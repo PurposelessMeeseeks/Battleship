@@ -1,0 +1,21 @@
+Igra potapanja brodova
+
+Sudionici: 2 igrača
+
+1.Svaki igrač nacrtat dvije mreže: jedna na koju će smjestit flotu,druga za evidenciju
+2.Svaki igrač složi dlotu
+3.Prvi igrač šalje upit za polje koje gađa, npr.C-3(stupac-redak)
+4.Drugi igrač uvidom na svoju mrežu s flotom provjerava nalazi li se na tom polju brod
+5.Ako se se nalazi niti jedan brod, odgovora s "promašaj",
+ako se nalazi brof ali taj brod još ima nepogođenih polja, odgovara s "pogodak",
+ako je to zadnje pogođeno polje tog broda, odgovara s "tone".
+6. Igrači mijenjaju uloge i drugi igrač gađa flotu prvog igrača(ponavljaju se koraci 3-5)
+7. Koraci 3-6 se ponavljaju sve dok flota jednog od igrača nije potpuno potopljena
+8. Pobjednik je igrač kojemu je ostao barem jedan ne potopljeni brod.
+
+
+Mreža
+Polje
+Flota
+Brod
+Igrač

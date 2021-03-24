@@ -1,0 +1,10 @@
+Placing fleet
+
+1. Shipwright created a grid with squares in 10 rows and 10 columns
+2. Shipwright looks for possible placements for a sip 5 squares long and selects one of them
+3. Shipwright marks fileds onto which ship will be placed
+4. Shipwright repeats steps 2&3 for a ship 4 squares long 
+5. Steps 2-4 are repeated for remaing ships.
+
+Postcondition: all ships are placed on the grid
+
