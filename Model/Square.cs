@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Vsite.Oom.Battleship.Model
+{
+    public struct Square
+    {
+        public Square(int row, int column)
+        {
+            Row = row;
+            Column = column;
+        }
+        public readonly int Row;
+        public readonly int Column;
+    }
+}
