@@ -16,17 +16,40 @@ namespace Vsite.Oom.Battleship.Model
             squares = new Square?[rows, columns];
             for (int r = 0; r < rows; ++r)
             {
-                for (int c = 0; c < columns; ++c) 
+                for (int c = 0; c < columns; ++c)
                     squares[r, c] = new Square(r, c);
-                
+
             }
         }
 
-        public IEnumerable< 
+        public IEnumerable<
             IEnumerable<Square>> GetAvailablePlacements(int length)
         {
-            return new List<List<Square>>();
+           List<List<Square>> result = GetHorizontalPlacements(length);
+            // result.Add(vertical placemetnts!!)
+            return result;
         }
+
+        private List<List<Square>> GetHorizontalPlacements(int length)
+        {
+            var result = new List<List<Square>>();
+            for (int r = 0 ; r < rows; ++r) {
+                LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
+                for (int c = 0; c< columns; ++c) {
+                    if (squares[r, c] != null)
+                        gathered.Enqueue(squares[r, c].Value);
+                    else
+                        gathered.Clear();
+
+                    if (gathered.Count == length)
+                    {
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+                    }
+                }
+            }
+            return result;
+        }
+    
 
         private int rows;
         private int columns;
