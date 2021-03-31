@@ -7,7 +7,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         [TestMethod]
         public void LimitedQueueMethodAddsElementsToQueue() {
             LimitedQueue<int> limitedQueue = new LimitedQueue<int>(3);
-            limitedQueue.Enqueue(1)
+            limitedQueue.Enqueue(1);
             Assert.AreEqual(1, limitedQueue.Count);
             limitedQueue.Enqueue(5);
             Assert.AreEqual(2, limitedQueue.Count);
