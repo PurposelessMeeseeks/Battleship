@@ -29,12 +29,40 @@ namespace Vsite.Oom.Battleship.Model
 
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int lenght)
         {
-            return new List<List<Square>>();
-            
+            var result = new List<List<Square>>();
+            return result;
+        }
+
+        private IEnumerable<IEnumerable<Square>> GetHorizontalPlacements(int lenght)
+        {
+            var result = GetHorizontalPlacements(lenght);
+
+            for (int r = 0; r < rows; ++r) 
+            {
+                LimitedQueue<Square> gathered = new LimitedQueue<Square>(lenght);
+                
+
+                for (int c = 0; c < colums; ++c) 
+                {
+                    if (squares[r, c] != null)
+                    {
+                        gathered.Enqueue(squares[r, c].Value);
+                    }
+                    else
+                    {
+                        gathered.Clear();
+                    }
+
+                    if (gathered.Count == lenght)  
+                    {
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+                    }
+                }
+            }
+
+            return result;
         }
 
         public Square?[,] squares;
-
-
     }
 }

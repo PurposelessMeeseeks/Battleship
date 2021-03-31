@@ -6,23 +6,20 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
-    class LimitedQueue<T> : Queue<T>
+    public class LimitedQueue<T> : Queue<T>
     {
-        public LimitedQueue(int lenght)
+        public LimitedQueue(int length)
         {
-            this.lenght = lenght;
+            this.length = length;
         }
 
         public new void Enqueue(T item)
         {
             base.Enqueue(item);
-
-            if (Count > lenght)
-            {
+            if (Count > length)
                 Dequeue();
-            }
         }
 
-        private int lenght;
+        private int length;
     }
 }
