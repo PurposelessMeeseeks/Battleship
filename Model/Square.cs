@@ -6,12 +6,12 @@ namespace Vsite.Oom.Battleship.Model
     {
         public Square(int row, int column)
         {
-            Row    = row;
-            Column = column;
+            this.row    = row;
+            this.column = column;
         }
 
-        public int Row;
-        public int Column;
+        public int row;
+        public int column;
 
     }
 }

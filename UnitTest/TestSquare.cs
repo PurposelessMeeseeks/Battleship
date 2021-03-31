@@ -10,8 +10,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTest
         public void TestingSquareConstructorsRowAndColumn()
         {
             Square testingSquare = new Square(5, 4);
-            Assert.AreEqual(5, testingSquare.Row);
-            Assert.AreEqual(4, testingSquare.Column);
+            Assert.AreEqual(5, testingSquare.row);
+            Assert.AreEqual(4, testingSquare.column);
         }
     }
 }
