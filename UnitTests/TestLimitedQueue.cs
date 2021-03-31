@@ -45,7 +45,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             lq.Enqueue(10);
 
             var array = lq.ToArray();
-            Assert.AreEqual(5, array);
+            Assert.AreEqual(3, array);
             Assert.AreEqual(5, lq.Peek());
         }
     }
