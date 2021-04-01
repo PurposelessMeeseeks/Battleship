@@ -26,7 +26,13 @@ namespace Vsite.Oom.Battleship.Model
         {
             List<List<Square>> result = GetHorizontalPlacements(length);
             //Add vertical placements
-            //result.Add()
+            List<List<Square>> result2 = GetVerticalPlacements(length);
+            for (int i = 0; i < result2.Count; ++i)
+            {
+                result.Add(result2[i]);
+            }
+
+            
 
 
             return result;
@@ -53,7 +59,26 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-
+        private List<List<Square>> GetVerticalPlacements(int length)
+        {
+            var result = new List<List<Square>>();
+            for (int c = 0; c < columns; ++c)
+            {
+                LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
+                for (int r = 0; r < rows; ++r)
+                {
+                    if (squares[r, c] != null)
+                        gathered.Enqueue(squares[r, c].Value);
+                    else
+                        gathered.Clear();
+                    if (gathered.Count == length)
+                    {
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+                    }
+                }
+            }
+            return result;
+        }
 
         private int rows;
         private int columns;
