@@ -47,13 +47,10 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             queue.Enqueue(10);
 
             var arr = queue.ToArray();
+
             Assert.AreEqual(5, arr[0]);
             Assert.AreEqual(8, arr[1]);
             Assert.AreEqual(10, arr[2]);
-
-
-            Assert.AreEqual(3, queue.ToArray());
-            Assert.AreEqual(5, queue.Peek());
 
         }
     }

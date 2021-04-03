@@ -8,6 +8,10 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class Grid
     {
+        private int rows;
+        private int colums;
+        public Square?[,] squares;
+
         public Grid(int rows, int colums)
         {
             this.rows = rows;
@@ -24,24 +28,27 @@ namespace Vsite.Oom.Battleship.Model
             }
         }
 
-        private int rows;
-        private int colums;
-
-        public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int lenght)
+        public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
-            var result = new List<List<Square>>();
+            List<List<Square>> result = GetHorizontalPlacements(length);
+            List<List<Square>> result_2 = GetVerticalPlacements(length);
+
+            for (int i = 0; i < result_2.Count; ++i)
+            {
+                result.Add(result_2[i]);
+            }
+
             return result;
         }
 
-        private IEnumerable<IEnumerable<Square>> GetHorizontalPlacements(int lenght)
+        private List<List<Square>> GetHorizontalPlacements(int length)
         {
-            var result = GetHorizontalPlacements(lenght);
+            var result = new List<List<Square>>();
 
             for (int r = 0; r < rows; ++r) 
             {
-                LimitedQueue<Square> gathered = new LimitedQueue<Square>(lenght);
+                LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
                 
-
                 for (int c = 0; c < colums; ++c) 
                 {
                     if (squares[r, c] != null)
@@ -53,7 +60,7 @@ namespace Vsite.Oom.Battleship.Model
                         gathered.Clear();
                     }
 
-                    if (gathered.Count == lenght)  
+                    if (gathered.Count == length)  
                     {
                         result.Add(new List<Square>(gathered.ToArray<Square>()));
                     }
@@ -63,6 +70,34 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-        public Square?[,] squares;
+        private List<List<Square>> GetVerticalPlacements(int length)
+        {
+            var result = new List<List<Square>>();
+
+            for (int c = 0; c < colums; ++c)
+            {
+                LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
+
+                for (int r = 0; r < rows; ++r)
+                {
+                    if (squares[r, c] != null)
+                    {
+                        gathered.Enqueue(squares[r, c].Value);
+
+                    }
+                    else
+                    {
+                        gathered.Clear();
+                    }
+
+                    if (gathered.Count == length)
+                    {
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }
