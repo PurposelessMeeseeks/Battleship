@@ -28,15 +28,20 @@ namespace Vsite.Oom.Battleship.Model {
 
 
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length) {
+            List<List<Square>> resultHorizontal = GetHorizontalPlacements(length);
 
-            List<List<Square>> res = GetHorizontalPlacements(length);
 
-            //res.Add(getVerticalPlacements(length));
-            return res;
+            List<List<Square>> resultVertical = GetVerticalPlacements(length);
+
+            for (int i = 0; i < resultVertical.Count; ++i) {
+                resultHorizontal.Add(resultVertical[i]);
+            }
+
+            return resultHorizontal;
         }
 
 
-        private List<List<Square>>  GetHorizontalPlacements(int length) {
+        private List<List<Square>> GetHorizontalPlacements(int length) {
             var res = new List<List<Square>>();
 
 
@@ -66,14 +71,27 @@ namespace Vsite.Oom.Battleship.Model {
 
         }
 
-        //TODO getVerticalplacements
-         private List<List<Square>> getVerticalPlacements(int length) {
+        private List<List<Square>> GetVerticalPlacements(int length) {
+            var result = new List<List<Square>>();
 
-            var res = new List<List<Square>>();
+            for (int c = 0; c < columns; ++c) {
+                LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
 
+                for (int r = 0; r < rows; ++r) {
+                    if (squares[r, c] != null) {
+                        gathered.Enqueue(squares[r, c].Value);
 
-            return res;
+                    } else {
+                        gathered.Clear();
+                    }
 
+                    if (gathered.Count == length) {
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+                    }
+                }
+            }
+
+            return result;
         }
 
 
