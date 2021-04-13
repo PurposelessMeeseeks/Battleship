@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Vsite.Oom.Battleship.Model.UnitTest
+namespace Vsite.Oom.Battleship.Model.UnitTests
 {
     [TestClass]
     public class TestLimitedQueue

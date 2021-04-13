@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Vsite.Oom.Battleship.Model.UnitTest
+namespace Vsite.Oom.Battleship.Model.UnitTests
 {
     [TestClass]
     public class TestGrid
