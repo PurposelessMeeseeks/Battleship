@@ -12,7 +12,7 @@ namespace Vsite.Oom.Battleship.Model
     {
         public void CreateShip(IEnumerable<Square> squares)
         {
-            Ships ship = new Ships(squares);
+            Ship ship = new Ship(squares);
             ships.Add(ship);
         }
 
