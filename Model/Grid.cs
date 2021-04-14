@@ -27,6 +27,10 @@ namespace Vsite.Oom.Battleship.Model
 
 
         }
+        public Grid(int rows, int columns,ISquareEliminator squareEliminator): this(rows, columns)
+        {
+            this.SquareEliminator = squareEliminator;
+        }
 
 
 
@@ -68,9 +72,13 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-        internal void Eliminate(IEnumerable<Square> selected)
+        public void Eliminate(IEnumerable<Square> selected)
         {
-            throw new NotImplementedException();
+            var ToEliminate=SquareEliminator.ToEliminate(selected);
+            foreach(Square square in ToEliminate)
+            {
+                squares[square.Row, square.Column] = null;
+            }
         }
 
         private List<List<Square>> GetVerticalPlacements(int length)
@@ -109,5 +117,6 @@ namespace Vsite.Oom.Battleship.Model
 
 
         private Square?[,] squares;
+        private ISquareEliminator SquareEliminator=new OnlyShipSquresEliminator();
     }
 }
