@@ -31,7 +31,11 @@ namespace Vsite.Oom.Battleship.Model
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
             List<List<Square>> result = GetHorizontalPlacements(length);
+            if (length > 1)
+                result.AddRange(GetVerticalPlacements(length));
+            return result;
             List<List<Square>> result_2 = GetVerticalPlacements(length);
+
 
             for (int i = 0; i < result_2.Count; ++i)
             {
