@@ -3,8 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Collections.Generic;
 
-
-
 namespace Vsite.Oom.Battleship.Model.UnitTests
 {
     [TestClass]
@@ -17,8 +15,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Assert.AreEqual(0, fleet.Ships.Count());
         }
 
-
-
         [TestMethod]
         public void CreateShipAddsNewShipToFleet()
         {
@@ -27,11 +23,9 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             fleet.CreateShip(squares);
             Assert.AreEqual(1, fleet.Ships.Count());
 
-
-
             squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             fleet.CreateShip(squares);
-            Assert.AreEqual(1, fleet.Ships.Count());
+            Assert.AreEqual(2, fleet.Ships.Count());
         }
     }
 }
