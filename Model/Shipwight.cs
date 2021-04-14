@@ -18,18 +18,27 @@ namespace Vsite.Oom.Battleship.Model
 
         public Fleet CreateFleet()
         {
-            Queue<int> lenghts = new Queue<int>(shipLenghts);
-            grid = new Grid(rows, columns);
-            while(lenghts.Count > 0)
+            for (int retries = 5 - 1; retries >= 0; --retries)
             {
-                int lenght = lenghts.Dequeue();
-                var placements = grid.GetAvailablePlacements(lenght);
-                int index = random.Next(placements.Count());
-                var selected = placements.ElementAt(index);
-                fleet.CreateShip(selected);
-                grid.Eliminate(selected);
+                Queue<int> lenghts = new Queue<int>(shipLenghts);
+                Grid grid = new Grid(rows, columns);
+                Fleet fleet = new Fleet();
+                while (lenghts.Count > 0)
+                {
+                    int lenght = lenghts.Dequeue();
+                    var placements = grid.GetAvailablePlacements(lenght);
+                    if (placements.Count() == 0)
+                        return null;
+                    int index = random.Next(placements.Count());
+                    var selected = placements.ElementAt(index);
+                    fleet.CreateShip(selected);
+                    grid.Eliminate(selected);
 
-            }*
+                }
+                return fleet;
+            }
+            throw new ArgumentException();
+            
 
             
         }
