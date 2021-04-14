@@ -10,15 +10,15 @@ namespace Vsite.Oom.Battleship.Model
     {
         public Grid(int rows, int columns)
         {
-            this.Rows = rows;
-            this.Columns = columns;
+            this.rows = rows;
+            this.columns = columns;
 
-            Squares = new Square?[rows, columns];
+            squares = new Square?[rows, columns];
             for (int r = 0; r < rows; ++r)
             {
                 for (int c = 0; c < columns; ++c)
                 {
-                    Squares[r, c] = new Square(r, c);
+                    squares[r, c] = new Square(r, c);
                 }
             }
         }
@@ -26,7 +26,7 @@ namespace Vsite.Oom.Battleship.Model
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
             List<List<Square>> result = GetHorizontalPlacements(length);
-            // add GetVerticalPlacements(length)
+            result.AddRange(GetVerticalPlacements(length));
 
             return result;
         }
@@ -35,14 +35,14 @@ namespace Vsite.Oom.Battleship.Model
         {
             var result = new List<List<Square>>();
 
-            for (int r = 0; r < Rows; ++r)
+            for (int r = 0; r < rows; ++r)
             {
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
-                for (int c = 0; c < Columns; ++c)
+                for (int c = 0; c < columns; ++c)
                 {
-                    if (Squares[r, c] != null)
+                    if (squares[r, c] != null)
                     {
-                        gathered.Enqueue(Squares[r, c].Value);
+                        gathered.Enqueue(squares[r, c].Value);
                     }
                     else
                     {
@@ -59,8 +59,36 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-        private int Rows;
-        private int Columns;
-        private Square?[,] Squares;
+        private List<List<Square>> GetVerticalPlacements(int length)
+        {
+            var result = new List<List<Square>>();
+
+            for (int c = 0; c < columns; ++c)
+            {
+                LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
+                for (int r = 0; r < rows; ++r)
+                {
+                    if (squares[r, c] != null) 
+                    {
+                        gathered.Enqueue(squares[r, c].Value);
+                    }
+                    else
+                    {
+                        gathered.Clear();
+                    }
+
+                    if (gathered.Count == length)
+                    {
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private int rows;
+        private int columns;
+        private Square?[,] squares;
     }
 }
