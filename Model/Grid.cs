@@ -26,14 +26,9 @@ namespace Vsite.Oom.Battleship.Model
         {
             List<List<Square>> result = GetHorizontalPlacements(length);
             //Add vertical placements
-            List<List<Square>> result2 = GetVerticalPlacements(length);
-            for (int i = 0; i < result2.Count; ++i)
-            {
-                result.Add(result2[i]);
-            }
-
+            if (length > 1)
+                result.AddRange(GetVerticalPlacements(length));
             
-
 
             return result;
         }
