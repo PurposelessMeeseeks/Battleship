@@ -53,6 +53,11 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
+        internal void Eliminate(IEnumerable<Square> selected)
+        {
+            throw new NotImplementedException();
+        }
+
         private List<List<Square>> GetVerticalPlacements(int length)
         {
             var result = new List<List<Square>>();
