@@ -24,7 +24,8 @@ namespace Vsite.Oom.Battleship.Model
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
             List<List<Square>> result = GetHorizontalPlacements(length);
-            result.AddRange(GetVerticalPlacements(length));
+            if (length > 1)
+                result.AddRange(GetVerticalPlacements(length));
             return result;
         }
 
