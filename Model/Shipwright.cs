@@ -33,7 +33,6 @@ namespace Vsite.Oom.Battleship.Model
             Fleet fleet = new Fleet();
             while (lengths.Count > 0)
             {
-
                 int length = lengths.Dequeue();
                 var placements = grid.GetAvailablePlacements(length);
                 if (placements.Count() == 0)
