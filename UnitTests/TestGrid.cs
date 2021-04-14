@@ -22,5 +22,13 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             var placement = grid.GetAvailablePlacements(3);
             Assert.AreEqual(3, placement.Count());
         }
+
+        [TestMethod]
+        public void GetAvailablePlacementsReturn100SequancesForShip1SquaresLongOnGrid10x10()
+        {
+            Grid grid = new Grid(10, 10);
+            var placement = grid.GetAvailablePlacements(1);
+            Assert.AreEqual(100, placement.Count());
+        }
     }
 }
