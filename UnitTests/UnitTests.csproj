@@ -52,6 +52,7 @@
     <Compile Include="TestSquare.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestShip.cs" />
+    <Compile Include="TestFleet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
