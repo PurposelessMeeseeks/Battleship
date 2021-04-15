@@ -48,6 +48,7 @@
     <Compile Include="OnlyShipSquaresEliminator.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="Shipwright.cs" />
+    <Compile Include="SorroundingSquaresEliminator.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
