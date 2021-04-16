@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{59669E2B-3D34-47CD-BC98-11A0751AB3C4}</ProjectGuid>
+    <ProjectGuid>{92F13B84-0631-475B-A436-0CE73281C07F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Vsite.Oom.Battleship.Model</RootNamespace>
@@ -41,8 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fleet.cs" />
     <Compile Include="Grid.cs" />
+    <Compile Include="ISquareEliminator.cs" />
     <Compile Include="LimitedQueue.cs" />
+    <Compile Include="OnlyShipSquaresEliminator.cs" />
+    <Compile Include="Ship.cs" />
+    <Compile Include="Shipwright.cs" />
+    <Compile Include="SorroundingSquaresEliminator.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

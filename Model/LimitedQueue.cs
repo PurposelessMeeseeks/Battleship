@@ -4,22 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vsite.Oom.Battleship.Model {
-   public  class LimitedQueue<T>:Queue<T> {
+namespace Vsite.Oom.Battleship.Model
+{
 
-        public LimitedQueue(int length) {
+    public class LimitedQueue<T> : Queue<T>
+    {
+        public LimitedQueue(int length)
+        {
             this.length = length;
         }
 
-        private int length;
-        
-        public new void Enqueue(T item) {
-
+        public new void Enqueue(T item)
+        {
             base.Enqueue(item);
-            if(base.Count > length) {
-                base.Dequeue();
-            }
 
+            if (Count > length)
+            {
+                Dequeue();
+            }
         }
+
+        private int length;
     }
 }
