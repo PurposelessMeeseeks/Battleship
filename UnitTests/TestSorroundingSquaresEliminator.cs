@@ -8,14 +8,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
     [TestClass]
     public class TestSorroundingSquaresEliminator
     {
-        [TestMethod]
-        public void ToEliminateReturnsNullIfNullRefferenceIsProvided()
-        {
-            var eliminator = new SorroundingSquaresEliminator(10, 10);
-            var toEliminate = eliminator.ToEliminate(null);
-
-            Assert.AreEqual(null, toEliminate);
-        }
 
         [TestMethod]
         public void ToEliminateReturnsEighteenSquaresToEliminateForShipWithDimensionFourByThree()

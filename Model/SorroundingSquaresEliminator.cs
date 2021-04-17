@@ -16,11 +16,6 @@ namespace Vsite.Oom.Battleship.Model
 
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> squares)
         {
-            if (squares.Count() == 0)
-            {
-                return null;
-            }
-
             var mostLeftShip  = squares.First();
             var mostRightShip = squares.Last();
 
