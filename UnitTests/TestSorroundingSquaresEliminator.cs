@@ -1,0 +1,87 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Vsite.Oom.Battleship.Model.UnitTests
+{
+    [TestClass]
+    public class TestSorroundingSquaresEliminator
+    {
+        [TestMethod]
+        public void ToEliminateReturnsNullIfNullRefferenceIsProvided()
+        {
+            var eliminator = new SorroundingSquaresEliminator(10, 10);
+            var toEliminate = eliminator.ToEliminate(null);
+
+            Assert.AreEqual(null, toEliminate);
+        }
+
+        [TestMethod]
+        public void ToEliminateReturnsEighteenSquaresToEliminateForShipWithDimensionFourByThree()
+        {
+            var ship = new List<Square> { new Square(7, 3), new Square(7, 4), new Square(7, 5), new Square(7, 6) };
+            var eliminator = new SorroundingSquaresEliminator(10, 10);
+            var toEliminate = eliminator.ToEliminate(ship);
+
+            Assert.AreEqual(18, toEliminate.Count());
+
+            // all sorrounding squares
+            Assert.IsTrue(toEliminate.Contains(new Square(6, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(8, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(8, 7)));
+            Assert.IsTrue(toEliminate.Contains(new Square(6, 7)));
+        }
+
+        [TestMethod]
+        public void ToEliminateReturnsEightSquaresWhenShipIsPlacedOnTheFirstColumnVertically()
+        {
+            var ship = new List<Square> { new Square(0, 5), new Square(0, 6)};
+            var eliminator = new SorroundingSquaresEliminator(10, 10);
+            var toEliminate = eliminator.ToEliminate(ship);
+
+            Assert.AreEqual(8, toEliminate.Count());
+
+            // all sorrounding squares
+            Assert.IsTrue(toEliminate.Contains(new Square(0, 4)));
+            Assert.IsTrue(toEliminate.Contains(new Square(1, 4)));
+            Assert.IsTrue(toEliminate.Contains(new Square(1, 7)));
+            Assert.IsTrue(toEliminate.Contains(new Square(0, 7)));
+        }
+
+        [TestMethod]
+        public void ToEliminateReturnsEightSquaresWhenShipIsPlacedOnTheFirsRowHorisontally()
+        {
+            var ship = new List<Square> { new Square(0, 0), new Square(0, 1) };
+            var eliminator = new SorroundingSquaresEliminator(10, 10);
+            var toEliminate = eliminator.ToEliminate(ship);
+
+            Assert.AreEqual(6, toEliminate.Count());
+          
+            // all sorrounding squares
+            Assert.IsTrue(toEliminate.Contains(new Square(0, 0)));
+            Assert.IsTrue(toEliminate.Contains(new Square(1, 0)));
+            Assert.IsTrue(toEliminate.Contains(new Square(1, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(0, 2)));
+        }
+
+
+        [TestMethod]
+        public void ToEliminateReturnsSixSquaresWhenShipIsPlacedInTheCorner()
+        {
+            var ship = new List<Square>{ new Square(8, 9), new Square(9, 9)};
+            var eliminator = new SorroundingSquaresEliminator(10, 10);
+            var toEliminate = eliminator.ToEliminate(ship);
+
+            Assert.AreEqual(6, toEliminate.Count());
+
+            // all sorrounding squares
+            Assert.IsTrue(toEliminate.Contains(new Square(7, 8)));
+            Assert.IsTrue(toEliminate.Contains(new Square(7, 9)));
+            Assert.IsTrue(toEliminate.Contains(new Square(9, 8)));
+            Assert.IsTrue(toEliminate.Contains(new Square(9, 9)));
+        }
+
+        // TODO: test cases when ship is placed on the mirrored way as now ( to over all sides of the rect ) 
+    }
+}

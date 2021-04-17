@@ -16,11 +16,36 @@ namespace Vsite.Oom.Battleship.Model
 
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> squares)
         {
-            // naci namjanji redak i namjanji stupac - umanjis 1
-            // naci najveci redat i najveci stupac uvecas za 1
-            // for loop i kreirati square result i insertati squarese
+            if (squares.Count() == 0)
+            {
+                return null;
+            }
 
-            throw new NotImplementedException();
+            var mostLeftShip  = squares.First();
+            var mostRightShip = squares.Last();
+
+            // get the sorrounding squares dimension on the most left ship
+            int left = mostLeftShip.column > 0 ? mostLeftShip.column - 1 : mostLeftShip.column;
+            int top = mostLeftShip.row > 0 ? mostLeftShip.row - 1 : mostLeftShip.row;
+
+            // get the sorrounding squares dimension on the most right ship
+            int right = mostRightShip.column + 1;
+            right = (right < columns) ? ++right : right;
+
+            int bottom = mostRightShip.row + 1;
+            bottom = (bottom < rows) ? ++bottom : bottom;
+
+            var toEliminate = new List<Square>();
+
+            for (int r = top; r < bottom; ++r)
+            {
+                for (int c = left; c <right; ++c)
+                {
+                    toEliminate.Add(new Square(r, c));
+                }
+            }
+
+            return toEliminate;
         }
 
         private readonly int rows;
