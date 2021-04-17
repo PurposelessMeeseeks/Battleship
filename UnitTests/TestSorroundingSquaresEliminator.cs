@@ -82,6 +82,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Assert.IsTrue(toEliminate.Contains(new Square(9, 9)));
         }
 
-        // TODO: test cases when ship is placed on the mirrored way as now ( to over all sides of the rect ) 
+        // TODO: test cases when ship is placed on the mirrored way as now ( to cover all sides of the rect ) 
+        // TODO: test cases for all ship dimensions, covered are 2 and 4, so 3 and 5 are missing
     }
 }
