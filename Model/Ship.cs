@@ -8,12 +8,12 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class Ship
     {
-        public Ship(IEquatable<Square> squares)
+        public Ship(IEnumerable<Square> squares)
         {
             this.squares = squares.ToArray();
         }
 
-        public IEquatable<Square> Squares
+        public IEnumerable<Square> Squares
         {
             get { return squares; }
         }
