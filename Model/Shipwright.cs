@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
@@ -10,7 +12,7 @@ namespace Vsite.Oom.Battleship.Model
         {
             this.rows = rows;
             this.columns = columns;
-            this.shipLengths = shipLengths.OrderByDescending(s => s);
+            this.shipLengths = shipLength.OrderByDescending(s => s);
         }
 
         public Fleet CreateFleet()
