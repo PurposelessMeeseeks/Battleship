@@ -37,12 +37,10 @@ namespace Vsite.Oom.Battleship.Model
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
             List<List<Square>> result = GetHorizontalPlacements(length);
-            //if (length > 1)
-            //    result.Add(GetVerticalPlacements(length));
+            if (length > 1)
+                result.AddRange(GetVerticalPlacements(length));
             return result;
         }
-
-
 
         private List<List<Square>> GetHorizontalPlacements(int length)
         {
@@ -57,30 +55,21 @@ namespace Vsite.Oom.Battleship.Model
                     else
                         gathered.Clear();
 
-
-
                     if (gathered.Count == length)
-                    {
                         result.Add(new List<Square>(gathered.ToArray<Square>()));
-                        //add previous length squares to result;
-                    }
                 }
             }
-
-
-
             return result;
         }
 
         public void Eliminate(IEnumerable<Square> selected)
         {
-            var ToEliminate=SquareEliminator.ToEliminate(selected);
-            foreach(Square square in ToEliminate)
+            var toEliminate = SquareEliminator.ToEliminate(selected);
+            foreach (Square square in toEliminate)
             {
                 squares[square.Row, square.Column] = null;
             }
         }
-
         private List<List<Square>> GetVerticalPlacements(int length)
         {
             var result = new List<List<Square>>();
@@ -94,22 +83,12 @@ namespace Vsite.Oom.Battleship.Model
                     else
                         gathered.Clear();
 
-
-
                     if (gathered.Count == length)
-                    {
                         result.Add(new List<Square>(gathered.ToArray<Square>()));
-                        //add previous length squares to result;
-                    }
                 }
             }
-
-
-
             return result;
         }
-
-
 
         private int rows;
         private int columns;
