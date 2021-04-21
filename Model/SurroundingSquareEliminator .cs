@@ -17,30 +17,13 @@ namespace Vsite.Oom.Battleship.Model
         {
             var result = new List<Square>();
 
-            int minCol = columns - 1;
-            int minRow = rows - 1;
-            int maxCol = 0;
-            int maxRow = 0;
+            if (!shipSquares.Any())
+                return null;
 
-            shipSquares.ToList().ForEach(s =>
-            {
-                if(s.Row < minRow)
-                {
-                    minRow = s.Row;
-                }
-                if (s.Row > maxRow)
-                {
-                    maxRow = s.Row;
-                }
-                if (s.Column < minCol)
-                {
-                    minCol = s.Column;
-                }
-                if (s.Column > maxCol)
-                {
-                    maxCol = s.Column;
-                }
-            });
+            int minCol = shipSquares.Min(s => s.Column);
+            int maxCol = shipSquares.Max(s => s.Column);
+            int minRow = shipSquares.Min(s => s.Row);
+            int maxRow = shipSquares.Max(s => s.Row);
 
             minRow = minRow > 0 ? minRow - 1 : 0;
             minCol = minCol > 0 ? minCol - 1 : 0;
