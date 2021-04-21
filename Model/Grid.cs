@@ -53,7 +53,7 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-        internal void Eliminate(IEnumerable<Square> selected)
+        public void Eliminate(IEnumerable<Square> selected)
         {
             var ToEliminate = squareEliminator.ToEliminate(selected);
 
