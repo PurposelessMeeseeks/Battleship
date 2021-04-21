@@ -24,7 +24,6 @@ namespace Vsite.Oom.Battleship.Model
 
             shipSquares.ToList().ForEach(s =>
             {
-                result.Add(s);
                 if(s.Row < minRow)
                 {
                     minRow = s.Row;
@@ -53,8 +52,7 @@ namespace Vsite.Oom.Battleship.Model
                 for(int j = minCol; j <= maxCol; j++)
                 {
                     Square sq = new Square(i,j);
-                    if (!result.Contains(sq))
-                        result.Add(sq);
+                    result.Add(sq);
                 }
             }
 
