@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Vsite.Oom.Battleship.Model.UnitTests
 {
@@ -24,11 +25,29 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         }
 
         [TestMethod]
-        public void GetAvailablePlacementsReturns3SequencesForShip1SquaresLongONGrid10x10()
+        public void GetAvailablePlacementsReturns100SequencesForShip1SquaresLongONGrid10x10()
         {
             Grid grid = new Grid(10, 10);
             var placements = grid.GetAvailablePlacements(1);
             Assert.AreEqual(100, placements.Count());
+        }
+
+        [TestMethod]
+        public void GetAvailablePlacementsReturns3SequencesForShip2SquaresLongONGrid1x6WithSquare0_2Eliminated()
+        {
+            Grid grid = new Grid(1, 6);
+            grid.Eliminate( new List<Square> { new Square(0, 2) });
+            var placements = grid.GetAvailablePlacements(2);
+            Assert.AreEqual(3, placements.Count());
+        }
+
+        [TestMethod]
+        public void GetAvailablePlacementsReturns2SequencesForShip2SquaresLongONGrid5x1WithSquare1_0Eliminated()
+        {
+            Grid grid = new Grid(5, 1);
+            grid.Eliminate(new List<Square> { new Square(1, 0) });
+            var placements = grid.GetAvailablePlacements(2);
+            Assert.AreEqual(2, placements.Count());
         }
     }
 }
