@@ -16,7 +16,18 @@ namespace Vsite.Oom.Battleship.Model
 
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares)
         {
-            throw new NotImplementedException();
+            int rMin = Math.Max(shipSquares.Min(s => s.Row) - 1, 0);
+            int cMin = Math.Max(shipSquares.Min(s => s.Column) - 1, 0);
+            int rMax = Math.Min(shipSquares.Max(s => s.Row) + 2, rows);
+            int cMax = Math.Min(shipSquares.Max(s => s.Column) + 2, columns);
+
+            List<Square> squares = new List<Square>();
+            for (int r = rMin; r < rMax; ++r)
+            {
+                for (int c = cMin; c < cMax; ++c)
+                    squares.Add(new Square(r, c));
+            }
+            return squares;
         }
 
         private readonly int rows;
