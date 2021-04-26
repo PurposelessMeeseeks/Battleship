@@ -30,6 +30,14 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
+        public void RemoveSquares(IEnumerable<Square> squaresToEliminate)
+        {
+            foreach (Square square in squaresToEliminate)
+            {
+                squares[square.Row, square.Column] = null;
+            }
+        }
+
         private List<IEnumerable<Square>> GetHorizontalSequences(int length)
         {
             List<IEnumerable<Square>> result = new List<IEnumerable<Square>>();
