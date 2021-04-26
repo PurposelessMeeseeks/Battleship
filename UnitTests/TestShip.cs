@@ -11,12 +11,12 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         [TestMethod]
         public void ConstructorCreatesAShipFormSquaresProvided()
         {
-            var sqaures = new List<Square> { new Square(4, 3), new Square(4, 4), new Square(4, 5), new Square(4, 6) };
+            var squares = new List<Square> { new Square(4, 3), new Square(4, 4), new Square(4, 5), new Square(4, 6) };
             Ship ship = new Ship(squares);
-            Assert.AreEqual(4, ship.Sqaures.Count());
-            Assert.IsTrue(ship.Sqaures.Contains(sqaures[0]));
-            Assert.IsTrue(ship.Sqaures.Contains(sqaures[1]));
-            Assert.IsTrue(ship.Sqaures.Contains(sqaures[2]));
+            Assert.AreEqual(4, ship.Squares.Count());
+            Assert.IsTrue(ship.Squares.Contains(squares[0]));
+            Assert.IsTrue(ship.Squares.Contains(squares[1]));
+            Assert.IsTrue(ship.Squares.Contains(squares[2]));
         }
     }
 }
