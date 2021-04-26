@@ -21,6 +21,11 @@ namespace Vsite.Oom.Battleship.Model
             }
         }
 
+        public object GetAvailablePlacements(int v)
+        {
+            throw new NotImplementedException();
+        }
+
         public Grid(int rows, int columns, ISquareElimination squareElimination) : this(rows, columns)
         {
             this.squareEliminator = squareEliminator;
