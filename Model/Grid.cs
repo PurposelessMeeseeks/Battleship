@@ -22,10 +22,32 @@ namespace Vsite.Oom.Battleship.Model
             }
         }
 
-        public IEnumerable<IEnumerable<Square>> GetSequences(int v)
+        public IEnumerable<IEnumerable<Square>> GetSequences(int length)
+        {
+            var result = GetHorizontalSequences(length);
+            if (length > 1)
+                ; //result.AddRange();
+            return result;
+        }
+
+        private List<IEnumerable<Square>> GetHorizontalSequences(int length)
         {
             List<IEnumerable<Square>> result = new List<IEnumerable<Square>>();
-
+            for (int r = 0; r < Rows; ++r)
+            {
+                var queue = new LimitedQueue<Square>(length);
+                for (int c = 0; c < Columns; ++c)
+                {
+                    if (squares[r, c] != null)
+                    {
+                        queue.Enqueue(squares[r, c].Value);
+                        if (queue.Count >= length)
+                            result.Add(queue.ToArray());
+                    }
+                    else
+                        queue.Clear();
+                }
+            }
             return result;
         }
 

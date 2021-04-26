@@ -8,13 +8,21 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
     public class TestGrid
     {
         [TestMethod]
+        public void GetSequencesReturns100ArraysForAShipOfLength1SquareOnGridWith10Rows10Columns()
+        {
+            Grid grid = new Grid(10, 10);
+            var placements = grid.GetSequences(1);
+            Assert.AreEqual(100, placements.Count());
+        }
+
+        [TestMethod]
         public void GetSequencesReturns2ArraysForAShipOfLength3SquaresOnGridWith1Row4Columns()
         {
             Grid grid = new Grid(1, 4);
             var placements = grid.GetSequences(3);
             Assert.AreEqual(2, placements.Count());
-            Assert.AreEqual(3, placements.ElementAt(0));
-            Assert.AreEqual(3, placements.ElementAt(1));
+            Assert.AreEqual(3, placements.ElementAt(0).Count());
+            Assert.AreEqual(3, placements.ElementAt(1).Count());
         }
 
         [TestMethod]
