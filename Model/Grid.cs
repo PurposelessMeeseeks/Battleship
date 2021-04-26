@@ -22,6 +22,11 @@ namespace Vsite.Oom.Battleship.Model
 
         }
 
+        public Grid(int rows, int columns, ISquareEliminator squareEliminator) : this(rows, columns)
+        {
+            this.squareEliminator = squareEliminator;
+        }
+
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int lenght)
         {
             List<List<Square>> result = GetHorizontalPlacements(lenght);
@@ -54,14 +59,19 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-        internal void Eliminate(IEnumerable<Square> selected)
+        public void Eliminate(IEnumerable<Square> selected)
         {
-            throw new NotImplementedException();
+            var toEliminate = squareEliminator.ToEliminate(selected);
+            foreach (Square square in toEliminate)
+            {
+                squares[square.Row, square.Column] = null;
+            }
         }
 
         private int rows;
         private int columns;
 
         private Square?[,] squares;
+        private ISquareEliminator squareEliminator = new OnlyShipSquaresEliminator();
     }
 }

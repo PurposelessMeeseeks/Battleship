@@ -10,8 +10,8 @@ namespace Vsite.Oom.Battleship.Model
     {
         public void CreateShip(IEnumerable<Square> squares)
         {
-            //? Ship ship = new 
-            //? Ships.add
+             Ship ship = new Ship(squares);
+             ships.Add(ship);
         }
 
         public IEnumerable<Ship> Ships
