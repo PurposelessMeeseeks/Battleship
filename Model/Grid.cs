@@ -21,13 +21,56 @@ namespace Vsite.Oom.Battleship.Model
                 }
             }
         }
-        public IEnumerable<IEnumerable<Square>> GetSequences(int v)
+        public IEnumerable<IEnumerable<Square>> GetSequences(int length)
         {
-            List<IEnumerable<Square>> result = new List<IEnumerable<Square>>();
+
+            var result = GetHorizontalSequences(length);
 
             return result;
 
         }
+
+        public void RemoveSquares(IEnumerable<Square> squaresToEliminate)
+        {
+            foreach (Square square in squaresToEliminate) { 
+                squares[square.Row,square.Column] = null;
+            }
+        }
+
+        private List<IEnumerable<Square>> GetHorizontalSequences(int length) {
+
+            List<IEnumerable<Square>> result = new List<IEnumerable<Square>>();
+            for (int r = 0; r < Rows; ++r) {
+
+                var queue = new LimitedQueue<Square>(length);
+                for (int c = 0; c < Columns; ++c) {
+
+                    if (squares[r, c] != null) {
+
+                        queue.Enqueue(squares[r, c].Value);
+                        if (queue.Count >= length)
+                        {
+
+                            result.Add(queue.ToArray());
+                          
+                        }
+                        
+                    }
+                    else
+                    {
+                        queue.Clear();
+                    }
+
+                }
+
+            
+            }
+
+            return result;
+
+        }
+
+
 
         private readonly Square?[,] squares;
 
