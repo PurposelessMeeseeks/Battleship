@@ -16,7 +16,48 @@ namespace Vsite.Oom.Battleship.Model
 
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares)
         {
-            throw new NotImplementedException();
+            if (shipSquares.Count() == 0)
+            {
+                return null;
+            }
+
+            int top = shipSquares.First().Row;
+            int bottom = shipSquares.Last().Row + 1;
+
+            int left = shipSquares.First().Column;
+            int right = shipSquares.Last().Column + 1;
+
+            if (top > 0)
+            {
+                --top;
+            }
+
+            if (bottom < rows)
+            {
+                ++bottom;
+            }
+
+            if (left > 0)
+            {
+                --left;
+            }
+
+            if (right < columns)
+            {
+                ++right;
+            }
+
+            var eliminatedSquares = new List<Square>();
+
+            for (int r = top; r < bottom; ++r)
+            {
+                for (int c = left; c < right; ++c)
+                {
+                    eliminatedSquares.Add(new Square(r, c));
+                }
+            }
+            
+            return eliminatedSquares;
         }
 
         private readonly int rows;
