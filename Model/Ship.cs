@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
+    public enum HitResult
+    {
+        Missed,
+        Hit,
+        Sunken
+    }
+
     public class Ship
     {
         public Ship(IEnumerable<Square> squares)
@@ -18,6 +25,44 @@ namespace Vsite.Oom.Battleship.Model
             get { return squares; }
         }
 
+        public HitResult Hit(Square square)
+        {
+
+            // check if square belongs to this ship
+            // if not: return HitResult.Missed
+            // if yes:
+            //      1. if all other squares are hit: return HitResult.Sunken
+            //         and mark all squares sunken
+            //      2. else, mark the square hit and return HitResult.Hit
+
+            if (squares.Contains(square)) 
+            {
+                foreach (var s in squares)
+                {
+                    if (s.Equals(square)) 
+                    {
+                        s.SetSquareState(HitResult.Hit);
+                    }
+                }
+
+                if (squares.All(item => item.SquareState == SquareState.Hit))
+                {
+                    foreach (var s in squares)
+                    {
+                        s.SetSquareState(HitResult.Sunken);
+                    }
+
+                    return HitResult.Sunken;
+                }
+
+                return HitResult.Hit;
+            }
+
+
+            return HitResult.Missed;
+        }
+
         private Square[] squares;
+
     }
 }
