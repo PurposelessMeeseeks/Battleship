@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2FC0D0DE-1780-4EC7-9B74-5EA4230B6C0D}</ProjectGuid>
+    <ProjectGuid>{89C4D857-8321-4706-8A4C-5997579F0ED0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Vsite.Oom.Battleship.Model.UnitTests</RootNamespace>
@@ -53,13 +53,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGrid.cs" />
     <Compile Include="TestLimitedQueue.cs" />
+    <Compile Include="TestShip.cs" />
+    <Compile Include="TestFleet.cs" />
+    <Compile Include="TestShipwright.cs" />
+    <Compile Include="TestSurroundingSquareEliminator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{38107e66-e3d5-4383-84f3-082e18cdc029}</Project>
+      <Project>{5e76526e-7606-4331-9205-734530be3c45}</Project>
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>

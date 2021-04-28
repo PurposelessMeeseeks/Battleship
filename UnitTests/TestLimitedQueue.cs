@@ -9,44 +9,41 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         [TestMethod]
         public void LimitedQueueEnqueueMethodAddsElementsToQueue()
         {
-
-            LimitedQueue<int> lq = new LimitedQueue<int>(3);
-
-            lq.Enqueue(1);
-            Assert.AreEqual(1, lq.Count);
-            lq.Enqueue(5);
-            Assert.AreEqual(2, lq.Count);
-            lq.Enqueue(8);
-            Assert.AreEqual(3, lq.Count);
+            LimitedQueue<int> queue = new LimitedQueue<int>(3);
+            queue.Enqueue(1);
+            Assert.AreEqual(1, queue.Count);
+            queue.Enqueue(5);
+            Assert.AreEqual(2, queue.Count);
+            queue.Enqueue(8);
+            Assert.AreEqual(3, queue.Count);
         }
 
         [TestMethod]
-        public void LimitedQueueEnqueueMethodDequeuesElementsFromQueue()
+        public void LimitedQueueEnqueueMethodDequeuesExcessElementsFromQueue()
         {
+            LimitedQueue<int> queue = new LimitedQueue<int>(3);
+            queue.Enqueue(1);
+            queue.Enqueue(5);
+            queue.Enqueue(8);
 
-            LimitedQueue<int> lq = new LimitedQueue<int>(3);
-
-            lq.Enqueue(1);            
-            lq.Enqueue(5);            
-            lq.Enqueue(8);
-            lq.Enqueue(10);
-            Assert.AreEqual(3, lq.Count);
-            Assert.AreEqual(5, lq.Peek());
+            queue.Enqueue(10);
+            Assert.AreEqual(3, queue.Count);
+            Assert.AreEqual(5, queue.Peek());
         }
 
         [TestMethod]
-        public void LimitedQueueEnqueueMethodReturnsCurrentElements()
+        public void LimitedQueueToArrayMethodReturnsCurrentElements()
         {
-            LimitedQueue<int> lq = new LimitedQueue<int>(3);
+            LimitedQueue<int> queue = new LimitedQueue<int>(3);
+            queue.Enqueue(1);
+            queue.Enqueue(5);
+            queue.Enqueue(8);
 
-            lq.Enqueue(1);
-            lq.Enqueue(5);
-            lq.Enqueue(8);
-            lq.Enqueue(10);
-
-            var array = lq.ToArray();
-            Assert.AreEqual(3, array);
-            Assert.AreEqual(5, lq.Peek());
+            queue.Enqueue(10);
+            var array = queue.ToArray();
+            Assert.AreEqual(5, array[0]);
+            Assert.AreEqual(8, array[1]);
+            Assert.AreEqual(10, array[2]);
         }
     }
 }

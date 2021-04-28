@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
-    public struct Square
+    public class OnlyShipSquaresEliminator : ISquareEliminator
     {
-        public Square(int row, int column)
+        public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares)
         {
-            Row = row;
-            Column = column;
+            return shipSquares;
         }
-
-        public readonly int Row;
-        public readonly int Column;
     }
 }
