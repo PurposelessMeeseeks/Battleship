@@ -8,7 +8,7 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class Shipwright
     {
-        public Shipwright(int rows, int colums, IEnumerable<int> shipLenghts)
+        public Shipwright(int rows, int columns, IEnumerable<int> shipLenghts)
         {
             this.rows = rows;
             this.columns = columns;

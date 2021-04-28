@@ -26,7 +26,7 @@ namespace Vsite.Oom.Battleship.Model
             throw new NotImplementedException();
         }
 
-        public Grid(int rows, int columns, ISquareElimination squareElimination) : this(rows, columns)
+        public Grid(int rows, int columns, ISquareElimination squareEliminator) : this(rows, columns)
         {
             this.squareEliminator = squareEliminator;
         }
@@ -35,18 +35,16 @@ namespace Vsite.Oom.Battleship.Model
         
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacement(int length)
         {
-            List<List<Square>> result = GetVerticalPlacements(length);
+            List<List<Square>> result = GetHorizontalPlacement(length);
             if (length > 1)
                 result.AddRange(GetVerticalPlacements(length));
-          
-
             return result;
 
         }
 
         private IEnumerable<IEnumerable<Square>> GetHorizontalPlacement(int length)
         {
-            var result = new List<List<Square>>();
+            var result = new List<IEnumerable<Square>>();
             for (int r = 0; r < rows; ++r)
             {
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
@@ -59,7 +57,7 @@ namespace Vsite.Oom.Battleship.Model
 
                     if (gathered.Count == length)
                     {
-                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+                        result.Add(gathered.ToArray<Square>());
                         // add previous length squares to result;
                     }
                 }
@@ -80,10 +78,10 @@ namespace Vsite.Oom.Battleship.Model
         private List<List<Square>> GetVerticalPlacements(int length)
         {
             var result = new List<List<Square>>();
-            for (int c = 0; c < rows; ++c)
+            for (int c = 0; c < columns; ++c)
             {
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
-                for (int r = 0; r < columns; ++r)
+                for (int r = 0; r < rows; ++r)
                 {
                     if (squares[r, c] != null)
                         gathered.Enqueue(squares[r, c].Value);
