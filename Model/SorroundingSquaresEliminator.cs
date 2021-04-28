@@ -1,29 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Vsite.Oom.Battleship.Model
-{
-    public class SorroundingSquaresEliminator : ISquareEliminator
-    {
-        public SorroundingSquaresEliminator(int rows, int columns)
-        {
-            this.rows    = rows;
+namespace Vsite.Oom.Battleship.Model {
+    public class SurroundingSquaresEliminator : ISquareEliminator {
+        private readonly int rows, columns;
+
+        public SurroundingSquaresEliminator(int rows, int columns) {
+            this.rows = rows;
             this.columns = columns;
         }
 
-        public IEnumerable<Square> ToEliminate(IEnumerable<Square> squares)
-        {
-            // naci namjanji redak i namjanji stupac - umanjis 1
-            // naci najveci redat i najveci stupac uvecas za 1
-            // for loop i kreirati square result i insertati squarese
+        public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares) {
+            int left = shipSquares.First().column;
+            int right = shipSquares.Last().column + 1;
 
-            throw new NotImplementedException();
+            int top = shipSquares.First().row;
+            int bottom = shipSquares.Last().row + 1;
+
+            if (left > 0) {
+                --left;
+            }
+
+            if (right < columns) {
+                ++right;
+            }
+
+            if (top > 0) {
+                --top;
+            }
+
+            if (bottom < rows) {
+                ++bottom;
+            }
+
+            List<Square> elim = new List<Square>();
+
+            for (int i = top; i < bottom; i++) {
+                for (int j = left; j < right; j++) {
+                    elim.Add(new Square(i, j));
+                }
+            }
+
+            return elim;
         }
-
-        private readonly int rows;
-        private readonly int columns;
     }
 }

@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Vsite.Oom.Battleship.Model
-{
-    public class Fleet
-    {
-        public void CreateShip(IEnumerable<Square> squares)
-        {
-            ships.Add(new Ship(squares));
+namespace Vsite.Oom.Battleship.Model {
+    public class Fleet {
+        public void CreateShip(IEnumerable<Square> squares) {
+            Ship ship = new Ship(squares);
+            ships.Add(ship);
         }
 
-        public IEnumerable<Ship> Ships { get { return ships; } }
+        public IEnumerable<Ship> Ships {
+            get { return ships; }
+        }
 
         private List<Ship> ships = new List<Ship>();
     }
