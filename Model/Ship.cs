@@ -15,6 +15,9 @@ namespace Vsite.Oom.Battleship.Model
 
     public class Ship
     {
+
+        private Square[] squares;
+
         public Ship(IEnumerable<Square> squares)
         {
             this.squares = squares.ToArray();
@@ -27,42 +30,28 @@ namespace Vsite.Oom.Battleship.Model
 
         public HitResult Hit(Square square)
         {
-
-            // check if square belongs to this ship
-            // if not: return HitResult.Missed
-            // if yes:
-            //      1. if all other squares are hit: return HitResult.Sunken
-            //         and mark all squares sunken
-            //      2. else, mark the square hit and return HitResult.Hit
-
-            if (squares.Contains(square)) 
+            if (squares.Contains(square))
             {
-                foreach (var s in squares)
+                for (int i = 0; i < squares.Length; ++i)
                 {
-                    if (s.Equals(square)) 
+                    if (squares[i].Equals(square))
                     {
-                        s.SetSquareState(HitResult.Hit);
+                        squares[i].SetSquareState(HitResult.Hit);
                     }
                 }
-
                 if (squares.All(item => item.SquareState == SquareState.Hit))
                 {
-                    foreach (var s in squares)
+                    for (int i = 0; i < squares.Length; ++i)
                     {
-                        s.SetSquareState(HitResult.Sunken);
+                        squares[i].SetSquareState(HitResult.Sunken);
                     }
 
                     return HitResult.Sunken;
                 }
-
                 return HitResult.Hit;
             }
-
-
             return HitResult.Missed;
         }
-
-        private Square[] squares;
 
     }
 }
