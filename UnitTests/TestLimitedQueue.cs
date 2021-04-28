@@ -16,8 +16,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Assert.AreEqual(2, queue.Count);
             queue.Enqueue(8);
             Assert.AreEqual(3, queue.Count);
-
         }
+
         [TestMethod]
         public void LimitedQueueEnqueueMethodDequeuesExcessElementsFromQueue()
         {
@@ -35,7 +35,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void LimitedQueueToArrayMethodReturnsCurrentElements()
         {
             LimitedQueue<int> queue = new LimitedQueue<int>(3);
-
             queue.Enqueue(1);
             queue.Enqueue(5);
             queue.Enqueue(8);
@@ -45,7 +44,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Assert.AreEqual(5, array[0]);
             Assert.AreEqual(8, array[1]);
             Assert.AreEqual(10, array[2]);
-
         }
     }
 }

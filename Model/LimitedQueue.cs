@@ -11,7 +11,6 @@ namespace Vsite.Oom.Battleship.Model
         public LimitedQueue(int length)
         {
             this.length = length;
-
         }
 
         public new void Enqueue(T item)
@@ -20,7 +19,7 @@ namespace Vsite.Oom.Battleship.Model
             if (Count > length)
                 Dequeue();
         }
-        private int length;
 
+        private int length;
     }
 }
