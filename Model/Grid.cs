@@ -21,11 +21,6 @@ namespace Vsite.Oom.Battleship.Model
             }
         }
 
-        public object GetAvailablePlacements(int v)
-        {
-            throw new NotImplementedException();
-        }
-
         public Grid(int rows, int columns, ISquareElimination squareEliminator) : this(rows, columns)
         {
             this.squareEliminator = squareEliminator;
@@ -33,16 +28,15 @@ namespace Vsite.Oom.Battleship.Model
 
        
         
-        public IEnumerable<IEnumerable<Square>> GetAvailablePlacement(int length)
+        public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
-            List<List<Square>> result = GetHorizontalPlacement(length);
+            List<List<Square>> result = GetHorizontalPlacements(length);
             if (length > 1)
                 result.AddRange(GetVerticalPlacements(length));
             return result;
-
         }
 
-        private IEnumerable<IEnumerable<Square>> GetHorizontalPlacement(int length)
+        private IEnumerable<IEnumerable<Square>> GetHorizontalPlacements(int length)
         {
             var result = new List<IEnumerable<Square>>();
             for (int r = 0; r < rows; ++r)
@@ -56,11 +50,9 @@ namespace Vsite.Oom.Battleship.Model
                         gathered.Clear();
 
                     if (gathered.Count == length)
-                    {
                         result.Add(gathered.ToArray<Square>());
                         // add previous length squares to result;
-                    }
-                }
+                    }               
             }
 
             return result;
@@ -102,4 +94,5 @@ namespace Vsite.Oom.Battleship.Model
         private ISquareElimination squareEliminator = new OnlyShipSquaresElinimator();
         }
     }
+
 

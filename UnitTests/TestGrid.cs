@@ -13,7 +13,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void GetAvailablePlacementsReturns2SequencesForShip3SquaresLongOnGrid1x4()
         {
             Grid grid = new Grid(1, 4);
-            var placements = grid.GetAvailablePlacement(3);
+            var placements = grid.GetAvailablePlacements(3);
             Assert.AreEqual(2, placements.Count());
         }
         
@@ -22,7 +22,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void GetAvailablePlacementsReturns100SequencesForShip1SquaresLongOnGrid5x1()
         {
             Grid grid = new Grid(5, 1);
-            var placements = grid.GetAvailablePlacement(3);
+            var placements = grid.GetAvailablePlacements(3);
             Assert.AreEqual(3, placements.Count());
         }
        
@@ -30,7 +30,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void GetAvailablePlacementsReturns100SequencesForShip1SquareLongOnGrid10x10()
         {
             Grid grid = new Grid(10, 10);
-            var placements = grid.GetAvailablePlacement(1);
+            var placements = grid.GetAvailablePlacements(1);
             Assert.AreEqual(100, placements.Count());
         }
         [TestMethod]
@@ -38,7 +38,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         {
             Grid grid = new Grid(1, 6);
             grid.Eliminate(new List<Square> { new Square(0, 2) });
-            var placements = grid.GetAvailablePlacement(2);
+            var placements = grid.GetAvailablePlacements(2);
             Assert.AreEqual(3, placements.Count());
         }
         [TestMethod]
@@ -46,7 +46,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         {
             Grid grid = new Grid(5, 1);
             grid.Eliminate(new List<Square> { new Square(1, 0) });
-            var placements = grid.GetAvailablePlacement(2);
+            var placements = grid.GetAvailablePlacements(2);
             Assert.AreEqual(2, placements.Count());
         }
     }

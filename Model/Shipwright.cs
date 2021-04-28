@@ -33,7 +33,7 @@ namespace Vsite.Oom.Battleship.Model
             while (lenghts.Count > 0)
             {
                 int length = lenghts.Dequeue();
-                var placements = grid.GetAvailablePlacement(length);
+                var placements = grid.GetAvailablePlacements(length);
                 if (placements.Count() == 0)
                     return null;
                 int index = random.Next(placements.Count());
