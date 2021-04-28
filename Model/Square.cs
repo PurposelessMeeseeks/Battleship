@@ -31,7 +31,7 @@ namespace Vsite.Oom.Battleship.Model
 
         private SquareState squareState;
 
-        public SetSquareState(HitResult hitResult)
+        public void SetSquareState(HitResult hitResult)
         {
             switch (hitResult)
             {
@@ -53,7 +53,7 @@ namespace Vsite.Oom.Battleship.Model
 
         public bool Equals(Square other)
         {
-            return Row = other.Row && Column == other.Column;
+            return Row == other.Row && Column == other.Column;
         }
 
         public override bool Equals(object obj)
