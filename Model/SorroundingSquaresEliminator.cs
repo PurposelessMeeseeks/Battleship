@@ -1,47 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model {
     public class SurroundingSquaresEliminator : ISquareEliminator {
-        private readonly int rows, columns;
-
         public SurroundingSquaresEliminator(int rows, int columns) {
             this.rows = rows;
             this.columns = columns;
         }
-
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares) {
-            int left = shipSquares.First().column;
-            int right = shipSquares.Last().column + 1;
+            int rowMin = Math.Max(shipSquares.Min(s => s.Row) - 1, 0);
+            int columnMin = Math.Max(shipSquares.Min(s => s.Column) - 1, 0);
+            int rowMax = Math.Min(shipSquares.Max(s => s.Row) + 2, rows);
+            int columnMax = Math.Min(shipSquares.Max(s => s.Column) + 2, columns);
 
-            int top = shipSquares.First().row;
-            int bottom = shipSquares.Last().row + 1;
-
-            if (left > 0) {
-                --left;
+            List<Square> squares = new List<Square>();
+            for (int r = rowMin; r < rowMax; ++r) {
+                for (int c = columnMin; c < columnMax; ++c)
+                    squares.Add(new Square(r, c));
             }
-
-            if (right < columns) {
-                ++right;
-            }
-
-            if (top > 0) {
-                --top;
-            }
-
-            if (bottom < rows) {
-                ++bottom;
-            }
-
-            List<Square> elim = new List<Square>();
-
-            for (int i = top; i < bottom; i++) {
-                for (int j = left; j < right; j++) {
-                    elim.Add(new Square(i, j));
-                }
-            }
-
-            return elim;
+            return squares;
         }
+
+        private readonly int rows;
+        private readonly int columns;
     }
 }
