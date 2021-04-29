@@ -54,6 +54,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Assert.AreEqual(HitResult.Hit, ship.Hit(new Square(1, 2)));
             Assert.AreEqual(HitResult.Hit, ship.Hit(new Square(1, 4)));
             Assert.AreEqual(HitResult.Sunken, ship.Hit(new Square(1, 3)));
+            Assert.AreEqual(SquareState.Sunken, ship.Squares.First(s => s.Equals(new Square(1, 4))).SquareState);
+            Assert.AreEqual(SquareState.Sunken, ship.Squares.First(s => s.Equals(new Square(1, 2))).SquareState);
         }
     }
 }
