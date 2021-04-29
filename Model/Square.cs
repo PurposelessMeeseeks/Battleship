@@ -33,17 +33,19 @@ namespace Vsite.Oom.Battleship.Model
             switch (hitResult)
             {
                 case HitResult.Missed:
+                    squareState = SquareState.Missed;
                     break;
                 case HitResult.Hit:
+                    squareState = SquareState.Hit;
                     break;
                 case HitResult.Sunken:
+                    squareState = SquareState.Sunken;
                     break;
             }
-            throw new NotImplementedException();
         }
         public SquareState SquareState
         {
-            get { return SquareState; }
+            get { return squareState; }
         }
         public bool Equals(Square other)
         {
