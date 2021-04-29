@@ -23,7 +23,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         [TestMethod]
         public void GetSequencesReturns3ArraysForAShipofLenth3SquaresOnGridWith5Row1Columns()
         {
-            Grid grid = new Grid(5, 1);
+            Grid grid = new Grid(1, 5);
             var placements = grid.GetSequences(3);
             Assert.AreEqual(3, placements.Count());
             Assert.AreEqual(3, placements.ElementAt(0).Count());
@@ -47,7 +47,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
                [TestMethod]
         public void GetSequencesReturns2ArraysForAShipofLenth2SquaresOnGridWith5Row1ColumnsAndSquares1_0Elimnated()
         {
-            Grid grid = new Grid(5, 1);
+            Grid grid = new Grid(1, 5);
             grid.RemoveSquares(new List<Square> {new Square(0,2) });
 
             var placements = grid.GetSequences(2);

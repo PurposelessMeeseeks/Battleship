@@ -70,6 +70,43 @@ namespace Vsite.Oom.Battleship.Model
 
         }
 
+        private List<IEnumerable<Square>> GetVerticalSequences(int length)
+        {
+
+            List<IEnumerable<Square>> result = new List<IEnumerable<Square>>();
+            for (int c = 0; c < Columns; ++c)
+            {
+
+                var queue = new LimitedQueue<Square>(length);
+                for (int r = 0; r < Rows; ++r)
+                {
+
+                    if (squares[c, r] != null)
+                    {
+
+                        queue.Enqueue(squares[c, r].Value);
+                        if (queue.Count >= length)
+                        {
+
+                            result.Add(queue.ToArray());
+
+                        }
+
+                    }
+                    else
+                    {
+                        queue.Clear();
+                    }
+
+                }
+
+
+            }
+
+            return result;
+
+        }
+
 
 
         private readonly Square?[,] squares;
