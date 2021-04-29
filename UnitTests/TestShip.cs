@@ -46,6 +46,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Assert.AreEqual(HitResult.Sunken, ship.Hit(new Square(1, 3)));
         }
 
+        [TestMethod]
         public void HitResultReturnsMissedIfSquareProvidedDoesNotBelongToShip()
         {
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };

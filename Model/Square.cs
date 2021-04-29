@@ -29,16 +29,15 @@ namespace Vsite.Oom.Battleship.Model
             switch(hitResult)
             {
                 case HitResult.Missed:
-                    //TODO:
+                    this.squareState = SquareState.Missed;
                     break;
                 case HitResult.Hit:
-                    //TODO:
+                    this.squareState = SquareState.Hit;
                     break;
                 case HitResult.Sunken:
-                    //TODO:
+                    this.squareState = SquareState.Sunken;
                     break;
             }
-            throw new NotImplementedException();
         }
 
         public SquareState SquareState
