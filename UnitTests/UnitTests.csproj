@@ -54,6 +54,8 @@
     <Compile Include="TestShip.cs" />
     <Compile Include="TestFleet.cs" />
     <Compile Include="TestShipwright.cs" />
+    <Compile Include="TestSurroundingSquareEliminator.cs" />
+    <Compile Include="TestGrid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
