@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
@@ -13,6 +9,7 @@ namespace Vsite.Oom.Battleship.Model
         Hit,
         Sunken
     }
+
     public struct Square : IEquatable<Square>
     {
         public Square(int Row, int Column)
@@ -20,7 +17,6 @@ namespace Vsite.Oom.Battleship.Model
             row = Row;
             column = Column;
             squareState = SquareState.Default;
-
         }
 
         public readonly int row;
@@ -33,12 +29,19 @@ namespace Vsite.Oom.Battleship.Model
             switch (hitResult)
             {
                 case HitResult.Missed:
+                    squareState = SquareState.Missed;
                     break;
+
                 case HitResult.Hit:
+                    squareState = SquareState.Hit;
                     break;
+
                 case HitResult.Sunken:
+                    squareState = SquareState.Sunken;
                     break;
+
                 default:
+                    squareState = SquareState.Default;
                     break;
             }
         }
@@ -55,7 +58,7 @@ namespace Vsite.Oom.Battleship.Model
 
         public override bool Equals(object obj)
         {
-            if (obj.GetType()!=GetType())
+            if (obj.GetType() != GetType())
             {
                 return false;
             }

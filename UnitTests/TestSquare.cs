@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Vsite.Oom.Battleship.Model.UnitTests
 {
@@ -24,21 +23,21 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         }
 
         [TestMethod]
-        public void SquareSetSquareStateChangesSquareStateToSunkenForHitResultMissed()
-        {
-            Square s = new Square(5, 4);
-            Assert.AreEqual(SquareState.Default, s.SquareState);
-            s.SetSquareState(HitResult.Sunken);
-            Assert.AreEqual(SquareState.Sunken, s.SquareState);
-        }
-
-        [TestMethod]
-        public void SquareSetSquareStateChangesSquareStateToHitForHitResultMissed()
+        public void SquareSetSquareStateChangesSquareStateToHitForHitResultHit()
         {
             Square s = new Square(5, 4);
             Assert.AreEqual(SquareState.Default, s.SquareState);
             s.SetSquareState(HitResult.Hit);
             Assert.AreEqual(SquareState.Hit, s.SquareState);
+        }
+
+        [TestMethod]
+        public void SquareSetSquareStateChangesSquareStateToSunkenForHitResultSunken()
+        {
+            Square s = new Square(5, 4);
+            Assert.AreEqual(SquareState.Default, s.SquareState);
+            s.SetSquareState(HitResult.Sunken);
+            Assert.AreEqual(SquareState.Sunken, s.SquareState);
         }
     }
 }

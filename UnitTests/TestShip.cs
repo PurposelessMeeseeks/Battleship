@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,6 +55,5 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
 
             Assert.AreEqual(HitResult.Missed, ship.Hit(new Square(5, 4)));
         }
-
     }
 }
