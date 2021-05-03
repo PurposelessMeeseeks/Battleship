@@ -29,7 +29,8 @@ namespace Vsite.Oom.Battleship.Model
                 var selected = placements.ElementAt(index);
                 fleet.CreateShip(selected);
                 // TODO: expand selection to surrounding squares
-                grid.RemoveSquares(selected);
+                var toEliminate = eliminator.ToEliminate(selected);
+                grid.RemoveSquares(toEliminate);
             }
             return fleet;
         }
@@ -38,5 +39,6 @@ namespace Vsite.Oom.Battleship.Model
         private readonly int columns;
         private readonly IEnumerable<int> shipLengths;
         private Random random = new Random();
+        private ISquareEliminate eliminator = new SimpleSquareEliminator();
     }
 }
