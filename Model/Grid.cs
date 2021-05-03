@@ -26,7 +26,7 @@ namespace Vsite.Oom.Battleship.Model
         {
             var result = GetHorizontalSequences(length);
             if (length > 1)
-                ; //result.AddRange();
+                result.AddRange(GetVerticalSequences(length));
             return result;
         }
 
@@ -45,6 +45,27 @@ namespace Vsite.Oom.Battleship.Model
             {
                 var queue = new LimitedQueue<Square>(length);
                 for (int c = 0; c < Columns; ++c)
+                {
+                    if (squares[r, c] != null)
+                    {
+                        queue.Enqueue(squares[r, c].Value);
+                        if (queue.Count >= length)
+                            result.Add(queue.ToArray());
+                    }
+                    else
+                        queue.Clear();
+                }
+            }
+            return result;
+        }
+
+        private List<IEnumerable<Square>> GetVerticalSequences(int length)
+        {
+            List<IEnumerable<Square>> result = new List<IEnumerable<Square>>();
+            for (int c = 0; c < Columns; ++c)
+            {
+                var queue = new LimitedQueue<Square>(length);
+                for (int r = 0; r < Rows; ++r)
                 {
                     if (squares[r, c] != null)
                     {
