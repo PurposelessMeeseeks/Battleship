@@ -16,6 +16,7 @@ namespace Vsite.Oom.Battleship.Model
         }
 
         public Fleet CreateFleet() {
+          
             Grid grid = new Grid(rows,columns);
             Fleet fleet = new Fleet();
             var sortedLengths = shipLengths.OrderByDescending(l => l);
@@ -28,7 +29,8 @@ namespace Vsite.Oom.Battleship.Model
                 var selected = placements.ElementAt(index);
                 fleet.CreateShip(selected);
                 //TODO: expand selection to surrounding squaares
-                grid.RemoveSquares(selected);
+                var toEliminate = eliminator.ToEliminate(selected);
+                grid.RemoveSquares(toEliminate);
             }
             return fleet;
 
@@ -38,5 +40,6 @@ namespace Vsite.Oom.Battleship.Model
         private readonly int columns;
         private readonly IEnumerable<int> shipLengths;
         private Random random = new Random();
+        private ISquareEliminator eliminator = new SimpleSquareEliminator();
     }
 }
