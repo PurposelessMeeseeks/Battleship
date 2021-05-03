@@ -73,7 +73,7 @@ namespace Vsite.Oom.Battleship.Model
 
             foreach (Square square in toEliminate)
             {
-                squares[square.row, square.column] = null;
+                squares[square.Row, square.Column] = null;
             }
         }
 

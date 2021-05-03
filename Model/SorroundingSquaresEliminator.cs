@@ -20,14 +20,14 @@ namespace Vsite.Oom.Battleship.Model
             var mostRightShip = squares.Last();
 
             // get the sorrounding squares dimension on the most left ship
-            int left = mostLeftShip.column > 0 ? mostLeftShip.column - 1 : mostLeftShip.column;
-            int top = mostLeftShip.row > 0 ? mostLeftShip.row - 1 : mostLeftShip.row;
+            int left = mostLeftShip.Column > 0 ? mostLeftShip.Column - 1 : mostLeftShip.Column;
+            int top = mostLeftShip.Row > 0 ? mostLeftShip.Row - 1 : mostLeftShip.Row;
 
             // get the sorrounding squares dimension on the most right ship
-            int right = mostRightShip.column + 1;
+            int right = mostRightShip.Column + 1;
             right = (right < columns) ? ++right : right;
 
-            int bottom = mostRightShip.row + 1;
+            int bottom = mostRightShip.Row + 1;
             bottom = (bottom < rows) ? ++bottom : bottom;
 
             var toEliminate = new List<Square>();
