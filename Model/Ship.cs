@@ -31,13 +31,25 @@ namespace Vsite.Oom.Battleship.Model
 
         public HitResult Hit(Square square)
         {
-            //check if square belongs to this ship
-            //if not: return HitResult.Missed
-            //if yes:
-            //  1. check if all other squares are hit,return HitResult.Sunken
-            //    and mark alll squares sunken
-            //  2. else,mark the square hit and return HitResult.Hit
-            throw new NotImplementedException();
+            if (!squares.Contains(square))
+                return HitResult.Missed;
+
+            for (int i = 0; i < squares.Length; ++i)
+            {
+                if (squares[i].Equals(square))
+                    squares[i].SetSquareState(HitResult.Hit);
+            }
+
+            if (squares.All(sq => sq.SquareState == SquareState.Hit))
+            {
+                foreach (Square position in squares)
+                {
+                    position.SetSquareState(HitResult.Sunken);
+                }
+                return HitResult.Sunken;
+            }
+
+            return HitResult.Hit;
         }
 
         private Square[] squares;

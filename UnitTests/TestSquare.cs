@@ -6,6 +6,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
     [TestClass]
     public class TestSquare
     {
+
         [TestMethod]
         public void SquareConstructorCreatesASquareAtGivenRowAndColumn()
         {
