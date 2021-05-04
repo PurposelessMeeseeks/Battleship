@@ -45,7 +45,10 @@ namespace Vsite.Oom.Battleship.Model
 
         public SquareState SquareState
         {
-            get { return squareState; }
+            get 
+            { 
+                return squareState;
+            }
         }
 
         public void SetSquareState(HitResult hitResult)
@@ -53,17 +56,18 @@ namespace Vsite.Oom.Battleship.Model
             switch (hitResult)
             {
                 case HitResult.Missed:
-                    // TODO:
+                    squareState = SquareState.Missed;
                     break;
                 case HitResult.Hit:
-                    // TODO:
+                    squareState = SquareState.Hit;
                     break;
                 case HitResult.Sunken:
-                    // TODO:
+                    squareState = SquareState.Sunken;
+                    break;
+                default:
+                    squareState = SquareState.Default;
                     break;
             }
-
-            throw new NotImplementedException();
         }
 
         public readonly int Row;
