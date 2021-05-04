@@ -16,8 +16,10 @@ namespace Vsite.Oom.Battleship.Model
             squares = new Square?[rows, columns];
             for (int r = 0; r < rows; ++r)
             {
-                for (int c = 0; c<columns; ++c)
+                for (int c = 0; c < columns; ++c)
+                {
                     squares[r, c] = new Square(r, c);
+                }
             }
 
         }
@@ -30,8 +32,10 @@ namespace Vsite.Oom.Battleship.Model
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
             List<List<Square>> result = GetHorizontalPlacements(length);
-            //if (length > 1)
-            //    result.Add(GetVerticalPlacements(length));
+            if (length > 1)
+                foreach (List<Square> l in GetVerticalPlacements(length))
+                    result.Add(l);
+                //result.Add(GetVerticalPlacements(length));
             return result;
         }
 

@@ -24,15 +24,17 @@ namespace Vsite.Oom.Battleship.Model
 
         private SquareState squareState;
 
-        public SetSquareState(HitResult hitResult)
+        public void SetSquareState(HitResult hitResult)
         {
             switch (hitResult)
             {
                 case HitResult.Hit:
-                    break;
+                    squareState = SquareState.Hit; break;
                 case HitResult.Sunken:
+                    squareState = SquareState.Sunken;
                     break;
                 case HitResult.Missed:
+                    squareState = SquareState.Missed;
                     break;
             }
 

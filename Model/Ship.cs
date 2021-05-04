@@ -33,7 +33,39 @@ namespace Vsite.Oom.Battleship.Model
             //          and mark all squares sunken 
             //      2.  else, mark the square hti and return HitResult.Hit
 
-            throw new NotImplementedException();
+            bool outsideShip = true;
+
+
+            for(int i = 0; i < squares.Length; i++)
+            {
+                if (squares[i].Equals(square))
+                {
+                    outsideShip = false;
+                    squares[i].SetSquareState(HitResult.Hit);
+                    square.SetSquareState(HitResult.Hit);
+                }
+            }
+
+            bool sunken = true;
+            foreach (Square s in squares)
+                if (s.SquareState != SquareState.Hit)
+                {
+                    sunken = false;
+                }
+
+            if(sunken)
+            {
+                for(int i = 0; i < squares.Length; i++)
+                    squares[i].SetSquareState(HitResult.Sunken);
+                return HitResult.Sunken;
+            }
+
+
+            if (outsideShip) return HitResult.Missed;
+
+            return HitResult.Hit;
+
+            //throw new NotImplementedException();
 
         }
 
