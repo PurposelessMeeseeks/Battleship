@@ -29,6 +29,11 @@ namespace Vsite.Oom.Battleship.Model
             this.squareEliminator = squareEliminator;
         }
 
+        public void RecordResult(Square square, HitResult result)
+        {
+            squares[square.Row, square.Column].Value.SetSquareState(result);
+        }
+
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
             List<List<Square>> result = GetHorizontalPlacements(length);

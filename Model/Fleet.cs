@@ -16,5 +16,20 @@ namespace Vsite.Oom.Battleship.Model
         public IEnumerable<Ship> Ships { get { return ships; } }
 
         private List<Ship> ships = new List<Ship>();
+
+        public HitResult Hit(Square square)
+        {
+            foreach (var ship in ships)
+            {
+                var hitResult = ship.Hit(square);
+
+                if (hitResult != HitResult.Missed)
+                {
+                    return hitResult;
+                }
+            }
+
+            return HitResult.Missed;
+        }
     }
 }
