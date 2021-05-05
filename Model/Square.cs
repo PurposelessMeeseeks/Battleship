@@ -19,7 +19,7 @@ namespace Vsite.Oom.Battleship.Model
         {
             Row = row;
             Column = column;
-            squareState = SquareState.Default
+            squareState = SquareState.Default;
         }
 
         public readonly int Row;

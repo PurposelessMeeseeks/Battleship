@@ -13,7 +13,7 @@ namespace Vsite.Oom.Battleship.Model
             this.rows = rows;
             this.columns = columns;
         }
-        IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares)
+        public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares)
         {
             throw new NotImplementedException();
         }
