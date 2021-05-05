@@ -16,6 +16,7 @@ namespace Vsite.Oom.Battleship.Model
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares)
         {
             throw new NotImplementedException();
+
         }
         private readonly int rows;
         private readonly int columns;
