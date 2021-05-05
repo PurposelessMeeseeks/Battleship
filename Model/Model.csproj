@@ -42,14 +42,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fleet.cs" />
+    <Compile Include="Gunnery.cs" />
     <Compile Include="ISquareEliminator.cs" />
+    <Compile Include="ITargetSelect.cs" />
     <Compile Include="LimitedQueue.cs" />
     <Compile Include="Grid.cs" />
+    <Compile Include="LinearShooting.cs" />
     <Compile Include="OnlyShipSquaresEliminator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomShooting.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="Shipwright.cs" />
     <Compile Include="Square.cs" />
+    <Compile Include="SurroundingShooting.cs" />
     <Compile Include="SurroundingSquaresEliminator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
