@@ -25,7 +25,6 @@ namespace Vsite.Oom.Battleship.Model
 
         public Square NextTarget()
         {
-
             return targetSelect.NextTarget();
         }
 
@@ -34,20 +33,34 @@ namespace Vsite.Oom.Battleship.Model
             // evidenceGrid.RecordResult(); 
 
             ChangeTactics(result);
-            throw new NotImplementedException();
         }
 
         private void ChangeTactics(HitResult result)
         {
-            // if result is Missed dont change the tactics
-            // if result is Hit:
-            //    - if current tactics is Random, change it to Surrounding and:
-            //      targetSelect = new SurroundingShooting(...);
-            //    - if current tactics is Surrounding, change it to Linear and:
-            //      targetSelect = new LinearShooting(...);
-            //    - if current tactics is Linear, don't change it
-            // if result is Sunken, change current tactics to Random and:
-            //   target = new RadnomShooting();
+            switch (result)
+            {
+                case HitResult.Missed:
+                    return;
+                case HitResult.Hit:
+                    switch (shootingTactics)
+                    {
+                        case ShootingTactics.Random:
+                            shootingTactics = ShootingTactics.Surrounding;
+                            targetSelect = new SurroundingShooting(evidenceGrid, new Square(1, 1));
+                            return;
+                        case ShootingTactics.Surrounding:
+                            shootingTactics = ShootingTactics.Linear;
+                            targetSelect = new LinearShooting(evidenceGrid, new List<Square>{ new Square(1, 1) });
+                            return;
+                        case ShootingTactics.Linear:
+                            return;
+                    }
+                    break;
+                case HitResult.Sunken:
+                    shootingTactics = ShootingTactics.Random;
+                    targetSelect = new RandomShooting(evidenceGrid, 4);
+                    return;
+            }
         }
 
         public ShootingTactics ShootingTactics
