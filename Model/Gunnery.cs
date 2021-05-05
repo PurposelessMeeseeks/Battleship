@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
-
     public enum ShootingTactics
     {
         Linear,
@@ -30,23 +29,9 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShootingResult(HitResult result)
         {
-            /* 
-             * 
-             * evidenceGrid.RecordResult();
-             * 
-             * if result is Missed, dont change the tactics 
-             * if result is Hit:
-             *      - if current tactic is Random, change it to Surrounding and:
-             *          - targetSelect = new SurroundingShooting(grid, firstHit)
-             *      - if current tactic is Surrounding, change it to Linear
-             *          - targetSelect = new LinearShooting(grid, firstHit)
-             *      - if current tactis is Linear, dont change it
-             * if result is Sunken, change tactics to random and :
-             *  
-             *  - targetSelect = new RandomShooting(grid, firstHit)
-             */
+            //evidenceGrid.RecordResult();
+                        
             ChangeTactics(result);
-            throw new NotImplementedException();
         }
 
         private void ChangeTactics(HitResult result)
@@ -64,8 +49,27 @@ namespace Vsite.Oom.Battleship.Model
              *  
              *  - targetSelect = new RandomShooting(grid, firstHit)
              */
-        }
 
+            if (result == HitResult.Hit)
+            {
+                if (ShootingTactics == ShootingTactics.Random)
+                {
+                    TargetSelect = new SurroundingShooting(EvidenceGrid, ShipsToShoot);
+                    ShootingTactics = ShootingTactics.Surrounding;
+                }
+                else if (ShootingTactics == ShootingTactics.Surrounding)
+                {
+                    TargetSelect = new LinearShooting(EvidenceGrid, ShipsToShoot);
+                    ShootingTactics = ShootingTactics.Linear;
+                }
+            }
+
+            if (result == HitResult.Sunken)
+            {
+                TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot[0]);
+                ShootingTactics = ShootingTactics.Random;
+            }
+        }
 
         public ShootingTactics CurrentShootingTactics
         {
