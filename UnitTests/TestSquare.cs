@@ -21,8 +21,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTest
         {
             Square s = new Square(5, 4);
             Assert.AreEqual(SquareState.Default, s.SquareState);
-            s.SetSquareState(HitResult.Missed);
-            Assert.AreEqual(SquareState.Missed, s.SquareState);
+            s.SetSquareState(HitResult.Hit);
+            Assert.AreEqual(SquareState.Hit, s.SquareState);
         }
 
 
@@ -31,8 +31,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTest
         {
             Square s = new Square(5, 4);
             Assert.AreEqual(SquareState.Default, s.SquareState);
-            s.SetSquareState(HitResult.Missed);
-            Assert.AreEqual(SquareState.Missed, s.SquareState);
+            s.SetSquareState(HitResult.Sunken);
+            Assert.AreEqual(SquareState.Sunked, s.SquareState);
         }
 
         [TestMethod]

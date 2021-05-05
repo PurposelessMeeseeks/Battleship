@@ -33,5 +33,85 @@ namespace Vsite.Oom.Battleship.Model.UnitTest
         }
 
 
+        [TestMethod]
+        public void HitForFleetReturnsMissedIfSquareDoesntBelongToAnyShip()
+        {
+
+            Fleet fleet = new Fleet();
+            List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
+            fleet.CreateShip(squares);
+            
+
+
+            
+            HitResult result = fleet.Hit(new Square(2, 2));
+            Assert.AreEqual(HitResult.Missed, result);
+
+            result = fleet.Hit(new Square(5, 5));
+            Assert.AreEqual(HitResult.Missed, result);
+
+        }
+
+
+        [TestMethod]
+        public void HitForFleetReturnsMissedIfSquareBelongsToAnyShip()
+        {
+
+            Fleet fleet = new Fleet();
+            List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
+            fleet.CreateShip(squares);
+
+            HitResult result = fleet.Hit(new Square(1, 2));
+            Assert.AreEqual(HitResult.Missed, result);
+
+            result = fleet.Hit(new Square(1, 4));
+            Assert.AreEqual(HitResult.Missed, result);
+
+        }
+
+
+        [TestMethod]
+        public void HitForFleetReturnsSunkenIfAllSquaresBelongingShipAreHit()
+        {
+
+            Fleet fleet = new Fleet();
+            List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
+            fleet.CreateShip(squares);
+
+            fleet.Hit(new Square(1, 2));
+            
+
+            fleet.Hit(new Square(1, 4));
+            HitResult result = fleet.Hit(new Square(1, 3));
+            Assert.AreEqual(HitResult.Sunken, result);
+
+
+
+        }
+
+
+
+
+        [TestMethod]
+        public void HitForFleetReturnsSunkenIfAllSquaresBelongingToOneOfShipsAreHit()
+        {
+
+            Fleet fleet = new Fleet();
+            List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
+            fleet.CreateShip(squares);
+
+            fleet.Hit(new Square(5, 7));
+            fleet.Hit(new Square(6, 7));
+            HitResult result = fleet.Hit(new Square(1, 3));
+            Assert.AreEqual(HitResult.Sunken, result);
+            //dovršit!!!!!!!!!!!!
+
+
+        }
+
+
+
+
+
     }
 }
