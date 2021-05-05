@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
     public class Grid
     {
-        private int rows;
-        private int colums;
+        private readonly int rows;
+        private readonly int colums;
 
-        private Square?[,] squares;
-        private ISquareEliminator squareEliminator = new OnlyShipSquaresEliminator();
-
+        private readonly Square?[,] squares;
+        private readonly ISquareEliminator squareEliminator = new OnlyShipSquaresEliminator();
 
         public Grid(int rows, int colums)
         {
@@ -22,13 +18,18 @@ namespace Vsite.Oom.Battleship.Model
 
             squares = new Square?[rows, colums];
 
-            for (int r = 0; r < rows; ++r) 
+            for (int r = 0; r < rows; ++r)
             {
-                for (int c = 0; c < colums; ++c) 
+                for (int c = 0; c < colums; ++c)
                 {
                     squares[r, c] = new Square(r, c);
                 }
             }
+        }
+
+        public void RecordResult(Square square, HitResult result)
+        {
+            squares[square.row, square.column].Value.SetSquareState(result);
         }
 
         public Grid(int rows, int columns, ISquareEliminator squareEliminator) : this(rows, columns)
@@ -57,7 +58,7 @@ namespace Vsite.Oom.Battleship.Model
         {
             var ToEliminate = squareEliminator.ToEliminate(selected);
 
-            foreach (Square square in ToEliminate) 
+            foreach (Square square in ToEliminate)
             {
                 squares[square.row, square.column] = null; ;
             }
@@ -67,13 +68,13 @@ namespace Vsite.Oom.Battleship.Model
         {
             var result = new List<List<Square>>();
 
-            for (int r = 0; r < rows; ++r) 
+            for (int r = 0; r < rows; ++r)
             {
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
-                
-                for (int c = 0; c < colums; ++c) 
+
+                for (int c = 0; c < colums; ++c)
                 {
-                    if (squares[r, c] != null)
+                    if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
                     {
                         gathered.Enqueue(squares[r, c].Value);
                     }
@@ -82,7 +83,7 @@ namespace Vsite.Oom.Battleship.Model
                         gathered.Clear();
                     }
 
-                    if (gathered.Count == length)  
+                    if (gathered.Count == length)
                     {
                         result.Add(new List<Square>(gathered.ToArray<Square>()));
                     }
@@ -102,10 +103,9 @@ namespace Vsite.Oom.Battleship.Model
 
                 for (int r = 0; r < rows; ++r)
                 {
-                    if (squares[r, c] != null)
+                    if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
                     {
                         gathered.Enqueue(squares[r, c].Value);
-
                     }
                     else
                     {

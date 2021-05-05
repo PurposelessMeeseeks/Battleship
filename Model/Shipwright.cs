@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
-   public class Shipwright
+    public class Shipwright
     {
         private Grid grid;
         private Fleet fleet;
 
-        private int rows; 
+        private int rows;
         private int columns;
         private IEnumerable<int> shipLengths;
 
@@ -22,24 +20,21 @@ namespace Vsite.Oom.Battleship.Model
             this.rows = rows;
             this.columns = columns;
             this.shipLengths = shipLengths.OrderByDescending(s => s);
-    }
+        }
 
         public Fleet CreateFleet()
         {
-
             for (int retries = 0; retries < 5; ++retries)
             {
                 var fleet = PlaceShips();
 
-                if (fleet != null) 
+                if (fleet != null)
                 {
                     return fleet;
                 }
-               
             }
 
             throw new ArgumentException();
-
         }
 
         private Fleet PlaceShips()

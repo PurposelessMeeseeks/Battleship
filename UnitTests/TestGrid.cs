@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,7 +44,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void GetAvailablePlacementsReturn3SequancesForShip2SquaresLongOnGrid5x1WithSquare1_0liminated()
         {
             Grid grid = new Grid(5, 1);
-            grid.Eliminate(new List<Square> { new Square(1,0) }); 
+            grid.Eliminate(new List<Square> { new Square(1, 0) });
             var placement = grid.GetAvailablePlacements(2);
             Assert.AreEqual(2, placement.Count());
         }

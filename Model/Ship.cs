@@ -24,13 +24,6 @@ namespace Vsite.Oom.Battleship.Model
 
         public HitResult Hit(Square square)
         {
-            ////check if square belongs to this ship
-            ////if not: return HitResult.Missed
-            ////if yes:
-            //        1. if all others squares are hit, return HitResult.Sunken
-            //        and mark all squares sunken
-            //        2. else, mark the square hit and return HitResult.Hit
-
             if (!squares.Contains(square))
             {
                 return HitResult.Missed;

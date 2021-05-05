@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Vsite.Oom.Battleship.Model.UnitTests
 {
@@ -12,13 +11,13 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             LimitedQueue<int> queue = new LimitedQueue<int>(3);
 
             queue.Enqueue(1);
-            Assert.AreEqual(1, queue.Count); 
-            
+            Assert.AreEqual(1, queue.Count);
+
             queue.Enqueue(5);
             Assert.AreEqual(2, queue.Count);
-            
+
             queue.Enqueue(8);
-            Assert.AreEqual(3, queue.Count); 
+            Assert.AreEqual(3, queue.Count);
         }
 
         [TestMethod]
@@ -33,7 +32,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
 
             Assert.AreEqual(3, queue.Count);
             Assert.AreEqual(5, queue.Peek());
-            
         }
 
         [TestMethod]
@@ -51,7 +49,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Assert.AreEqual(5, arr[0]);
             Assert.AreEqual(8, arr[1]);
             Assert.AreEqual(10, arr[2]);
-
         }
     }
 }
