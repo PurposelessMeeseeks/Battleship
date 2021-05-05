@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model
+namespace Vsite.Oom.Battleship.Model
 {
-    public class Class1
+    public interface ITargetSelect
     {
+
+        Square NextTarget();
     }
 }
