@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
@@ -91,7 +88,7 @@ namespace Vsite.Oom.Battleship.Model
         public void Eliminate(IEnumerable<Square> selected)
         {
             var toEliminate = squareEliminator.ToEliminate(selected);
-            foreach(Square square in toEliminate)
+            foreach (Square square in toEliminate)
             {
                 squares[square.Row, square.Column] = null;
             }

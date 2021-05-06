@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
@@ -25,13 +22,22 @@ namespace Vsite.Oom.Battleship.Model
         }
         public HitResult Hit(Square square)
         {
-            // check if square belongs to this ship
-            // if not: return HitResult.Missed
-            // if yes: 
-            //      1. check if all other squares are hit, return HitResult.Sunken
-            //          and mark all squares sunken
-            //      2. else, mark the square hit and return HitResult.Hit
-            throw new NotImplementedException();
+            if (!squares.Contains(square))
+                return HitResult.Missed;
+            for (int i = 0; i < squares.Length; ++i)
+            {
+                if (squares[i].Equals(square)) // hvatam squareove preko indexa, strukture su vrijednosni tip // 10 predavanje, 1h:35m
+                    squares[i].SetSquareState(HitResult.Hit);
+            }
+            if (squares.All(s => s.SquareState == SquareState.Hit))
+            {
+                for (int i = 0; i < squares.Length; ++i)
+                {
+                    squares[i].SetSquareState(HitResult.Sunken);
+                }
+                return HitResult.Sunken;
+            }
+            return HitResult.Hit;
         }
         private Square[] squares;
     }

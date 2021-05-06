@@ -33,15 +33,12 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             fleet.CreateShip(squares);
 
-
             HitResult result = fleet.Hit(new Square(2, 2));
             Assert.AreEqual(HitResult.Missed, result);
 
             result = fleet.Hit(new Square(5, 5));
             Assert.AreEqual(HitResult.Missed, result);
         }
-
-
 
         [TestMethod]
         public void HitForFleetReturnHitIfSquareDoesntBelongToAnyShip()
@@ -50,15 +47,12 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             fleet.CreateShip(squares);
 
-
             HitResult result = fleet.Hit(new Square(1, 2));
             Assert.AreEqual(HitResult.Hit, result);
 
             result = fleet.Hit(new Square(1, 4));
             Assert.AreEqual(HitResult.Hit, result);
         }
-
-
 
         [TestMethod]
         public void HitForFleetReturnSunkenIfAllSquaresBelongingToAShipAreHit()

@@ -21,8 +21,6 @@ namespace Vsite.Oom.Battleship.Model
             targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
         }
 
-
-
         public Square NextTarget()
         {
 

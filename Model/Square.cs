@@ -29,26 +29,21 @@ namespace Vsite.Oom.Battleship.Model
             switch (hitResult)
             {
                 case HitResult.Missed:
-                    // TODO:
+                    squareState = SquareState.Missed;
                     break;
                 case HitResult.Hit:
-                    // TODO:
+                    squareState = SquareState.Hit;
                     break;
                 case HitResult.Sunken:
-                    // TODO:
+                    squareState = SquareState.Sunken;
                     break;
             }
-            throw new NotImplementedException();
         }
         public SquareState SquareState
         {
             get { return squareState; }
         }
 
-        public override int GetHashCode()
-        {
-            return Row ^ Column;
-        }
         public bool Equals(Square other)
         {
             return Row == other.Row && Column == other.Column;
@@ -58,6 +53,10 @@ namespace Vsite.Oom.Battleship.Model
             if (obj.GetType() != GetType())
                 return false;
             return Equals((Square)obj);
+        }
+        public override int GetHashCode()
+        {
+            return Row ^ Column;
         }
     }
 

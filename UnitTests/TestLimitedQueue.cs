@@ -31,8 +31,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
 
             Assert.AreEqual(3, queue.Count);
             Assert.AreEqual(5, queue.Peek());
-
-        }      
+        }   
+        
         [TestMethod]
         public void LimitedQueueToArrayMethodReturnsCurrentElements()
         {
@@ -46,7 +46,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Assert.AreEqual(5, array[0]);
             Assert.AreEqual(8, array[1]);
             Assert.AreEqual(10, array[2]);
-
         }
     }
 }
