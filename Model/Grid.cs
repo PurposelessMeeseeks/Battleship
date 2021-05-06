@@ -41,9 +41,10 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-
-
-
+        public void RecordResult(Square square, HitResult result)
+        {
+            squares[square.Row, square.Column].Value.SetSquareState(result);
+        }
 
         private List<List<Square>> GetHorizontalPlacements(int length)
         {
@@ -53,7 +54,7 @@ namespace Vsite.Oom.Battleship.Model
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
                 for (int c = 0; c < columns; ++c)
                 {
-                    if (squares[r, c] != null)
+                    if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
                         gathered.Enqueue(squares[r, c].Value);
                     else
                         gathered.Clear();
@@ -65,10 +66,6 @@ namespace Vsite.Oom.Battleship.Model
             }
             return result;
         }
-
-
-
-
 
         private List<List<Square>> GetVerticalPlacements(int length)
         {
@@ -78,7 +75,7 @@ namespace Vsite.Oom.Battleship.Model
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
                 for (int r = 0; r < rows; ++r)
                 {
-                    if (squares[r, c] != null)
+                    if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
                         gathered.Enqueue(squares[r, c].Value);
                     else
                         gathered.Clear();
@@ -90,14 +87,6 @@ namespace Vsite.Oom.Battleship.Model
             }
             return result;
         }
-
-
-
-
-
-
-
-
 
         public void Eliminate(IEnumerable<Square> selected)
         {
