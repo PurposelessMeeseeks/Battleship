@@ -10,6 +10,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
             Assert.AreEqual(5, s.Row);
             Assert.AreEqual(4, s.Column);
         }
+
         [TestMethod]
         public void SetSquareStateChangesSquareStateToMissedForHitResultMissed() {
             Square s = new Square(5, 4);
@@ -17,6 +18,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
             s.SetSquareState(HitResult.Missed);
             Assert.AreEqual(SquareState.Missed, s.SquareState);
         }
+
         [TestMethod]
         public void SetSquareStateChangesSquareStateToHitForHitResultHit() {
             Square s = new Square(5, 4);
@@ -24,6 +26,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
             s.SetSquareState(HitResult.Hit);
             Assert.AreEqual(SquareState.Hit, s.SquareState);
         }
+
+
         [TestMethod]
         public void SetSquareStateChangesSquareStateToSunkenForHitResultSunken() {
             Square s = new Square(5, 4);

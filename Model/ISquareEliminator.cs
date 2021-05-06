@@ -8,6 +8,6 @@ namespace Vsite.Oom.Battleship.Model
 {
     public interface ISquareEliminator
     {
-        IEnumerable<Square> ToEliminate(IEnumerable<Square> squares); 
+        IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares);
     }
 }

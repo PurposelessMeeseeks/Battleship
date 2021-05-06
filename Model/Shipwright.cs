@@ -34,6 +34,7 @@ namespace Vsite.Oom.Battleship.Model {
                 var selected = placements.ElementAt(index);
                 fleet.CreateShip(selected);
                 grid.Eliminate(selected);
+                //eliminate nije jos implementiran
             }
             return fleet;
         }
