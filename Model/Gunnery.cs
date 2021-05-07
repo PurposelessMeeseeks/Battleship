@@ -30,22 +30,42 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShootingResult(HitResult result)
         {
-            //evidenceGrid.RecorrdResult(); 
-
             ChangeTactics(result);
-            throw new NotImplementedException();
         }
         private void ChangeTactics(HitResult result)
         {
-            //if result is Missed dont change the tactics
-            //if result is Hit:
-            //  if current tactics is random,change it to surroudinga and:
-            //  targetSelect = new SurroudingShooting(..);
-            //  if current tactics is surrouding , change it to linear and
-            //  targetSelect = new LinearShooting(..);
-            //  if current tactics is linear,dont change it 
-            //if result is sunken , change current tactics to random and
-            //   //  target=new RandomShooting();
+            if (HitResult.Missed == result && ShootingTactics == ShootingTactics.Random)
+            {
+                targetSelect = new RandomShooting(evidenceGrid, shipsToshoot[0]);
+                shootingTactics = ShootingTactics.Random;
+            }
+            else if (HitResult.Hit == result && ShootingTactics == ShootingTactics.Random)
+            {
+                targetSelect = new SurroundingShooting(evidenceGrid, new Square(1, 2));
+                shootingTactics = ShootingTactics.Surrounding;
+            }
+            else if (HitResult.Missed == result && ShootingTactics == ShootingTactics.Surrounding)
+            {
+                targetSelect = new SurroundingShooting(evidenceGrid, new Square(2, 3));
+                shootingTactics = ShootingTactics.Surrounding;
+            }
+            else if (HitResult.Hit == result && ShootingTactics == ShootingTactics.Surrounding)
+            {
+                List<Square> squaresHit = new List<Square> { new Square(1, 2), new Square(2, 3) };
+                targetSelect = new LinearShooting(evidenceGrid, squaresHit);
+                shootingTactics = ShootingTactics.Linear;
+            }
+            else if (HitResult.Missed == result && ShootingTactics == ShootingTactics.Linear)
+            {
+                List<Square> squaresHit = new List<Square> { new Square(1, 2), new Square(2, 3) };
+                targetSelect = new LinearShooting(evidenceGrid, squaresHit);
+                shootingTactics = ShootingTactics.Linear;
+            }
+            else if (HitResult.Sunken == result && ShootingTactics == ShootingTactics.Linear)
+            {
+                targetSelect = new RandomShooting(evidenceGrid, shipsToshoot[1]);
+                shootingTactics = ShootingTactics.Random;
+            }
         }
         public ShootingTactics ShootingTactics
         {
