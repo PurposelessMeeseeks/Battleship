@@ -37,7 +37,7 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordResult(Square square, HitResult result)
         {
-            square[square.Row, square.Column].Value.SetSquareState(result);
+            squares[square.Row, square.Column].Value.SetSquareState(result);
         }
 
         private List<List<Square>> GetHorizontalPlacements(int length)

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
+    public enum ShootingTactics
+    {
+        Random,
+        Surrounding,
+        Linear
+    }
     public class Gunnery
     {
-        public enum ShootingTactics
-        {
-            Random,
-            Surrounding,
-            Linear
-        }
         public Gunnery(int rows, int columns, IEnumerable<int> shipLengths)
         {
             evidenceGrid = new Grid(rows, columns);
@@ -29,6 +29,14 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShootingResult(HitResult result)
         {
+            //evidenceGrid.RecorrdResult(); 
+
+            ChangeTactics(result);
+            throw new NotImplementedException();
+        }
+
+        private void ChangeTactics(HitResult result)
+        {
             // evidanceGrid.RecordResult();
 
             // if result is Missed dont change the tactics
@@ -42,12 +50,7 @@ namespace Vsite.Oom.Battleship.Model
             //      target = new RandomShooting
         }
 
-        private void ChangeTactics(HitResult result)
-        {
-
-        }
-
-        public ShootingTactics CurrentShootingTactics
+        public ShootingTactics ShootingTactics
         {
             get { return shootingTactics; }
         }

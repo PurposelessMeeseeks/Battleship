@@ -32,14 +32,17 @@ namespace Vsite.Oom.Battleship.Model
             switch (hitResult)
             {
                 case HitResult.Missed:
-                    //TODO:
+                    squareState = SquareState.Missed;
                     break;
                 case HitResult.Hit:
+                    squareState = SquareState.Hit;
                     break;
                 case HitResult.Sunken:
+                    squareState = SquareState.Sunken;
+                    break;
+                default:
                     break;
             }
-            throw new NotImplementedException();
         }
 
         public SquareState SquareState
@@ -51,7 +54,6 @@ namespace Vsite.Oom.Battleship.Model
         {
             return Row == other.Row && Column == other.Column;
         }
-
         public override bool Equals(object obj)
         {
             if (obj.GetType() != GetType())
