@@ -27,7 +27,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         {
             Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
             g.RecordShootingResult(HitResult.Hit);
-            Assert.AreEqual(ShootingTactics.Random, g.ShootingTactics);
+            Assert.AreEqual(ShootingTactics.Surrounding, g.ShootingTactics);
         }
 
         [TestMethod]

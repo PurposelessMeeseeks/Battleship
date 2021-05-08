@@ -17,9 +17,9 @@ namespace Vsite.Oom.Battleship.Model
         public Gunnery(int rows, int columns, IEnumerable<int> shipLengths)
         {
             evidenceGrid = new Grid(rows, columns);
-            var sorted = shipLengths.OrderByDescending(s1 => s1);
+            var sorted = shipLengths.OrderByDescending(sl => sl);
             shipsToShoot = sorted.ToList();
-            targetSelect = new RandomShooting(evidenceGrid, shipsToShoot);
+            targetSelect = new RandomShooting(evidenceGrid,shipsToShoot[0]);
         }
 
         public Square NextTarget()
@@ -29,25 +29,43 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShootingResult(HitResult result)
         {
-            //evidenceGrid.RecorrdResult(); 
-
             ChangeTactics(result);
-            throw new NotImplementedException();
         }
 
         private void ChangeTactics(HitResult result)
         {
-            // evidanceGrid.RecordResult();
-
-            // if result is Missed dont change the tactics
-            // if result is Hit:
-            //      -if current tactics is Random, change it to Surrounding and:
-            //      targetSelect = new SurroundingShooting(...);
-            //      -if current tactics is Surrounding, change it to Linear and:
-            //      targetSelect = new LinearShooting(...);
-            //      -if current tactics is Linear, dont change it
-            //      -if result is Sunken, change current tactics to Random and:
-            //      target = new RandomShooting
+            if (HitResult.Missed == result && ShootingTactics == ShootingTactics.Random)
+            {
+                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
+                shootingTactics = ShootingTactics.Random;
+            }
+            else if (HitResult.Hit == result && ShootingTactics == ShootingTactics.Random)
+            {
+                targetSelect = new SurroundingShooting(evidenceGrid, new Square(1, 2));
+                shootingTactics = ShootingTactics.Surrounding;
+            }
+            else if (HitResult.Missed == result && ShootingTactics == ShootingTactics.Surrounding)
+            {
+                targetSelect = new SurroundingShooting(evidenceGrid, new Square(2, 3));
+                shootingTactics = ShootingTactics.Surrounding;
+            }
+            else if (HitResult.Hit == result && ShootingTactics == ShootingTactics.Surrounding)
+            {
+                List<Square> squaresHit = new List<Square> { new Square(1, 2), new Square(2, 3) };
+                targetSelect = new LinearShooting(evidenceGrid, squaresHit);
+                shootingTactics = ShootingTactics.Linear;
+            }
+            else if (HitResult.Missed == result && ShootingTactics == ShootingTactics.Linear)
+            {
+                List<Square> squaresHit = new List<Square> { new Square(1, 2), new Square(2, 3) };
+                targetSelect = new LinearShooting(evidenceGrid, squaresHit);
+                shootingTactics = ShootingTactics.Linear;
+            }
+            else if (HitResult.Sunken == result && ShootingTactics == ShootingTactics.Linear)
+            {
+                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[1]);
+                shootingTactics = ShootingTactics.Random;
+            }
         }
 
         public ShootingTactics ShootingTactics

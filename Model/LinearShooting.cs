@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
-    public class LinerShooting : ITargetSelect
+    public class LinearShooting : ITargetSelect
     {
-        public LinerShooting(Grid grid, IEnumerable<Square> squaresHit)
+        public LinearShooting(Grid grid, IEnumerable<Square> squaresHit)
         {
 
         }
