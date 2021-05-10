@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
@@ -30,30 +29,51 @@ namespace Vsite.Oom.Battleship.Model
             //evidanceGrid.RecordResult()
 
             ChangeTactics(result);
-            throw new NotImplementedException();
         }
 
         private void ChangeTactics(HitResult result)
         {
-            //if result is Missed don't change the tactics
-            //if result is Hit:
-            //if current tactics is Random, change it to Surrounding and:
-            //targetSelect=new urroundingShooting(...)
+            switch (result)
+            {
+                case HitResult.Missed:
+                    return;
 
-            //if current tactics is Surrounding, change it to Linear and:
-            //targetSelect=new LinearShooting(...)
+                case HitResult.Hit:
+                    switch (shootingTactics)
+                    {
+                        case ShootingTactics.Random:
+                            shootingTactics = ShootingTactics.Surrounding;
+                            TargetSelect = new SurroundingShooting(EvidenceGrid, ShipsToShoot);
+                            return;
 
-            //if curent tatics is Linear, don't change it
-            //targetSelect=new RandomShooting(...)
+                        case ShootingTactics.Surrounding:
+                            shootingTactics = ShootingTactics.Linear;
+                            TargetSelect = new LinearShooting(EvidenceGrid, ShipsToShoot);
+                            return;
 
-            //if result is Sunken, change current tactics to Random
+                        case ShootingTactics.Linear:
+                            TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot[0]);
+                            return;
+
+                        default:
+                            break;
+                    }
+                    break;
+
+                case HitResult.Sunken:
+                    shootingTactics = ShootingTactics.Random;
+                    return;
+
+                default:
+                    break;
+            }
         }
 
         public ShootingTactics ShootingTactics { get { return shootingTactics; } }
 
-        private readonly Grid EvidenceGrid;
-        private readonly List<int> ShipsToShoot;
-        private readonly ITargetSelect TargetSelect;
-        private readonly ShootingTactics shootingTactics = ShootingTactics.Random;
+        private Grid EvidenceGrid;
+        private List<int> ShipsToShoot;
+        private ITargetSelect TargetSelect;
+        private ShootingTactics shootingTactics = ShootingTactics.Random;
     }
 }

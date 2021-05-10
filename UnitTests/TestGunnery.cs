@@ -36,7 +36,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             g.RecordShootingResult(HitResult.Hit);
             Assert.AreEqual(ShootingTactics.Surrounding, g.ShootingTactics);
             g.RecordShootingResult(HitResult.Missed);
-            Assert.AreEqual(ShootingTactics.Random, g.ShootingTactics);
+            Assert.AreEqual(ShootingTactics.Surrounding, g.ShootingTactics);
         }
 
         [TestMethod]

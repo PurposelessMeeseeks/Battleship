@@ -9,6 +9,10 @@ namespace Vsite.Oom.Battleship.Model
         {
         }
 
+        public LinearShooting(Grid evidenceGrid, List<int> shipsToShoot)
+        {
+        }
+
         public Square NextTarget()
         {
             throw new NotImplementedException();
