@@ -60,9 +60,9 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         {
             var squares = new List<Square> { new Square(4, 3), new Square(4, 4), new Square(4, 5), new Square(4, 6) };
             Ship ship = new Ship(squares);
-            ship.Hit(new Square(4,4)));
-            ship.Hit(new Square(4,6)));
-            ship.Hit(new Square(4,3)));
+            ship.Hit(new Square(4,4));
+            ship.Hit(new Square(4,6));
+            ship.Hit(new Square(4,3));
             Assert.AreEqual(HitResult.Sunken, ship.Hit(new Square(4,5)));
         }
 
@@ -71,9 +71,9 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         {
             var squares = new List<Square> { new Square(4, 3), new Square(4, 4), new Square(4, 5), new Square(4, 6) };
             Ship ship = new Ship(squares);
-            ship.Hit(new Square(4,4)));
-            ship.Hit(new Square(4,6)));
-            ship.Hit(new Square(4,3)));
+            ship.Hit(new Square(4,4));
+            ship.Hit(new Square(4,6));
+            ship.Hit(new Square(4,3));
             Assert.AreEqual(HitResult.Sunken, ship.Hit(new Square(4,5)));
             Assert.AreEqual(HitResult.Sunken, ship.Hit(new Square(4,4)));
             Assert.AreEqual(HitResult.Sunken, ship.Hit(new Square(4,3)));
