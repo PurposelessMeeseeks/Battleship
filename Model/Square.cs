@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,14 +37,19 @@ namespace Vsite.Oom.Battleship.Model
             switch (hitResult)
             {
                 case HitResult.Missed:
-                    //todo
+                    squareState = SquareState.Missed;
                     break;
                 case HitResult.Hit:
+                    squareState = SquareState.Hit;
                     break;
                 case HitResult.Sunken:
+                    squareState = SquareState.Sunked;
+                    break;
+                default:
+                    Debug.Assert(false);
                     break;
             }
-            throw new NotImplementedException();
+            
         }
 
         public SquareState SquareState
