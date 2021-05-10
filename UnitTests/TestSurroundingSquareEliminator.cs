@@ -6,7 +6,7 @@ using System.Linq;
 namespace Vsite.Oom.Battleship.Model.UnitTests
 {
     [TestClass]
-    public class TestSurroundingSquareEliminatorž
+    public class TestSurroundingSquareEliminator
     {
         [TestMethod]
         public void ToEliminateReturns18SquaresForShipSquaresRow4Column3toRow4Column6OnGrid10x10()

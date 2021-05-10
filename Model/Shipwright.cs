@@ -15,7 +15,27 @@ namespace Vsite.Oom.Battleship.Model
             this.shipLengths = shipLengths;
         }
 
+        public Shipwright(int rows, int columns, IEnumerable<int> shipLengths, ISquareEliminate eliminate)
+        {
+            this.rows = rows;
+            this.columns = columns;
+            this.shipLengths = shipLengths;
+            eliminator = eliminate;
+        }
+
         public Fleet CreateFleet()
+        {
+            int maxRetries = 5;
+            for (int i = 0; i < maxRetries; ++i)
+            {
+                Fleet fleet = PlaceShips();
+                if (fleet != null)
+                    return fleet;
+            }
+            throw new ArgumentOutOfRangeException();
+        }
+
+        private Fleet PlaceShips()
         {
             Grid grid = new Grid(rows, columns);
             Fleet fleet = new Fleet();
@@ -25,10 +45,11 @@ namespace Vsite.Oom.Battleship.Model
             {
                 int len = lengths.Dequeue();
                 var placements = grid.GetSequences(len);
+                if (placements.Count() == 0)
+                    return null;
                 var index = random.Next(placements.Count());
                 var selected = placements.ElementAt(index);
                 fleet.CreateShip(selected);
-                // TODO: expand selection to surrounding squares
                 var toEliminate = eliminator.ToEliminate(selected);
                 grid.RemoveSquares(toEliminate);
             }
