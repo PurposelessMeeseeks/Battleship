@@ -46,6 +46,7 @@
     <Compile Include="Gunnery.cs" />
     <Compile Include="ISquareEliminator.cs" />
     <Compile Include="ITargetSelect.cs" />
+    <Compile Include="LimitedQueue.cs" />
     <Compile Include="LinearShooting.cs" />
     <Compile Include="OnlyShipSquaresEliminator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

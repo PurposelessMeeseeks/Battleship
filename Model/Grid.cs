@@ -29,7 +29,8 @@ namespace Vsite.Oom.Battleship.Model
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
             List<List<Square>> result = GetHorizontalPlacements(length);
-            //result.Add()
+            if (length > 1)
+                result.AddRange(GetVerticalPlacements(length));
             return result;
         }
 
@@ -51,9 +52,8 @@ namespace Vsite.Oom.Battleship.Model
                     else
                         gathered.Clear();
                     if (gathered.Count == lenght)
-                        {
-                            result.Add(new List<Square>(gathered.ToArray<Square>()));
-                        }
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+                        
                 }
             }
             return result;
@@ -67,6 +67,27 @@ namespace Vsite.Oom.Battleship.Model
                 squares[square.Row, square.Column] = null;
             }
         }
+
+        private List<List<Square>> GetVerticalPlacements(int lenght)
+        {
+            var result = new List<List<Square>>();
+            for (int c = 0; c < columns; ++c)
+            {
+                LimitedQueue<Square> gathered = new LimitedQueue<Square>(lenght);
+                for (int r = 0; r < rows; ++r)
+                {
+                    if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
+                        gathered.Enqueue(squares[r, c].Value);
+                    else
+                        gathered.Clear();
+
+                    if (gathered.Count == lenght)
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+
+                }
+            }
+            return result;}
+
 
         private int rows;
         private int columns;
