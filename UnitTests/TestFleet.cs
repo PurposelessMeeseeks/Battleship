@@ -26,5 +26,48 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             fleet.CreateShip(squares);
             Assert.AreEqual(2, fleet.Ships.Count());
         }
+        [TestMethod]
+        public void HitForFleetReturnsMissedIfSquareDoesntBelongToAnyShip()
+        {
+            Fleet fleet = new Fleet();
+            List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
+            fleet.CreateShip(squares);
+            
+
+            HitResult result = fleet.Hit(new Square(2, 2));
+            Assert.AreEqual(HitResult.Missed, result);
+
+            result = fleet.Hit(new Square(5, 5));
+            Assert.AreEqual(HitResult.Missed, result);
+        }
+        [TestMethod]
+        public void HitForFleetReturnsHitIfSquareBelongToAnyShip()
+        {
+            Fleet fleet = new Fleet();
+            List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
+            fleet.CreateShip(squares);
+            
+
+            HitResult result = fleet.Hit(new Square(1, 2));
+            Assert.AreEqual(HitResult.Hit, result);
+
+            result = fleet.Hit(new Square(1, 4));
+            Assert.AreEqual(HitResult.Hit, result);
+        }
+        [TestMethod]
+        public void HitForFleetReturnsSunkenIfAllSquaresBelongingToAnyShipAreHit()
+        {
+            Fleet fleet = new Fleet();
+            List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
+            fleet.CreateShip(squares);
+            
+
+            fleet.Hit(new Square(1, 2));
+            fleet.Hit(new Square(1, 4));
+            HitResult result = fleet.Hit(new Square(1, 3));
+            Assert.AreEqual(HitResult.Sunken, result);
+
+
+        }
     }
 }

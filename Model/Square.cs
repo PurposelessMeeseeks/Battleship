@@ -31,13 +31,19 @@ namespace Vsite.Oom.Battleship.Model
             switch (hitResult)
             {
                 case HitResult.Missed:
+                    squareState = SquareState.Missed;
                     // TODO:
                     break;
                 case HitResult.Hit:
+                    squareState = SquareState.Hit;
                     // TODO:
                     break;
                 case HitResult.Sunken:
+                    squareState = SquareState.Sunken;
                     // TODO:
+                    break;
+                default:
+                    Debug.Assert(false);
                     break;
                 
             }
