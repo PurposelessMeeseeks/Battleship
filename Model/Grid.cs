@@ -36,9 +36,9 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-        private IEnumerable<IEnumerable<Square>> GetHorizontalPlacements(int length)
+        private List<List<Square>> GetHorizontalPlacements(int length)
         {
-            var result = new List<IEnumerable<Square>>();
+            var result = new List<List<Square>>();
             for (int r = 0; r < rows; ++r)
             {
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
@@ -50,7 +50,7 @@ namespace Vsite.Oom.Battleship.Model
                         gathered.Clear();
 
                     if (gathered.Count == length)
-                        result.Add(gathered.ToArray<Square>());
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
                         // add previous length squares to result;
                     }               
             }
