@@ -24,6 +24,7 @@ namespace Vsite.Oom.Battleship.Model
 
         public Square NextTarget()
         {
+            var lastTargets.Add = targetSelect.NextTarget();
             return targetSelect.NextTarget();
         }
 
@@ -75,6 +76,8 @@ namespace Vsite.Oom.Battleship.Model
 
         private Grid evidenceGrid;
         private List<int> shipsToShoot;
+        private Square lastTarget;
+        private List<Square> lastHits = new List<Square>();
         private ITargetSelect targetSelect;
         private ShootingTactics shootingTactics = ShootingTactics.Random;
     }
