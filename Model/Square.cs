@@ -43,7 +43,6 @@ namespace Vsite.Oom.Battleship.Model
                     // TODO:
                     break;
                 default:
-                    Debug.Assert(false);
                     break;
                 
             }
