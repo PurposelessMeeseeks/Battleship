@@ -17,10 +17,14 @@ namespace Vsite.Oom.Battleship.Model
         public Square NextTarget()
         {
             var allPlacements = grid.GetAvailablePlacements(shipLenght);
+            // select one of squares using random
+            // calculate how many times IEnumerable<IEnumerable<Square>> calculate how many times
+            //
             throw new NotImplementedException();
         }
 
         private Grid grid;
         private int shipLenght;
+        private Random random = new Random();
     }
 }

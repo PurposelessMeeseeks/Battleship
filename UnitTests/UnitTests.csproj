@@ -58,6 +58,8 @@
     <Compile Include="TestShipwringht.cs" />
     <Compile Include="TestSurrondingSquareEliminator.cs" />
     <Compile Include="TestGunnery.cs" />
+    <Compile Include="TestLinearShootingEliminator.cs" />
+    <Compile Include="TestSurroundingShooting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

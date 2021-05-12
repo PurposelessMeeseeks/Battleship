@@ -99,12 +99,18 @@ namespace Vsite.Oom.Battleship.Model.UnitTest
             Fleet fleet = new Fleet();
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             fleet.CreateShip(squares);
+            squares = new List<Square> { new Square(5, 7), new Square(6, 7), new Square(7, 7) };
+            fleet.CreateShip(squares);
+            squares = new List<Square> { new Square(8, 1), new Square(9, 1) };
+            fleet.CreateShip(squares);
+
+
 
             fleet.Hit(new Square(5, 7));
             fleet.Hit(new Square(6, 7));
-            HitResult result = fleet.Hit(new Square(1, 3));
+            HitResult result = fleet.Hit(new Square(7, 7));
             Assert.AreEqual(HitResult.Sunken, result);
-            //dovršit!!!!!!!!!!!!
+            
 
 
         }
