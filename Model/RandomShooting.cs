@@ -16,10 +16,15 @@ namespace Vsite.Oom.Battleship.Model
         public Square NextTarget()
         {
             var allPlacements = grid.GetAvailablePlacements(shipLength);
+            //select one of squares using rendom:
+            //  DZ
+            //
+            //
             throw new NotImplementedException();
         }
 
         private Grid grid;
         private int shipLength;
+        private Random random = new Random();
     }
 }
