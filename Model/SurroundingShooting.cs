@@ -8,7 +8,7 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class SurroundingShooting : ITargetSelect
     {
-        public SurroundingShooting(Grid grid, Square firstHit)
+        public SurroundingShooting(Grid grid, IEnumerable<int> shipLengths)
         {
 
         }
