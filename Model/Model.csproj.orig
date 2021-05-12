@@ -47,15 +47,22 @@
     <Compile Include="ISquareEliminator.cs" />
     <Compile Include="ITargetSelect.cs" />
     <Compile Include="LimitedQueue.cs" />
-    <Compile Include="LinearShooting.cs" />
+<<<<<<< HEAD
     <Compile Include="SurroundingSquareEliminator .cs" />
+=======
+    <Compile Include="LinearShooting.cs" />
+>>>>>>> d0ca449... Add gunner class and shooting tactics
     <Compile Include="OnlyShipSquaresEliminator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomShooting.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="Shipwright.cs" />
     <Compile Include="Square.cs" />
+<<<<<<< HEAD
+=======
     <Compile Include="SurroundingShooting.cs" />
+    <Compile Include="SurroundingSquaresEliminator.cs" />
+>>>>>>> d0ca449... Add gunner class and shooting tactics
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
