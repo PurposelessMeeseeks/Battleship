@@ -51,7 +51,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         {
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             var ship = new Ship(squares);
-            Assert.AreEqual(HitResult.Hit, ship.Hit(new Square(5, 4)));
+            Assert.AreEqual(HitResult.Missed, ship.Hit(new Square(5, 4)));
         }
     }
 }
