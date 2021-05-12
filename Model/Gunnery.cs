@@ -24,7 +24,8 @@ namespace Vsite.Oom.Battleship.Model
 
         public Square NextTarget()
         {
-            return targetSelect.NextTarget();
+            LastTarget = targetSelect.NextTarget();
+            return LastTarget;
         }
 
         public void RecordShooting(HitResult result)
@@ -42,29 +43,32 @@ namespace Vsite.Oom.Battleship.Model
             }
             else if (HitResult.Hit == result && ShootingTactics == ShootingTactics.Random)
             {
-                targetSelect = new SurroundingShooting(evidenceGrid, new Square(1,2));//neznam koji square saljemo za nextTarget
+                lastHits.Add(LastTarget);
+                targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0]);
                 shootingTactics = ShootingTactics.Surrounding;
             }
             else if (HitResult.Missed == result && ShootingTactics == ShootingTactics.Surrounding)
             {
-                targetSelect = new SurroundingShooting(evidenceGrid, new Square(2, 3));
+                targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0]);
                 shootingTactics = ShootingTactics.Surrounding;
             }
             else if(HitResult.Hit == result && ShootingTactics == ShootingTactics.Surrounding)
             {
-                List<Square> squaresHit = new List<Square> { new Square(1, 2), new Square(2, 3) };
-                targetSelect = new LinearShooting(evidenceGrid, squaresHit);
+                lastHits.Add(LastTarget);
+                targetSelect = new LinearShooting(evidenceGrid, lastHits);
                 shootingTactics = ShootingTactics.Linear;
             }
             else if(HitResult.Missed == result && ShootingTactics == ShootingTactics.Linear)
             {
-                List<Square> squaresHit = new List<Square> { new Square(1, 2), new Square(2, 3) };
-                targetSelect = new LinearShooting(evidenceGrid, squaresHit);
+                targetSelect = new LinearShooting(evidenceGrid, lastHits);
                 shootingTactics = ShootingTactics.Linear;
             }
             else if(HitResult.Sunken == result && ShootingTactics == ShootingTactics.Linear)
             {
-                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[1]);
+                int sunkenShipLength = lastHits.Count;
+                shipsToShoot.Remove(sunkenShipLength);
+                lastHits.Clear();
+                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
                 shootingTactics = ShootingTactics.Random;
             }
 
@@ -81,6 +85,8 @@ namespace Vsite.Oom.Battleship.Model
 
         private Grid evidenceGrid;
         private List<int> shipsToShoot;
+        private Square LastTarget;
+        private List<Square> lastHits = new List<Square> { };
         private ITargetSelect targetSelect;
         private ShootingTactics shootingTactics = ShootingTactics.Random;
     }

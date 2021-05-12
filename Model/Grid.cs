@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
+    public enum Direction
+    {
+        Upwards,
+        Rightwards,
+        Downwards,
+        Leftwards
+    }
+
     public class Grid
     {
         public Grid(int rows, int columns)
@@ -69,6 +77,45 @@ namespace Vsite.Oom.Battleship.Model
                         result.Add(new List<Square>(gathered.ToArray<Square>()));
                     }
                 }
+            }
+            return result;
+        }
+
+        public IEnumerable<Square> GetAvailablePlacementsInDirection(Square from, Direction direction)
+        {
+            int deltaRow = 0;
+            int deltaColumn = 0;
+            int count = 0;
+            switch(direction)
+            {
+                case Direction.Upwards:
+                    deltaRow = -1;
+                    count = from.Row + 1;
+                    break;
+                case Direction.Rightwards:
+                    deltaColumn = 1;
+                    count = columns - from.Column;
+                    break;
+                case Direction.Downwards:
+                    deltaRow = 1;
+                    count = rows - from.Row;
+                    break;
+                case Direction.Leftwards:
+                    deltaColumn = -1;
+                    count = from.Column + 1;
+                    break;
+            }
+            List<Square> result = new List<Square>();
+            int row = from.Row + deltaRow;
+            int column = from.Column + deltaColumn;
+            for (int i = 0; i < count; ++i)
+            {
+                if (squares[row, column] != null && squares[row, column].Value.SquareState == SquareState.Default)
+                    result.Add(squares[row, column].Value);
+                else
+                    break;
+                row += deltaRow;
+                column += deltaColumn;
             }
             return result;
         }
