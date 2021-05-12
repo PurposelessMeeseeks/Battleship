@@ -1,8 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
 {
+    public enum Direction
+    {
+        Upwords,
+        Rightwords,
+        Downwords,
+        Leftwords
+    }
     public class Grid
     {
         private readonly int rows;
@@ -32,6 +40,11 @@ namespace Vsite.Oom.Battleship.Model
             squares[square.row, square.column].Value.SetSquareState(result);
         }
 
+        internal IEnumerable<Square> GetAvailablePlacementsInDirection(Square square)
+        {
+            throw new NotImplementedException();
+        }
+
         public Grid(int rows, int columns, ISquareEliminator squareEliminator) : this(rows, columns)
         {
             this.squareEliminator = squareEliminator;
@@ -53,6 +66,60 @@ namespace Vsite.Oom.Battleship.Model
 
             return result;
         }
+
+        public IEnumerable<Square> GetAvailablePlacementsInDirection(Square from, Direction direction)
+        {
+            int deltaRow = 0;
+            int deltaColumn = 0;
+            int count = 0;
+            
+            switch (direction)
+            {
+                case Direction.Upwords:
+                    deltaRow = -1;
+                    count = from.row + 1;
+                    break;
+                case Direction.Rightwords:
+                    deltaColumn = 1;
+                    count = colums - from.column;
+                    break;
+                case Direction.Downwords:
+                    deltaRow = -1;
+                    count = rows - from.row;                    
+                    break;
+                case Direction.Leftwords:
+                    deltaColumn = -1;
+                    count = from.column + 1;                    
+                    break;
+                default:
+                    break;
+            }
+            int row = from.row + deltaRow;
+            int column = from.column + deltaColumn;
+
+            List<Square> result = new List<Square>();
+
+            for (int i = 0; i < count; i++)
+            {
+                if (squares[row, column] != null && squares[row, column].Value.SquareState == SquareState.Default)
+                {
+                    result.Add(squares[row, column].Value);
+                }
+                else
+                {
+                    break;
+                }
+
+                row += deltaRow;
+                column += deltaColumn;
+            }
+            return result;
+        }
+
+
+      
+
+       
 
         public void Eliminate(IEnumerable<Square> selected)
         {
@@ -118,6 +185,8 @@ namespace Vsite.Oom.Battleship.Model
                     }
                 }
             }
+
+           
 
             return result;
         }

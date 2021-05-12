@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
@@ -21,7 +22,8 @@ namespace Vsite.Oom.Battleship.Model
 
         public Square NextTarget()
         {
-            return TargetSelect.NextTarget();
+            var lastTarget= TargetSelect.NextTarget();
+            return lastTarget;
         }
 
         public void RecordShootingResult(HitResult result)
@@ -39,16 +41,18 @@ namespace Vsite.Oom.Battleship.Model
                     return;
 
                 case HitResult.Hit:
+                    lastHits.Add(lastTarget);
                     switch (shootingTactics)
                     {
                         case ShootingTactics.Random:
                             shootingTactics = ShootingTactics.Surrounding;
-                            TargetSelect = new SurroundingShooting(EvidenceGrid, ShipsToShoot);
+                            Debug.Assert(lastHits.Count == 1);
+                            TargetSelect = new SurroundingShooting(EvidenceGrid, lastHits[0]);
                             return;
 
                         case ShootingTactics.Surrounding:
                             shootingTactics = ShootingTactics.Linear;
-                            TargetSelect = new LinearShooting(EvidenceGrid, ShipsToShoot);
+                            TargetSelect = new LinearShooting(EvidenceGrid, lastHits);
                             return;
 
                         case ShootingTactics.Linear:
@@ -62,6 +66,10 @@ namespace Vsite.Oom.Battleship.Model
 
                 case HitResult.Sunken:
                     shootingTactics = ShootingTactics.Random;
+                    int sunkenShipLength = lastHits.Count;
+                    ShipsToShoot.Remove(sunkenShipLength);
+                    lastHits.Clear();
+                    TargetSelect = new RandomShooting(EvidenceGrid, 4);
                     return;
 
                 default:
@@ -73,6 +81,8 @@ namespace Vsite.Oom.Battleship.Model
 
         private Grid EvidenceGrid;
         private List<int> ShipsToShoot;
+        private List<Square> lastHits= new List<Square>();
+        private Square lastTarget;
         private ITargetSelect TargetSelect;
         private ShootingTactics shootingTactics = ShootingTactics.Random;
     }
