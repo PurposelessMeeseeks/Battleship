@@ -21,7 +21,10 @@ namespace Vsite.Oom.Battleship.Model
         {
 
             var allPlacements = Grid.GetAvailablePlacements(ShipLength);
-
+            
+            //select one of the squares using random
+            // calculate how many times each square appears in allPlacements - from IEnumerable<IEnumerable<Square>>
+            allPlacements.Count();
 
             throw new NotImplementedException();
         }

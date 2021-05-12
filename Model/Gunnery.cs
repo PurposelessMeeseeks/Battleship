@@ -24,7 +24,8 @@ namespace Vsite.Oom.Battleship.Model
         }
         public Square NextTarget()
         {
-            return TargetSelect.NextTarget();
+            Square lastTarget = TargetSelect.NextTarget();
+            return lastTarget;
         }
 
         public void RecordShootingResult(HitResult result)
@@ -36,30 +37,19 @@ namespace Vsite.Oom.Battleship.Model
 
         private void ChangeTactics(HitResult result)
         {
-            /* 
-             * 
-             * if result is Missed, dont change the tactics 
-             * if result is Hit:
-             *      - if current tactic is Random, change it to Surrounding and:
-             *          - targetSelect = new SurroundingShooting(grid, firstHit)
-             *      - if current tactic is Surrounding, change it to Linear
-             *          - targetSelect = new LinearShooting(grid, firstHit)
-             *      - if current tactis is Linear, dont change it
-             * if result is Sunken, change tactics to random and :
-             *  
-             *  - targetSelect = new RandomShooting(grid, firstHit)
-             */
 
             if (result == HitResult.Hit)
             {
+                lastHits.Add(lastTarget);
+
                 if (ShootingTactics == ShootingTactics.Random)
                 {
-                    TargetSelect = new SurroundingShooting(EvidenceGrid, ShipsToShoot);
+                    TargetSelect = new SurroundingShooting(EvidenceGrid, lastHits[0]);
                     ShootingTactics = ShootingTactics.Surrounding;
                 }
                 else if (ShootingTactics == ShootingTactics.Surrounding)
                 {
-                    TargetSelect = new LinearShooting(EvidenceGrid, ShipsToShoot);
+                    TargetSelect = new LinearShooting(EvidenceGrid, lastHits);
                     ShootingTactics = ShootingTactics.Linear;
                 }
             }
@@ -78,6 +68,8 @@ namespace Vsite.Oom.Battleship.Model
 
         private Grid EvidenceGrid;
         private List<int> ShipsToShoot;
+        private Square lastTarget;
+        private List<Square> lastHits;
         private ITargetSelect TargetSelect;
         private ShootingTactics ShootingTactics = ShootingTactics.Random;
     }
