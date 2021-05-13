@@ -108,7 +108,7 @@ namespace Vsite.Oom.Battleship.Model
             List<Square> result = new List<Square>();
             int row = from.Row + deltaRow;
             int column = from.Column + deltaColumn;
-            for (int i = 0; i < count; ++i)
+            for (int i = 1; i < count; ++i)
             {
                 if (squares[row, column] != null && squares[row, column].Value.SquareState == SquareState.Default)
                     result.Add(squares[row, column].Value);

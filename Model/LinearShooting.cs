@@ -19,6 +19,7 @@ namespace Vsite.Oom.Battleship.Model
             this.grid = grid;
             this.squaresHit = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
         }
+
         public Square NextTarget()
         {
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
@@ -26,20 +27,29 @@ namespace Vsite.Oom.Battleship.Model
             switch(orientation)
             {
                 case Orientation.Horizontal:
-                    squares.Add(grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Leftwards));
-                    squares.Add(grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Rightwards));
+                    var left = grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Leftwards);
+                    if (left.Count() > 0)
+                        squares.Add(left);
+                    var right = grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Rightwards);
+                    if (right.Count() > 0)
+                        squares.Add(right);
                     break;
                 case Orientation.Vertical:
-                    squares.Add(grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Upwards));
-                    squares.Add(grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Downwards));
+                    var up = grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Upwards);
+                    if (up.Count() > 0)
+                        squares.Add(up);
+                    var down = grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Downwards);
+                    if (down.Count() > 0)
+                        squares.Add(down);
                     break;
                 default:
                     Debug.Assert(false);
                     break;
             }
-            // get from grid available squares in continuation = rjeseno^
-            // TODO: select 1 of them optionally using random number generator
-            throw new NotImplementedException();
+            int randBroj = random.Next(0,1);
+            if (randBroj == 0)
+                return squares[0].First();
+            return squares[1].Last();
         }
 
         Orientation GetHitSquaresOrientation()

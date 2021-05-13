@@ -21,8 +21,9 @@ namespace Vsite.Oom.Battleship.Model
             squares.Add(grid.GetAvailablePlacementsInDirection(firstHit, Direction.Downwards));
             squares.Add(grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwards));
             // get from grid available surrounding squares = rjeseno^
-            // TODO: select one of them as a target
-            throw new NotImplementedException();
+            // select one of them as a target
+            int randBroj = random.Next(0, 4);
+            return squares[randBroj].First();
         }
 
         Grid grid;
