@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
@@ -24,12 +25,13 @@ namespace Vsite.Oom.Battleship.Model
         public Square NextTarget()
         {
 
-            return targetSelect.NextTarget();
+            lastTarget = targetSelect.NextTarget();
+            return lastTarget;
         }
 
         public void RecordShootingResult(HitResult result)
         {
-            // evidenceGreid.Result();
+            // evidenceGrid.Result();
 
             ChangeTactics(result);
             throw new NotImplementedException();
@@ -37,24 +39,45 @@ namespace Vsite.Oom.Battleship.Model
 
         private void ChangeTactics(HitResult result)
         {
-            // if result is Missed dont change the tactics
-            // if result is hit:
-            //      - if current tactics is Random, chnage it to Surrounding and:
-            //      targetSelect = new SurroundingShooting(...);
-            //      - if current tactics is Surrounding, change it to linear and:
-            //      targetSelect = new LinearShooting(...);
-            //      - if current tactics is Linear, dont change it
-            // if result is Sunken, change current tactics to Random and:
-            //      target = new RandomShooting();
+            switch (result)
+            {
+                case HitResult.Missed:
+                    return;
+                case HitResult.Hit:
+                    lastHits.Add(lastTarget);
+                    switch (shootingTactics)
+                    {
+                        case ShootingTactics.Random:
+                            shootingTactics = ShootingTactics.Surrounding;
+                            Debug.Assert(lastHits.Count == 1);
+                            targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0]);
+                            return;
+                        case ShootingTactics.Surrounding:
+                            shootingTactics = ShootingTactics.Linear;
+                            targetSelect = new LinearShooting(evidenceGrid, lastHits);
+                            return;
+                        case ShootingTactics.Linear:
+                            return;
+                    }
+                    break;
+                case HitResult.Sunken:
+                    shootingTactics = ShootingTactics.Random;
+                    int sunkenShipLength = lastHits.Count;
+                    shipsToShoot.Remove(sunkenShipLength);
+                    lastHits.Clear();
+                    targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
+                    return;
+            }
         }
 
         public ShootingTactics ShootingTactics
         {
             get { return shootingTactics; }
         }
-
         private Grid evidenceGrid;
         private List<int> shipsToShoot;
+        private Square lastTarget;
+        private List<Square> lastHits = new List<Square>();
         private ITargetSelect targetSelect;
         private ShootingTactics shootingTactics = ShootingTactics.Random;
     }
