@@ -41,6 +41,31 @@ namespace Vsite.Oom.Battleship.Model
             //     - if current tactic is Surrounding, change it to Lienar
             //     - else keep it Linear
             //  if result is Sunken, change to Random
+
+            if (result == HitResult.Missed) 
+            {
+                // change nothing
+            }
+            else if (result == HitResult.Hit) 
+            {
+                if (currentTactics == ShootingTactics.Random)
+                {
+                    currentTactics = ShootingTactics.Surrounding;
+                }
+                else if (currentTactics == ShootingTactics.Surrounding) 
+                {
+                    currentTactics = ShootingTactics.Linear;
+                }
+               else 
+                {
+                    currentTactics = ShootingTactics.Linear;
+                }
+            }
+            else if (result == HitResult.Sunken)
+            {
+                currentTactics = ShootingTactics.Random;
+            }
+
         }
 
         public ShootingTactics CurrentTactics
