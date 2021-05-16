@@ -37,8 +37,10 @@ namespace Vsite.Oom.Battleship.Model
                     Debug.Assert(false);
                     break;
             }
-            //select one of them optionally using random number generator
-            throw new NotImplementedException();
+            int randBroj = random.Next(0, 1);
+            if (randBroj == 0)
+                return squares[0].First();
+            return squares[1].Last();
         }
         Orientation GetHitSquaresOrientation()
         {

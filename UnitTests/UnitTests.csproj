@@ -58,6 +58,7 @@
     <Compile Include="TestLimitedQueue.cs" />
     <Compile Include="TestSurroundingSquaresEliminator.cs" />
     <Compile Include="TestGunnery.cs" />
+    <Compile Include="TestLinearShooting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
