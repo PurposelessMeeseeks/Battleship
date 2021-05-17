@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model.UnitTests {
     [TestClass]
@@ -25,25 +24,28 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         }
 
         [TestMethod]
-        public void HitResultReturnsHitIfSquareProvidedBelongsToShip() {
+        public void HitReturnesHitIfSquareProvidedBelongToShip() {
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             var ship = new Ship(squares);
+
             Assert.AreEqual(HitResult.Hit, ship.Hit(new Square(1, 2)));
         }
 
         [TestMethod]
-        public void HitResultReturnsSunkenIfSquareProvidedIsLastRemainingSquareBelongingToShip() {
+        public void HitReturnesSunkenIfSquareProvidedIsLastRemainingSquareBelongingToShip() {
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             var ship = new Ship(squares);
+
             Assert.AreEqual(HitResult.Hit, ship.Hit(new Square(1, 2)));
             Assert.AreEqual(HitResult.Hit, ship.Hit(new Square(1, 4)));
             Assert.AreEqual(HitResult.Sunken, ship.Hit(new Square(1, 3)));
         }
 
         [TestMethod]
-        public void HitResultReturnsMissedIfSquareProvidedDoesNotBelongToShip() {
+        public void HitReturnesMissedtIfSquareProvidedDoesNotBelongToShip() {
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             var ship = new Ship(squares);
+
             Assert.AreEqual(HitResult.Missed, ship.Hit(new Square(5, 4)));
         }
     }

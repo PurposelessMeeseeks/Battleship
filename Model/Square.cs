@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Vsite.Oom.Battleship.Model {
     public enum SquareState {
@@ -9,27 +7,35 @@ namespace Vsite.Oom.Battleship.Model {
         Hit,
         Sunken
     }
+
     public struct Square : IEquatable<Square> {
-        public Square(int row, int column) {
-            Row = row;
-            Column = column;
+        public Square(int Row, int Column) {
+            row = Row;
+            column = Column;
             squareState = SquareState.Default;
         }
-        public readonly int Row;
-        public readonly int Column;
+
+        public readonly int row;
+        public readonly int column;
 
         private SquareState squareState;
 
         public void SetSquareState(HitResult hitResult) {
             switch (hitResult) {
                 case HitResult.Missed:
-                    this.squareState = SquareState.Missed;
+                    squareState = SquareState.Missed;
                     break;
+
                 case HitResult.Hit:
-                    this.squareState = SquareState.Hit;
+                    squareState = SquareState.Hit;
                     break;
+
                 case HitResult.Sunken:
-                    this.squareState = SquareState.Sunken;
+                    squareState = SquareState.Sunken;
+                    break;
+
+                default:
+                    squareState = SquareState.Default;
                     break;
             }
         }
@@ -39,17 +45,19 @@ namespace Vsite.Oom.Battleship.Model {
         }
 
         public bool Equals(Square other) {
-            return Row == other.Row && Column == other.Column;
+            return row == other.row && column == other.column;
         }
 
         public override bool Equals(object obj) {
-            if (obj.GetType() != GetType())
+            if (obj.GetType() != GetType()) {
                 return false;
+            }
+
             return Equals((Square)obj);
         }
 
         public override int GetHashCode() {
-            return Row ^ Column;
+            return row ^ column;
         }
     }
 }

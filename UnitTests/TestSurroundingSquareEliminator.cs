@@ -56,8 +56,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
             Assert.AreEqual(12, result.Count());
 
             Assert.IsTrue(result.Contains(new Square(6, 4)));
-
-
             Assert.IsTrue(result.Contains(new Square(6, 6)));
             Assert.IsTrue(result.Contains(new Square(9, 4)));
             Assert.IsTrue(result.Contains(new Square(9, 6)));

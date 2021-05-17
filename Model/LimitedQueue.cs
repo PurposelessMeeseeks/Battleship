@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Vsite.Oom.Battleship.Model {
     public class LimitedQueue<T> : Queue<T> {
@@ -12,9 +8,8 @@ namespace Vsite.Oom.Battleship.Model {
 
         public new void Enqueue(T item) {
             base.Enqueue(item);
-            if (Count > length) {
+            if (Count > length)
                 Dequeue();
-            }
         }
 
         private int length;

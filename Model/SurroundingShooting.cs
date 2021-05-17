@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model {
     public class SurroundingShooting : ITargetSelect {
-        public SurroundingShooting(Grid grid, Square firstHit) {
-
+        public SurroundingShooting(Grid grid, Square FirstHit) {
         }
+
+        public SurroundingShooting(Grid evidenceGrid, List<int> shipsToShoot) {
+        }
+
         public Square NextTarget() {
             throw new NotImplementedException();
         }
