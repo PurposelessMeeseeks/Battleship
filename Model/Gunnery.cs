@@ -36,12 +36,29 @@ namespace Vsite.Oom.Battleship.Model
 
         private void ChangeTactics(HitResult result)
         {
-            // if result is Missed, don't change the tactics
-            // if result is Hit:
-            //   - if current tactics random, change it to Surrounding
-            //   - if current tactics is Surrounding, change it to Linear
-            //   - else keep it Linear
-            // if result is Sunken, change tactics to Random
+            switch (result)
+            {
+                case HitResult.Missed:
+                    return;
+                case HitResult.Hit:
+                    if (currentTactics == ShootingTactics.Random)
+                    {
+                        selectTarget = new SurroundingShooting();
+                        currentTactics = ShootingTactics.Surrounding;
+                        return;
+                    }
+                    if (currentTactics == ShootingTactics.Surrounding)
+                    {
+                        selectTarget = new LinearShooting();
+                        currentTactics = ShootingTactics.Linear;
+                        return;
+                    }
+                    break;
+                case HitResult.Sunken:
+                    selectTarget = new RandomShooting();
+                    currentTactics = ShootingTactics.Random;
+                    break;
+            }
         }
 
         public ShootingTactics CurrentTactics

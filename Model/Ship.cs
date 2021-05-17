@@ -27,12 +27,23 @@ namespace Vsite.Oom.Battleship.Model
 
         public HitResult Hit(Square target)
         {
-            // if target is not in squares collection then return Missed
-            // if target is one of squares then mark that square as Hit
-            // check if all squares are marked Hit:
-            //   if all squares are hit, then mark all squares sunken and return Sunken
-            //   else return Hit
-            throw new NotImplementedException();
+            if (!squares.Contains(target))
+                return HitResult.Missed;
+            for (int i = 0; i < squares.Length; ++i)
+            {
+                if (squares[i].Equals(target))
+                    squares[i].SetState(SquareState.Hit);
+            }
+            if (squares.All(s => s.SquareState == SquareState.Hit || s.SquareState == SquareState.Sunken))
+            {
+                for (int i = 0; i < squares.Length; ++i)
+                {
+                    if (squares[i].Equals(target))
+                        squares[i].SetState(SquareState.Sunken);
+                }
+                return HitResult.Sunken;
+            }
+            return HitResult.Hit;
         }
 
         private Square[] squares = null;
