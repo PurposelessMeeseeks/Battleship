@@ -8,9 +8,18 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class RandomShooting : ISelectTarget
     {
+        public RandomShooting(Grid grid, int shipLength)
+        {
+            this.grid = grid;
+            this.shipLenght = shipLength;
+        }
+
         public Square NextTarget()
         {
             throw new NotImplementedException();
         }
+
+        private Grid grid;
+        private int shipLenght;
     }
 }

@@ -8,9 +8,20 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class LinearShooting : ISelectTarget
     {
+        public LinearShooting(Grid grid, IEnumerable<Square> alreadyHit, int shipLength)
+        {
+            this.grid = grid;
+            squaresHit = new List<Square>(alreadyHit);
+            this.shipLength = shipLength;
+        }
+
         public Square NextTarget()
         {
             throw new NotImplementedException();
         }
+
+        private Grid grid;
+        private List<Square> squaresHit;
+        private int shipLength;
     }
 }
