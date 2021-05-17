@@ -19,17 +19,30 @@ namespace Vsite.Oom.Battleship.Model
             var sorted = shipLengths.OrderByDescending(s => s);
             shipsToSink = new List<int>(sorted);
             evidanceGrid = new Grid(rows, columns);
-            selectTarget = new RandomShooting();
+            selectTarget = new RandomShooting(evidanceGrid, shipsToSink[0]);
         }
 
         public Square NextTarget()
         {
-            return selectTarget.NextTarget();
+            lastTarget = selectTarget.NextTarget();
+            return lastTarget;
         }
 
         public void ProcessShootingResult(HitResult result)
         {
             //Mark the result in evidence grid 
+            switch (result)
+            {
+                case HitResult.Missed:
+                    //mark square missed in evidence grid
+                    break;
+                case HitResult.Hit:
+                    squaresHit.Add(lastTarget);
+                    break;
+                case HitResult.Sunken:
+                    squaresHit.Clear();
+                    break;
+            }
             ChangeTactics(result);
         }
 
@@ -44,26 +57,33 @@ namespace Vsite.Oom.Battleship.Model
 
             if (result == HitResult.Missed) 
             {
-                // change nothing
+                return;
             }
             else if (result == HitResult.Hit) 
             {
                 if (currentTactics == ShootingTactics.Random)
                 {
+                    selectTarget = new SurroundingShooting(evidanceGrid, squaresHit[0],shipsToSink[0]);
                     currentTactics = ShootingTactics.Surrounding;
+                    
                 }
                 else if (currentTactics == ShootingTactics.Surrounding) 
                 {
+                    selectTarget = new LinearShooting(evidanceGrid, squaresHit, shipsToSink[0]);
                     currentTactics = ShootingTactics.Linear;
+                    
                 }
                else 
                 {
                     currentTactics = ShootingTactics.Linear;
+                  
                 }
             }
             else if (result == HitResult.Sunken)
             {
+                selectTarget = new RandomShooting(evidanceGrid, shipsToSink[0]);
                 currentTactics = ShootingTactics.Random;
+
             }
 
         }
@@ -77,5 +97,7 @@ namespace Vsite.Oom.Battleship.Model
         private List<int> shipsToSink;
         private ISelectTarget selectTarget;
         private ShootingTactics currentTactics = ShootingTactics.Random;
+        private List<Square> squaresHit = new List<Square>();
+        private Square lastTarget;
     }
 }
