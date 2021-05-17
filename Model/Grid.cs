@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
+    public enum Direction
+    {
+        Up,
+        Right,
+        Down,
+        Left
+    }
+
     public class Grid
     {
         public Grid(int rows, int columns)
@@ -38,6 +46,52 @@ namespace Vsite.Oom.Battleship.Model
             }
         }
 
+        public IEnumerable<Square> GetSequence(Square reference, Direction direction)
+        {
+            int deltaRow = 0;
+            int deltaColumn = 0;
+            int count = 0;
+            switch (direction)
+            {
+                case Direction.Up:
+                    deltaRow = -1;
+                    count = reference.Row;
+                    break;
+                case Direction.Right:
+                    deltaColumn = +1;
+                    count = Columns - reference.Column - 1;
+                    break;
+                case Direction.Down:
+                    deltaRow = +1;
+                    count = Rows - reference.Row - 1;
+                    break;
+                case Direction.Left:
+                    deltaColumn = -1;
+                    count = reference.Column;
+                    break;
+            }
+            List<Square> result = new List<Square>();
+            int row = reference.Row + deltaRow;
+            int column = reference.Column + deltaColumn;
+            for (int i = 0; i < count; ++i)
+            {
+                if (!IsSquareAvailable(row, column))
+                    break;
+                else
+                {
+                    result.Add(squares[row, column].Value);
+                    row += deltaRow;
+                    column += deltaColumn;
+                }
+            }
+            return result;
+        }
+
+        private bool IsSquareAvailable(int row, int column)
+        {
+            return squares[row, column] != null && squares[row, column].Value.SquareState == SquareState.Default;
+        }
+
         private List<IEnumerable<Square>> GetHorizontalSequences(int length)
         {
             List<IEnumerable<Square>> result = new List<IEnumerable<Square>>();
@@ -46,7 +100,7 @@ namespace Vsite.Oom.Battleship.Model
                 var queue = new LimitedQueue<Square>(length);
                 for (int c = 0; c < Columns; ++c)
                 {
-                    if (squares[r, c] != null)
+                    if (IsSquareAvailable(r, c))
                     {
                         queue.Enqueue(squares[r, c].Value);
                         if (queue.Count >= length)
@@ -67,7 +121,7 @@ namespace Vsite.Oom.Battleship.Model
                 var queue = new LimitedQueue<Square>(length);
                 for (int r = 0; r < Rows; ++r)
                 {
-                    if (squares[r, c] != null)
+                    if (IsSquareAvailable(r, c))
                     {
                         queue.Enqueue(squares[r, c].Value);
                         if (queue.Count >= length)
