@@ -15,10 +15,14 @@ namespace Vsite.Oom.Battleship.Model
         }
         public Square NextTarget()
         {
+            var sequences = grid.GetSequences(shipLength);
+            // linearize sequences into one sequence of arrays
+            // select one of squares randomly as a target
             throw new NotImplementedException();
         }
 
         private Grid grid;
         private int shipLength;
+        private Random random = new Random();
     }
 }

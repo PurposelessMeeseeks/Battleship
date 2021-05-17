@@ -55,5 +55,40 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Assert.AreEqual(2, placements.ElementAt(0).Count());
             Assert.AreEqual(2, placements.ElementAt(1).Count());
         }
+
+
+        [TestMethod]
+        public void GetSequenceReturnsArrayWithOneSquareOnlyAboveSquare1_1()
+        {
+            Grid grid = new Grid(10, 10);
+            var placements = grid.GetSequence(new Square(1,1),Direction.Up);
+            Assert.AreEqual(1, placements.Count());
+        }
+
+
+        [TestMethod]
+        public void GetSequenceReturnsArrayWithTwoSquaresOnlyLeftToSquare1_2()
+        {
+            Grid grid = new Grid(10, 10);
+            var placements = grid.GetSequence(new Square(1,2),Direction.Left);
+            Assert.AreEqual(2, placements.Count());
+        }
+
+        [TestMethod]
+        public void GetSequenceReturnsArrayWith8SquaresBelowSquare1_1()
+        {
+            Grid grid = new Grid(10, 10);
+            var placements = grid.GetSequence(new Square(1,1),Direction.Down);
+            Assert.AreEqual(8, placements.Count());
+        }
+
+
+        [TestMethod]
+        public void GetSequenceReturnsArrayWith7SquaresOnlyRightToSquare1_2()
+        {
+            Grid grid = new Grid(10, 10);
+            var placements = grid.GetSequence(new Square(1,2),Direction.Right);
+            Assert.AreEqual(7, placements.Count());
+        }
     }
 }
