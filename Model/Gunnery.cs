@@ -34,10 +34,19 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShootingResult(HitResult result)
         {
-            //evidenceGrid.RecordResult();
+            //evidenceGrid.RecordResult(lastTarget, result);
+            if (result == HitResult.Missed)
+                return;
+            lastHits.Add(lastTarget);
+            if (result == HitResult.Sunken)
+            {
+                // mark all squares around lastHits as missed
+                // mark all squares in lasthits as sunken
+
+            }
 
             ChangeTactics(result);
-            throw new NotImplementedException();
+            
         }
 
         private void ChangeTactics(HitResult result)
