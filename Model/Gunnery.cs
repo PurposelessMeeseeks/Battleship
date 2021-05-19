@@ -74,12 +74,12 @@ namespace Vsite.Oom.Battleship.Model
                 if (shootingTactis == ShootingTactis.Random)
                 {
                     // TODO: assert
-                    targetSelect = new SorroundingShooting(evidenceGrid, lastHits[0]);
+                    targetSelect = new SorroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
                     shootingTactis = ShootingTactis.Sorrounding;
                 }
                 else if (shootingTactis == ShootingTactis.Sorrounding)
                 {
-                    targetSelect = new LinearShooting(evidenceGrid, lastHits);
+                    targetSelect = new LinearShooting(evidenceGrid, lastHits, shipsToShoot[0]);
                     shootingTactis = ShootingTactis.Linear;
                 }
             }

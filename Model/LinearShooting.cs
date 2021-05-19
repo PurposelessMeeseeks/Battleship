@@ -15,23 +15,26 @@ namespace Vsite.Oom.Battleship.Model
 
     public class LinearShooting : ITargetSelect
     {
-        public LinearShooting(Grid grid, IEnumerable<Square> squaresHit)
+        public LinearShooting(Grid grid, List<Square> squaresHit, int shipLength)
         {
             this.grid = grid;
-            this.squaresHit = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
+            this.squaresHit = squaresHit;
             random = new Random();
+            this.shipLength = shipLength;
         }
 
         public Square NextTarget()
         {
+            var sorted = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
+
             var orientation = GetHitSquaresOrientation();
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
             switch (orientation)
             {
                 case Orientiation.Horizontal:
                 {
-                    var left = grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Leftwards);
-                    var right = grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Rightwards);
+                    var left = grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Leftwards);
+                    var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Rightwards);
 
                     if (left.Count() > 0)
                         squares.Add(left);
@@ -43,8 +46,8 @@ namespace Vsite.Oom.Battleship.Model
                 }
                 case Orientiation.Vertical:
                 {
-                    var up = grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Upwards);
-                    var down = grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Downwards);
+                    var up = grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Upwards);
+                    var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Downwards);
 
                     if (up.Count() > 0)
                         squares.Add(up);
@@ -76,5 +79,6 @@ namespace Vsite.Oom.Battleship.Model
         Grid grid;
         List<Square> squaresHit;
         Random random;
+        private readonly int shipLength;
     }
 }
