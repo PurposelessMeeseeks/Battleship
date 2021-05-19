@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
@@ -18,6 +15,7 @@ namespace Vsite.Oom.Battleship.Model
 
         public Gunnery(int rows, int columns, IEnumerable<int> shipLengths)
         {
+            lastHits = new List<Square>();
             evidenceGrid = new Grid(rows, columns);
             var sorted = shipLengths.OrderByDescending(s => s);
             shipsToShoot = shipLengths.ToList();
@@ -53,20 +51,25 @@ namespace Vsite.Oom.Battleship.Model
 
             if (result == HitResult.Sunken)
             {
-                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
                 shootingTactis = ShootingTactis.Random;
+                int sunkenShipLength = lastHits.Count;
+                lastHits.Clear();
+                shipsToShoot.Remove(sunkenShipLength);
+                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
             }
 
             if (result == HitResult.Hit)
             {
+                lastHits.Add(lastTarget);
                 if (shootingTactis == ShootingTactis.Random)
                 {
-                    targetSelect = new SorroundingShooting(evidenceGrid, shipsToShoot);
+                    // TODO: assert
+                    targetSelect = new SorroundingShooting(evidenceGrid, lastHits[0]);
                     shootingTactis = ShootingTactis.Sorrounding;
                 }
                 else if (shootingTactis == ShootingTactis.Sorrounding)
                 {
-                    targetSelect = new LinearShooting(evidenceGrid, shipsToShoot);
+                    targetSelect = new LinearShooting(evidenceGrid, lastHits);
                     shootingTactis = ShootingTactis.Linear;
                 }
             }
@@ -74,6 +77,8 @@ namespace Vsite.Oom.Battleship.Model
 
         private Grid evidenceGrid;
         private List<int> shipsToShoot;
+        private Square lastTarget;
+        private List<Square> lastHits;
         private ShootingTactis shootingTactis = ShootingTactis.Random;
         private ITargetSelect targetSelect;
     }

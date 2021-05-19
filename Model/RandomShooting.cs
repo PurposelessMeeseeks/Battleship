@@ -17,7 +17,7 @@ namespace Vsite.Oom.Battleship.Model
         public Square NextTarget()
         {
             var allPlacements = grid.GetAvailablePlacements(shipLength);
-             
+            // select one of squares using random
             throw new NotImplementedException();
         }
 
