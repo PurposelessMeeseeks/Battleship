@@ -52,23 +52,23 @@ namespace Vsite.Oom.Battleship.Model
             else if (HitResult.Hit == result && ShootingTactics == ShootingTactics.Random)
             {
                 lastHits.Add(LastTarget);
-                targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0]);
+                targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
                 shootingTactics = ShootingTactics.Surrounding;
             }
             else if (HitResult.Missed == result && ShootingTactics == ShootingTactics.Surrounding)
             {
-                targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0]);
+                targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
                 shootingTactics = ShootingTactics.Surrounding;
             }
             else if(HitResult.Hit == result && ShootingTactics == ShootingTactics.Surrounding)
             {
                 lastHits.Add(LastTarget);
-                targetSelect = new LinearShooting(evidenceGrid, lastHits);
+                targetSelect = new LinearShooting(evidenceGrid, lastHits, shipsToShoot[0]);
                 shootingTactics = ShootingTactics.Linear;
             }
             else if(HitResult.Missed == result && ShootingTactics == ShootingTactics.Linear)
             {
-                targetSelect = new LinearShooting(evidenceGrid, lastHits);
+                targetSelect = new LinearShooting(evidenceGrid, lastHits, shipsToShoot[0]);
                 shootingTactics = ShootingTactics.Linear;
             }
             else if(HitResult.Sunken == result && ShootingTactics == ShootingTactics.Linear)

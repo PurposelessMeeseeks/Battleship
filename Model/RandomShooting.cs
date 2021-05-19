@@ -59,6 +59,8 @@ namespace Vsite.Oom.Battleship.Model
             
             return ChosenSquare;
             */
+
+            /* Druga implementacija
             int x, y;
             List<List<int>> SquareFrequency = new List<List<int>>()
             {
@@ -107,6 +109,7 @@ namespace Vsite.Oom.Battleship.Model
             Square FinalTarget = new Square(indexX, indexY);
 
             return FinalTarget;
+            */
         }
 
         
