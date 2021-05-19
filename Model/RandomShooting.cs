@@ -16,11 +16,20 @@ namespace Vsite.Oom.Battleship.Model
         public Square NextTarget()
         {
             var allPlacements = grid.GetAvailablePlacements(shipLength);
-            // TODO: select one of squares using random:
-            // 1. calculate how many times each square appears in allPlacements (IEnumerable<IEnumerable<Square>>)
-            // 2. find squares whic appear most often
-            // 3. from these squares select randomly one as target
-            throw new NotImplementedException();
+            // create simple array of all squares
+            var allCandidates = allPlacements.SelectMany(seq => seq);
+            // create groups with individual squares
+            var groups = allCandidates.GroupBy(sq => sq);
+            // find number of quares in the largest group
+            var maxCount = groups.Max(g => g.Count());
+            // filter groups with count == maxCount
+            var largestGroups = groups.Where(g => g.Count() == maxCount);
+            // fetch keys from largestGroups
+            var mostCommonSquares = largestGroups.Select(g => g.Key);
+            if (mostCommonSquares.Count() == 1)
+                mostCommonSquares.First();
+            int index = random.Next(mostCommonSquares.Count());
+            return mostCommonSquares.ElementAt(index);
         }
 
         private Grid grid;
