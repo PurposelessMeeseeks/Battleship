@@ -79,14 +79,17 @@ namespace Vsite.Oom.Battleship.Model
                     deltaRow = -1;
                     count = from.row;
                     break;
+
                 case Direction.Rightwords:
                     deltaColumn = +1;
                     count = colums - from.column;
                     break;
+
                 case Direction.Downwords:
                     deltaRow = +1;
                     count = rows - from.row;
                     break;
+
                 case Direction.Leftwords:
                     deltaColumn = -1;
                     count = from.column;

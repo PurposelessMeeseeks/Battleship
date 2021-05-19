@@ -30,17 +30,17 @@ namespace Vsite.Oom.Battleship.Model
         {
             EvidenceGrid.RecordResult(lastTarget, result);
 
-            if(result==HitResult.Missed)
+            if (result == HitResult.Missed)
             {
                 return;
             }
-            
+
             lastHits.Add(lastTarget);
 
-            if (result==HitResult.Sunken)
+            if (result == HitResult.Sunken)
             {
                 // mark all squares around lastHits as missed
-                // mark all squares in lastHits 
+                // mark all squares in lastHits
             }
 
             ChangeTactics(result);
@@ -59,12 +59,12 @@ namespace Vsite.Oom.Battleship.Model
                         case ShootingTactics.Random:
                             shootingTactics = ShootingTactics.Surrounding;
                             Debug.Assert(lastHits.Count == 1);
-                            TargetSelect = new SurroundingShooting(EvidenceGrid, lastHits[0]);
+                            TargetSelect = new SurroundingShooting(EvidenceGrid, lastHits[0], ShipsToShoot[0]);
                             return;
 
                         case ShootingTactics.Surrounding:
                             shootingTactics = ShootingTactics.Linear;
-                            TargetSelect = new LinearShooting(EvidenceGrid, lastHits);
+                            TargetSelect = new LinearShooting(EvidenceGrid, lastHits, ShipsToShoot[0]);
                             return;
 
                         case ShootingTactics.Linear:
