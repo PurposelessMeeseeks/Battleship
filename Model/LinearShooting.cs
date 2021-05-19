@@ -12,13 +12,15 @@ namespace Vsite.Oom.Battleship.Model
     }
     public class LinearShooting : ITargetSelect
     {
-        public LinearShooting(Grid grid, IEnumerable<Square> squaresHit)
+        public LinearShooting(Grid grid, List<Square> squaresHit, int shipLength)
         {
             this.grid = grid;
-            this.squaresHit = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
+            this.squaresHit = squaresHit;
+            this.shipLength = shipLength;
         }
         public Square NextTarget()
         {
+            var sorted = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
             var orientation = GetHitSquaresOrientation();
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
             switch (orientation)
@@ -36,6 +38,7 @@ namespace Vsite.Oom.Battleship.Model
                     break;
             }
             // TODO: DZ select one of them optionally using random number generator
+            // do it in similar way as for surrounding shooting
             throw new NotImplementedException();
         }
 
@@ -46,6 +49,7 @@ namespace Vsite.Oom.Battleship.Model
             return Orientation.Vertical;
         }
         Grid grid;
+        int shipLength;
         List<Square> squaresHit;
     }
 }

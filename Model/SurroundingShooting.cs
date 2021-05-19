@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
 {
@@ -7,10 +8,11 @@ namespace Vsite.Oom.Battleship.Model
     public class SurroundingShooting : ITargetSelect
     {
 
-        public SurroundingShooting(Grid grid, Square firstHit)
+        public SurroundingShooting(Grid grid, Square firstHit, int shipLength)
         {
             this.grid = grid;
             this.firstHit = firstHit;
+            this.shipLength = shipLength;
         }
         public Square NextTarget()
         {
@@ -21,13 +23,26 @@ namespace Vsite.Oom.Battleship.Model
             squares.Add(grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Downwards));
             squares.Add(grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Leftwards));
 
+            // sort squares by length
+            var sorted = squares.OrderByDescending(seq=>seq.Count());
+            int maxLength = sorted.ElementAt(0).Count();
+            if (maxLength > shipLength - 1)
+                maxLength = shipLength - 1;
+
+            var longest = sorted.Where(seq => seq.Count() >= maxLength);
+            if (longest.Count() == 1)
+                return longest.ElementAt(0).First();
+            int index = random.Next(longest.Count());
+            return longest.ElementAt(index).First();
+
             // TODO: DZ select one of them as target
             throw new NotImplementedException();
 
         }
 
-        Grid grid;
-        Square firstHit;
-        Random random = new Random();
+        private Grid grid;
+        private Square firstHit;
+        private readonly int shipLength;
+        private Random random = new Random();
     }
 }
