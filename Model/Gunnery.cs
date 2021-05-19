@@ -32,15 +32,22 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShootingResult(HitResult result)
         {
-            // evidenceGrid.RecordResult();
-
+            evidenceGrid.RecordResult(lastTarget, result);
+            if (result == HitResult.Missed)
+                return;
+            lastHits.Add(lastTarget);
+            if(result == HitResult.Sunken)
+            {
+                // mark all squares around lastHits as Missed
+                // mark all squares in lastHits as Sunken
+            }
             ChangeTactics(result);
-            throw new NotImplementedException();
         }
 
         private void ChangeTactics(HitResult result)
         {
-            // if result is Missed, stay in Random tactics
+            // DONT PUT MISSED
+            // lastHits.Add(lastTarget); NE
             // if result is Hit:
             //      - if current tactics is Random, change it to Surrounding and:
             //        targetSelect = new SurroundingShooting(Grid, firstHit);
