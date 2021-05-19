@@ -16,22 +16,20 @@ namespace Vsite.Oom.Battleship.Model
         public Square NextTarget()
         {
             var allPlacements = grid.GetAvailablePlacements(shipLength);
-            SortedDictionary<Square, int> SquareFrequency = new SortedDictionary<Square, int>();
-            for (int i = 0; i < allPlacements.Count(); ++i)
-            {
-                for (int j = 0; j < allPlacements.ElementAt(i).Count(); ++j)
-                {
-                    if (SquareFrequency.ContainsKey(allPlacements.ElementAt(i).ElementAt(j)))
-                        SquareFrequency[allPlacements.ElementAt(i).ElementAt(j)]++;
-                    else
-                        SquareFrequency.Add(allPlacements.ElementAt(i).ElementAt(j), 1);
-                }
-            }
-
-            int max = SquareFrequency.Values.Max();
-            var SquaresWithMaxApperances = SquareFrequency.Where(pair => max.Equals(pair.Value)).Select(pair => pair.Key);
-            int randBroj = random.Next(0, SquaresWithMaxApperances.Count());
-            return SquaresWithMaxApperances.ElementAt(randBroj); ;
+            //create simple array of all squares
+            var allCandidates = allPlacements.SelectMany(seq => seq);
+            //create groups with individual squares
+            var groups = allCandidates.GroupBy(sq => sq);
+            //find number of squares in the largest group
+            var maxCount = groups.Max(g => g.Count());
+            //filter groups with count== maxCount
+            var largestGroups = groups.Where(g => g.Count() == maxCount);
+            //fetch keys from largest groups
+            var mostCommonSquares = largestGroups.Select(g => g.Key);
+            if (mostCommonSquares.Count() == 1)
+                mostCommonSquares.First();
+            int index = random.Next(mostCommonSquares.Count());
+            return mostCommonSquares.ElementAt(index);
         }
 
         private Grid grid;
