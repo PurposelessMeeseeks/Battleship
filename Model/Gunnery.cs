@@ -30,8 +30,21 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShootingResult(HitResult result)
         {
-            //evidenceGrid.RecordResult();
-                        
+            EvidenceGrid.RecordResult(lastTarget, result);
+
+            if (result == HitResult.Missed) 
+            {
+                return;
+            }
+
+            lastHits.Add(lastTarget);
+
+            if (result == HitResult.Sunken)
+            {
+                // mark all squares around lastHits as missed
+                // mark all squares in lastHits as sunken
+            }
+
             ChangeTactics(result);
         }
 
@@ -40,11 +53,11 @@ namespace Vsite.Oom.Battleship.Model
 
             if (result == HitResult.Hit)
             {
-                lastHits.Add(lastTarget);
+                
 
                 if (ShootingTactics == ShootingTactics.Random)
                 {
-                    TargetSelect = new SurroundingShooting(EvidenceGrid, lastHits[0]);
+                    TargetSelect = new SurroundingShooting(EvidenceGrid, lastHits[0], shipLength);
                     ShootingTactics = ShootingTactics.Surrounding;
                 }
                 else if (ShootingTactics == ShootingTactics.Surrounding)
@@ -72,5 +85,6 @@ namespace Vsite.Oom.Battleship.Model
         private List<Square> lastHits;
         private ITargetSelect TargetSelect;
         private ShootingTactics ShootingTactics = ShootingTactics.Random;
+        private int shipLength;
     }
 }

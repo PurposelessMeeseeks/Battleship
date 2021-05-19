@@ -8,10 +8,11 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class SurroundingSquaresEliminator : ISquareEliminator
     {
-        public SurroundingSquaresEliminator(int rows, int columns)
+        public SurroundingSquaresEliminator(int rows, int columns, int shipLength)
         {
             this.rows = rows;
             this.columns = columns;
+            this.shipLength = shipLength;
         }
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares)
         {
@@ -29,7 +30,10 @@ namespace Vsite.Oom.Battleship.Model
             return squares;
         }
 
+
+
         private readonly int rows;
         private readonly int columns;
+        private readonly int shipLength;
     }
 }
