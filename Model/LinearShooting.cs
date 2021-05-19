@@ -14,30 +14,32 @@ namespace Vsite.Oom.Battleship.Model
     }
     public class LinearShooting : ITargetSelect
     {
-        public LinearShooting(Grid grid, IEnumerable<Square> squaresHit)
+        public LinearShooting(Grid grid, List<Square> squaresHit, int shipLength)
         {
             this.grid = grid;
-            this.squaresHit = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
+            this.squaresHit = squaresHit;
+            this.shipLength = shipLength;
         }
         public Square NextTarget()
         {
+            var sorted = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
             var orientation = GetHitSquaresOrientation();
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    var left = grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Leftwards);
+                    var left = grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Leftwards);
                     if (left.Count() > 0)
                         squares.Add(left);
-                    var right = grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Rigthwards);
+                    var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Rigthwards);
                     if (right.Count() > 0)
                         squares.Add(right);
                     break;
                 case Orientation.Vertical:
-                    var up = grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Upwards);
+                    var up = grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Upwards);
                     if (up.Count() > 0)
                     squares.Add(up);
-                    var down = grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Downwards);
+                    var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Downwards);
                     if (down.Count() > 0)
                         squares.Add(down);
                     break;
@@ -45,7 +47,7 @@ namespace Vsite.Oom.Battleship.Model
                     Debug.Assert(false);
                     break;
             }
-            // TODO: select one of them optionally using random number generator
+            // TODO: do it in a similar way as for surrounding shooting
             throw new NotImplementedException();
         }
 
@@ -56,8 +58,9 @@ namespace Vsite.Oom.Battleship.Model
             return Orientation.Vertical;
         }
 
-        Grid grid;
-        List<Square> squaresHit;
-        Random random = new Random();
+        private Grid grid;
+        private List<Square> squaresHit;
+        private int shipLength;
+        private Random random = new Random();
      }
 }

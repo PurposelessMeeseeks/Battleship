@@ -8,10 +8,11 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class SurroundingShooting : ITargetSelect
     {
-        public SurroundingShooting(Grid grid, Square firstHit)
+        public SurroundingShooting(Grid grid, Square firstHit, int shipLength)
         {
             this.grid = grid;
             this.firstHit = firstHit;
+            this.shipLength = shipLength;
         }
 
         public Square NextTarget()
@@ -29,12 +30,21 @@ namespace Vsite.Oom.Battleship.Model
             var left = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwards);
             if (left.Count() > 0)
                 squares.Add(left);
-            // TODO: select one of them as target
-            throw new NotImplementedException();
+            // sort squares array by length
+            var sorted = squares.OrderByDescending(seq => seq.Count());
+            int maxLength = sorted.ElementAt(0).Count();
+            if (maxLength > shipLength - 1)
+                maxLength = shipLength - 1;
+            var longest = sorted.Where(seq => seq.Count() >= maxLength);
+            if (longest.Count() == 1)
+                return longest.ElementAt(0).First();
+            int index = random.Next(longest.Count());
+            return longest.ElementAt(index).First();
         }
 
-        Grid grid;
-        Square firstHit;
-        Random random = new Random();
+        private Grid grid;
+        private Square firstHit;
+        private readonly int shipLength;
+        private Random random = new Random();
     }
 }
