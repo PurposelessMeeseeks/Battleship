@@ -32,7 +32,15 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShootingResult(HitResult result)
         {
-            // evidenceGrid.RecordResult();
+            evidenceGrid.RecordResult(lastTarget, result);
+            if (result == HitResult.Missed)
+                return;
+            lastHits.Add(lastTarget);
+            if (result == HitResult.Sunken)
+            {
+                // mark all squares arround lastHits as missed 
+                // mark all squares in lastHits as sunken
+            }
 
             ChangeTActics(result);
         }
@@ -41,10 +49,7 @@ namespace Vsite.Oom.Battleship.Model
         {
             switch (result)
             {
-                case HitResult.Missed:
-                    break;
                 case HitResult.Hit:
-                    lastHits.Add(lastTarget);
                     switch (shootingTactics)
                     {
                         case ShootingTactics.Random:
