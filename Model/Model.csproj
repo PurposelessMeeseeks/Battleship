@@ -53,9 +53,6 @@
     <Compile Include="Fleet.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Gunnery.cs" />
-    <Compile Include="GunneryTest.cs">
-      <SubType>Designer</SubType>
-    </Compile>
     <Compile Include="ISquareEliminator.cs" />
     <Compile Include="ITargetSelect.cs" />
     <Compile Include="LimitedQueue.cs" />
@@ -65,7 +62,6 @@
     <Compile Include="RandomShooting.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="Shipwright.cs" />
-    <Compile Include="SqlDatabaseSetup.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="SurroundingShooting.cs" />
     <Compile Include="SurroundingSquaresEliminator.cs" />

@@ -47,8 +47,8 @@ namespace Vsite.Oom.Battleship.Model
             return fleet;
         }
 
-        private Grid grid;
-        private Fleet fleet;
+        //private Grid grid;
+        //private Fleet fleet;
 
         private int rows;
         private int columns;

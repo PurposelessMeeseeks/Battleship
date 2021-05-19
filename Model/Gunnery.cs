@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
+    public enum ShootingTactics
+    {
+        Random,
+        Surrounding,
+        Linear
+    }
     public class Gunnery
     {   
 
-        enum ShootingTactics
-        {
-            Random,
-            Surrounding,
-            Linear
-        }
+        
         public Gunnery(int rows, int columns, IEnumerable<int> shipLenghts)
         {
             evidanceGrid = new Grid(rows, columns);
