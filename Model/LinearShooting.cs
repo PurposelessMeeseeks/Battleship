@@ -13,11 +13,11 @@ namespace Vsite.Oom.Battleship.Model
 
     public class LinearShooting : ITargetSelect
     {
-        public LinearShooting(Grid evidenceGrid, List<Square> squaresHit, int shipLenght)
+        public LinearShooting(Grid evidenceGrid, List<Square> squaresHit, int shipLength)
         {
             this.grid = evidenceGrid;
             this.squaresHit = squaresHit;
-            this.shipLenght = shipLenght;
+            this.shipLength = shipLength;
         }
 
         public Square NextTarget()
@@ -65,14 +65,32 @@ namespace Vsite.Oom.Battleship.Model
                     break;
             }
 
-            if (squares.Count > 1)
+            //if (squares.Count > 1)
+            //{
+            //    return squares[random.Next(0, 2)].First();
+            //}
+
+            //return squares[0].First();
+
+            var sorted_2 = squares.OrderByDescending(seq => seq.Count());
+
+            int maxLength = sorted_2.ElementAt(0).Count();
+
+            if (maxLength > shipLength - squaresHit.Count())
             {
-                return squares[random.Next(0, 2)].First();
+                maxLength = shipLength - squaresHit.Count();
             }
 
-            return squares[0].First();
+            var longest = sorted_2.Where(seq => seq.Count() >= maxLength);
 
-            // TODO 6: select one of them optionally using random generator
+            if (longest.Count() == 1)
+            {
+                return longest.ElementAt(0).First();
+            }
+
+            int index = random.Next(longest.Count());
+
+            return longest.ElementAt(index).First();
         }
 
         private Orientation GetHitSquaresOrientation()
@@ -85,9 +103,9 @@ namespace Vsite.Oom.Battleship.Model
             return Orientation.Vertical;
         }
 
-        private Grid grid;
-        private List<Square> squaresHit;
-        private Random random = new Random();
-        private int shipLenght;
+        private readonly Grid grid;
+        private readonly List<Square> squaresHit;
+        private readonly Random random = new Random();
+        private readonly int shipLength;
     }
 }

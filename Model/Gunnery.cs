@@ -40,7 +40,13 @@ namespace Vsite.Oom.Battleship.Model
             if (result == HitResult.Sunken)
             {
                 // mark all squares around lastHits as missed
+                SurroundingSquaresEliminator eliminator = new SurroundingSquaresEliminator(10, 10);
+                eliminator.ToEliminate(lastHits);
                 // mark all squares in lastHits
+                foreach (Square square in lastHits)
+                {
+                    square.SetSquareState(HitResult.Sunken);
+                }
             }
 
             ChangeTactics(result);
@@ -91,9 +97,9 @@ namespace Vsite.Oom.Battleship.Model
 
         public ShootingTactics ShootingTactics { get { return shootingTactics; } }
 
-        private Grid EvidenceGrid;
-        private List<int> ShipsToShoot;
-        private List<Square> lastHits = new List<Square>();
+        private readonly Grid EvidenceGrid;
+        private readonly List<int> ShipsToShoot;
+        private readonly List<Square> lastHits = new List<Square>();
         private Square lastTarget;
         private ITargetSelect TargetSelect;
         private ShootingTactics shootingTactics = ShootingTactics.Random;

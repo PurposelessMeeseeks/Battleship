@@ -54,18 +54,19 @@ namespace Vsite.Oom.Battleship.Model
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
         {
             List<List<Square>> result = GetHorizontalPlacements(length);
+
             if (length > 1)
-                result.AddRange(GetVerticalPlacements(length));
-            return result;
-
-            List<List<Square>> result_2 = GetVerticalPlacements(length);
-
-            for (int i = 0; i < result_2.Count; ++i)
             {
-                result.Add(result_2[i]);
+                result.AddRange(GetVerticalPlacements(length));
             }
 
             return result;
+
+            //List<List<Square>> result_2 = GetVerticalPlacements(length);
+
+            //{
+            //    result.Add(result_2[i]);
+            //}
         }
 
         public IEnumerable<Square> GetAvailablePlacementsInDirection(Square from, Direction direction)
@@ -73,6 +74,7 @@ namespace Vsite.Oom.Battleship.Model
             int deltaRow = 0;
             int deltaColumn = 0;
             int count = 0;
+
             switch (direction)
             {
                 case Direction.Upwords:
@@ -97,12 +99,17 @@ namespace Vsite.Oom.Battleship.Model
             }
 
             List<Square> result = new List<Square>();
+
             int row = from.row + deltaRow;
             int column = from.column + deltaColumn;
+
             for (int i = 1; i < count; ++i)
             {
                 if (squares[row, column].Value.SquareState != SquareState.Default)
+                {
                     break;
+                }
+
                 result.Add(squares[row, column].Value);
                 row += deltaRow;
                 column += deltaColumn;
@@ -174,7 +181,6 @@ namespace Vsite.Oom.Battleship.Model
                     }
                 }
             }
-
             return result;
         }
     }

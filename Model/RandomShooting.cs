@@ -8,9 +8,9 @@ namespace Vsite.Oom.Battleship.Model
     {
         private readonly Grid Grid;
         private readonly int ShipLenght;
-        private Grid evidenceGrid;
-        private List<int> shipsToShoot;
-        private Random random = new Random();
+        private readonly Grid evidenceGrid;
+        private readonly List<int> shipsToShoot;
+        private readonly Random random = new Random();
 
         public RandomShooting(Grid grid, int shipLenght)
         {
@@ -49,12 +49,9 @@ namespace Vsite.Oom.Battleship.Model
             }
 
             int index = random.Next(mostCommunSquares.Count());
+
             return mostCommunSquares.ElementAt(index);
 
-            // TODO 1: select one of squares using random:
-            // TODO 2: calculate how many times each square appears in AllPlacements (IEnumerable<IEnumerable<Squares>>)
-            // TODO 3: find squares which appear most often
-            // TODO 4: from these squares  select randomly one as target
             throw new NotImplementedException();
         }
     }
