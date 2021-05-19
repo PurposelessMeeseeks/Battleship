@@ -10,11 +10,18 @@ namespace Vsite.Oom.Battleship.Model
     {
         public LinearShooting(Grid grid, IEnumerable<Square> squaresHit)
         {
-
+            this.grid = grid;
+            this.squaresHit = new List<Square>(squaresHit);
         }
         public Square NextTarget()
         {
+            // find squares in countinuation of sqaures hit
+            // selecet one of them 
             throw new NotImplementedException();
         }
+
+        Grid grid;
+        List<Square> squaresHit;
+        Random random = new Random();
     }
 }
