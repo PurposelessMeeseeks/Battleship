@@ -15,13 +15,15 @@ namespace Vsite.Oom.Battleship.Model
 
     public class LinearShooting : ITargetSelect
     {
-        public LinearShooting(Grid grid, IEnumerable<Square> squaresHit)
+        public LinearShooting(Grid grid, List<Square> squaresHit, int shipLength)
         {
             this.grid = grid;
-            this.squaresHit = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
+            this.squaresHit = squaresHit;
+            this.shipLength = shipLength;
         }
         public Square NextTarget()
         {
+            var sorted = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
             var orientation = GetHitSquaresOrientation();
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
 
@@ -40,7 +42,18 @@ namespace Vsite.Oom.Battleship.Model
                     break;
             }
 
-            // TODO: select one of them optionaly using RNG
+            // TODO: do it in similar way as for SurroundingShooting
+            /*
+             var sorted = squares.OrderByDescending(seq => seq.Count());
+            int maxLength = sorted.ElementAt(0).Count();
+            if (maxLength > shipLength - 1)
+                maxLength = shipLength - 1;
+            var longest = sorted.Where(seq => seq.Count() >= maxLength);
+            if (longest.Count() == 1)
+                return longest.ElementAt(0).First();
+            int index = random.Next(longest.Count());
+            return longest.ElementAt(index).First();
+             */
             throw new NotImplementedException();
         }
 
@@ -52,8 +65,9 @@ namespace Vsite.Oom.Battleship.Model
             return Orientation.Vertical;
         }
 
-        Grid grid;
-        List<Square> squaresHit;
-        Random random = new Random();
+        private Grid grid;
+        private List<Square> squaresHit;
+        private Random random = new Random();
+        private int shipLength;
      }
 }
