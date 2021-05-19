@@ -11,7 +11,7 @@ namespace Vsite.Oom.Battleship.Model
         Hit,
         Sunken
     }
-    public struct Square : IEquatable<Square>
+    public struct Square : IEquatable<Square>, IComparable<Square>
     {
         public Square(int row, int column)
         {
@@ -60,6 +60,13 @@ namespace Vsite.Oom.Battleship.Model
         public override int GetHashCode()
         {
             return Row ^ Column;
+        }
+
+        public int CompareTo(Square other)
+        {
+            if (this.Row == other.Row && this.Column == other.Column)
+                return 0;
+            return 1;
         }
     }
 }

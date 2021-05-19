@@ -30,7 +30,15 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShooting(HitResult result)
         {
-            //evidenceGrid.RecordResult();
+            evidenceGrid.RecordResult(LastTarget, result);
+            if (result == HitResult.Missed)
+                return;
+            lastHits.Add(LastTarget);
+            if (result == HitResult.Sunken)
+            {
+                // mark all squares around lastHits as missed
+                // mark all squares in LastHits as Sunken uz pomoc surroundingSquaresEliminator
+            }
             ChangeTactics(result);
         }
 

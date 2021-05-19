@@ -40,7 +40,6 @@ namespace Vsite.Oom.Battleship.Model
                     EliminatedSquares.Add(new Square(topLeftX, topLeftY));
                 }
             }
-                
 
             return EliminatedSquares;
         }
