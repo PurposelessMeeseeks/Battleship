@@ -15,25 +15,28 @@ namespace Vsite.Oom.Battleship.Model
 
     public class LinearShooting : ITargetSelect
     {
-        public LinearShooting(Grid grid, IEnumerable<Square> squaresHit)
+        public LinearShooting(Grid grid, List<Square> squaresHit, int shipLength)
         {
             this.grid = grid;
-            this.squaresHit = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
+            this.squaresHit = squaresHit;
+            this.shipLength = shipLength;
         }
 
         public Square NextTarget()
         {
+            var sorted = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
+            //squaresHit.Sort(s => s.Row + s.Column);
             var orientation = GetHitSquaresOrientation();
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    squares.Add(grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Leftwards));
-                    squares.Add(grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Rightwards));
+                    squares.Add(grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Leftwards));
+                    squares.Add(grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Rightwards));
                     break;
                 case Orientation.Vertical:
-                    squares.Add(grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Upwards));
-                    squares.Add(grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Downwards));
+                    squares.Add(grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Upwards));
+                    squares.Add(grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Downwards));
                     break;
                 default:
                     Debug.Assert(false);
@@ -57,5 +60,7 @@ namespace Vsite.Oom.Battleship.Model
 
         private Grid grid;
         private List<Square> squaresHit;
+        private readonly int shipLength;
+        private Random random = new Random();
      }
 }

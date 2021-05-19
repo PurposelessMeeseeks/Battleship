@@ -63,12 +63,12 @@ namespace Vsite.Oom.Battleship.Model
                         case ShootingTactics.Random:
                             shootingTactics = ShootingTactics.Surrounding;
                             Debug.Assert(lastHits.Count == 1);
-                            targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0]);
+                            targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
                             return;
 
                         case ShootingTactics.Surrounding:
                             shootingTactics = ShootingTactics.Linear;
-                            targetSelect = new LinearShooting(evidenceGrid, lastHits);
+                            targetSelect = new LinearShooting(evidenceGrid, lastHits, shipsToShoot[0]);
                             return;
 
                         case ShootingTactics.Linear:
