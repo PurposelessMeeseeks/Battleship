@@ -37,7 +37,11 @@ namespace Vsite.Oom.Battleship.Model
             if (result == HitResult.Sunken)
             {
                 // mark all squares around lastHits as missed
+                SurroundingSquaresEliminator eliminator = new SurroundingSquaresEliminator(10,10);
+                eliminator.ToEliminate(lastHits);
                 // mark all squares in LastHits as Sunken uz pomoc surroundingSquaresEliminator
+                foreach (Square square in lastHits)
+                    square.SetSquareState(HitResult.Sunken);
             }
             ChangeTactics(result);
         }

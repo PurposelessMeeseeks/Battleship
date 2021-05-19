@@ -48,20 +48,20 @@ namespace Vsite.Oom.Battleship.Model
                     Debug.Assert(false);
                     break;
             }
-            // TODO: do it in similar way as for surrounding shooting
-            /* NESTO OVAKO
-            var sorted = squares.OrderByDescending(seq => seq.Count());
-            int maxLength = sorted.ElementAt(0).Count();
+            // do it in similar way as for surrounding shooting
+            // NESTO OVAKO
+            var sorted2 = squares.OrderByDescending(seq => seq.Count());
+            int maxLength = sorted2.ElementAt(0).Count();
             if (maxLength > shipLength - squaresHit.Count())
             {
                 maxLength = shipLength - squaresHit.Count();
             }
-            var longest = sorted.Where(seq => seq.Count() >= maxLength);
+            var longest = sorted2.Where(seq => seq.Count() >= maxLength);
             if (longest.Count() == 1)
                 return longest.ElementAt(0).First();
             int index = random.Next(longest.Count());
             return longest.ElementAt(index).First();
-            */
+            //
 
 
             int randBroj = random.Next(0,1);
