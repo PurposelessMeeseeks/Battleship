@@ -32,9 +32,20 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordShootingResult(HitResult result)
         {
-            // evidenceGrid.RecordResult()
-            // evidenceGrid.RecordResult();
-            
+            evidenceGrid.RecordResult(lastTarget, result);
+
+            if (result == HitResult.Missed)
+            {
+                return;
+            }
+            lastHits.Add(lastTarget);
+
+            if (result == HitResult.Sunken)
+            {
+                // mark all squares around lastHits as missed
+                // mark all squares in lastHits as sunken
+            }
+
             InvalidateTacticsState(result);
         }
 
@@ -60,7 +71,6 @@ namespace Vsite.Oom.Battleship.Model
 
             if (result == HitResult.Hit)
             {
-                lastHits.Add(lastTarget);
                 if (shootingTactis == ShootingTactis.Random)
                 {
                     // TODO: assert
