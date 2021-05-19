@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 
 namespace Vsite.Oom.Battleship.Model.UnitTests
@@ -11,10 +10,9 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void NextTargetReturnOneOfSquaresAboveOrBelowSquares3_3And4_3()
         {
             Grid grid = new Grid(10, 10);
-            List<Square> squares = new List<Square> { new Square(3, 3), new Square(4,3 };
+            List<Square> squares = new List<Square> { new Square(3, 3), new Square(4, 3 )};
             var shooting = new LinearShooting(grid, squares);
             Assert.IsTrue(shooting.NextTarget().Equals(new Square(2, 3)) || shooting.NextTarget().Equals(new Square(5, 3)));
-
         }
 
         [TestMethod]
@@ -24,17 +22,15 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             List<Square> squares = new List<Square> { new Square(3, 3), new Square(3, 4) };
             var shooting = new LinearShooting(grid, squares);
             Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 2)) || shooting.NextTarget().Equals(new Square(3, 5)));
-
         }
 
         [TestMethod]
         public void NextTargetReturnOneOfSquaresLeftOfSquares3_8And3_9()
         {
             Grid grid = new Grid(10, 10);
-            List<Square> squares = new List<Square> { new Square(3,8), new Square(3,9) };
+            List<Square> squares = new List<Square> { new Square(3, 8), new Square(3, 9) };
             var shooting = new LinearShooting(grid, squares);
             Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 7)));
-
         }
 
         [TestMethod]
@@ -43,8 +39,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Grid grid = new Grid(10, 10);
             List<Square> squares = new List<Square> { new Square(3, 0), new Square(3, 1) };
             var shooting = new LinearShooting(grid, squares);
-            Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 2)) || shooting.NextTarget().Equals(new Square(3, 5)));
-
+            Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 2)));
         }
     }
 }

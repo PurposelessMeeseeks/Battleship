@@ -22,13 +22,26 @@ namespace Vsite.Oom.Battleship.Model
 
         public Square NextTarget()
         {
-            var lastTarget= TargetSelect.NextTarget();
+            var lastTarget = TargetSelect.NextTarget();
             return lastTarget;
         }
 
         public void RecordShootingResult(HitResult result)
         {
-            //evidanceGrid.RecordResult()
+            EvidenceGrid.RecordResult(lastTarget, result);
+
+            if(result==HitResult.Missed)
+            {
+                return;
+            }
+            
+            lastHits.Add(lastTarget);
+
+            if (result==HitResult.Sunken)
+            {
+                // mark all squares around lastHits as missed
+                // mark all squares in lastHits 
+            }
 
             ChangeTactics(result);
         }
@@ -41,7 +54,6 @@ namespace Vsite.Oom.Battleship.Model
                     return;
 
                 case HitResult.Hit:
-                    lastHits.Add(lastTarget);
                     switch (shootingTactics)
                     {
                         case ShootingTactics.Random:
@@ -81,7 +93,7 @@ namespace Vsite.Oom.Battleship.Model
 
         private Grid EvidenceGrid;
         private List<int> ShipsToShoot;
-        private List<Square> lastHits= new List<Square>();
+        private List<Square> lastHits = new List<Square>();
         private Square lastTarget;
         private ITargetSelect TargetSelect;
         private ShootingTactics shootingTactics = ShootingTactics.Random;

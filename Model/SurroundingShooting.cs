@@ -11,10 +11,6 @@ namespace Vsite.Oom.Battleship.Model
             this.firstHit = firstHit;
         }
 
-        public SurroundingShooting(Grid evidenceGrid, List<int> shipsToShoot)
-        {
-        }
-
         public Square NextTarget()
         {
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
@@ -24,14 +20,12 @@ namespace Vsite.Oom.Battleship.Model
             squares.Add(grid.GetAvailablePlacementsInDirection(firstHit, Direction.Downwords));
             squares.Add(grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwords));
 
-            // select one of the as target
+            // TODO 5: select one of the as target
             throw new NotImplementedException();
         }
 
-       
-
-        Grid grid;
-        Square firstHit;
-        Random random = new Random();
+        private Grid grid;
+        private Square firstHit;
+        private Random random = new Random();
     }
 }
