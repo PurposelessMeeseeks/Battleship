@@ -7,6 +7,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
     public class TestSurroundingSquareEliminator {
         [TestMethod]
         public void ToEliminateReturns18SquaresForShip4_3To4_6() {
+
             var squares = new List<Square> { new Square(4, 3), new Square(4, 4), new Square(4, 5), new Square(4, 6) };
             SurroundingSquaresEliminator eliminator = new SurroundingSquaresEliminator(10, 10);
             var result = eliminator.ToEliminate(squares);
