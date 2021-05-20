@@ -1,5 +1,9 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
@@ -10,7 +14,8 @@ namespace Vsite.Oom.Battleship.Model
         Hit,
         Sunken
     }
-    public struct Square : IEnumerable<Square>
+
+    public struct Square : IEquatable<Square>
     {
         public Square(int row, int column)
         {
@@ -28,22 +33,26 @@ namespace Vsite.Oom.Battleship.Model
         {
             switch (hitResult)
             {
-                case HitResult.Hit:
-                    squareState = SquareState.Hit; break;
-                case HitResult.Sunken:
-                    squareState = SquareState.Sunken;
-                    break;
                 case HitResult.Missed:
                     squareState = SquareState.Missed;
                     break;
+                case HitResult.Hit:
+                    squareState = SquareState.Hit;
+                    break;
+                case HitResult.Sunken:
+                    squareState = SquareState.Sunken;
+                    break;
+                default:
+                    Debug.Assert(false);
+                    break;
             }
-
-            
         }
+
         public SquareState SquareState
         {
             get { return squareState; }
         }
+
         public bool Equals(Square other)
         {
             return Row == other.Row && Column == other.Column;
@@ -59,16 +68,6 @@ namespace Vsite.Oom.Battleship.Model
         public override int GetHashCode()
         {
             return Row ^ Column;
-        }
-
-        public IEnumerator<Square> GetEnumerator()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

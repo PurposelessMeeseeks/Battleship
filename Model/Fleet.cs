@@ -21,7 +21,7 @@ namespace Vsite.Oom.Battleship.Model
 
         public HitResult Hit(Square square)
         {
-            foreach(Ship ship in ships)
+            foreach (Ship ship in ships)
             {
                 var hit = ship.Hit(square);
                 if (hit != HitResult.Missed)
@@ -30,6 +30,6 @@ namespace Vsite.Oom.Battleship.Model
             return HitResult.Missed;
         }
 
-        List<Ship> ships = new List<Ship>();
+        private List<Ship> ships = new List<Ship>();
     }
 }

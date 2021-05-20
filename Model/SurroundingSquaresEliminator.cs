@@ -13,24 +13,20 @@ namespace Vsite.Oom.Battleship.Model
             this.rows = rows;
             this.columns = columns;
         }
-
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares)
         {
-            List<Square> result = new List<Square>();
-            for (int r = 0; r < rows; r++)
+            int rowMin = Math.Max(shipSquares.Min(s => s.Row) - 1, 0);
+            int columnMin = Math.Max(shipSquares.Min(s => s.Column) - 1, 0);
+            int rowMax = Math.Min(shipSquares.Max(s => s.Row) + 2, rows);
+            int columnMax = Math.Min(shipSquares.Max(s => s.Column) + 2, columns);
+
+            List<Square> squares = new List<Square>();
+            for (int r = rowMin; r < rowMax; ++r)
             {
-                for (int c = 0; c < columns; c++)
-                {
-                    foreach (var s in shipSquares)
-                    {
-                        if(r <= s.Row+1 && r>= s.Row-1 && c<=s.Column+1 && c>=s.Column-1 && !result.Contains(new Square(r, c)))
-                        {
-                            result.Add(new Square(r, c));
-                        }
-                    }
-                }
+                for (int c = columnMin; c < columnMax; ++c)
+                    squares.Add(new Square(r, c));
             }
-            return result;
+            return squares;
         }
 
         private readonly int rows;

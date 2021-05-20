@@ -21,9 +21,7 @@ namespace Vsite.Oom.Battleship.Model
             {
                 var fleet = PlaceShips();
                 if (fleet != null)
-                {
                     return fleet;
-                }
             }
             throw new ArgumentException();
         }
@@ -46,9 +44,6 @@ namespace Vsite.Oom.Battleship.Model
             }
             return fleet;
         }
-
-        //private Grid grid;
-        //private Fleet fleet;
 
         private int rows;
         private int columns;
