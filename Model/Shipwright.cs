@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model {
     public class Shipwright {
-        private Grid grid;
-        private Fleet fleet;
+        private readonly Grid grid;
+        private readonly Fleet fleet;
 
-        private int rows;
-        private int columns;
-        private IEnumerable<int> shipLengths;
+        private readonly int rows;
+        private readonly int columns;
+        private readonly IEnumerable<int> shipLengths;
 
-        private Random random = new Random();
+        private readonly Random random = new Random();
 
         public Shipwright(int rows, int columns, IEnumerable<int> shipLengths) {
             this.rows = rows;
@@ -27,7 +27,6 @@ namespace Vsite.Oom.Battleship.Model {
                     return fleet;
                 }
             }
-
             throw new ArgumentException();
         }
 

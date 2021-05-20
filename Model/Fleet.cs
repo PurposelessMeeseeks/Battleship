@@ -22,6 +22,6 @@ namespace Vsite.Oom.Battleship.Model {
             return HitResult.Missed;
         }
 
-        private List<Ship> ships = new List<Ship>();
+        private readonly List<Ship> ships = new List<Ship>();
     }
 }

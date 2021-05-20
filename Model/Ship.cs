@@ -34,10 +34,9 @@ namespace Vsite.Oom.Battleship.Model {
                 }
                 return HitResult.Sunken;
             }
-
             return HitResult.Hit;
         }
 
-        private Square[] squares;
+        private readonly Square[] squares;
     }
 }

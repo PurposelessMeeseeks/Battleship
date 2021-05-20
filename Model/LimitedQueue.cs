@@ -8,10 +8,12 @@ namespace Vsite.Oom.Battleship.Model {
 
         public new void Enqueue(T item) {
             base.Enqueue(item);
-            if (Count > length)
+
+            if (Count > length) {
                 Dequeue();
+            }
         }
 
-        private int length;
+        private readonly int length;
     }
 }
