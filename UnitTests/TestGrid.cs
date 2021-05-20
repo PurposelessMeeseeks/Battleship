@@ -48,5 +48,15 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             var placements = grid.GetAvailablePlacements(2);
             Assert.AreEqual(2, placements.Count());
         }
+
+        [TestMethod]
+        public void GetAvailablePlacementsReturns4SquaresOnGrid5x1AfterSquare4_1IsMarkedMissed()
+        {
+            Grid grid = new Grid(5, 1);
+            grid.RecordResult(new Square(4, 0), HitResult.Missed);
+            var placements = grid.GetAvailablePlacements(1);
+            Assert.AreEqual(4, placements.Count());
+        }
+
     }
 }
