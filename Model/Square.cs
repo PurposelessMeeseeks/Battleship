@@ -11,7 +11,7 @@ namespace Vsite.Oom.Battleship.Model
         Hit,
         Sunken
     }
-    public struct Square : IEquatable<Square>, IComparable<Square>
+    public class Square : IEquatable<Square>, IComparable<Square>
     {
         public Square(int row, int column)
         {

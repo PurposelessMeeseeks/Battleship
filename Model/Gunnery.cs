@@ -38,10 +38,18 @@ namespace Vsite.Oom.Battleship.Model
             {
                 // mark all squares around lastHits as missed
                 SurroundingSquaresEliminator eliminator = new SurroundingSquaresEliminator(10,10);
-                eliminator.ToEliminate(lastHits);
+                var toEliminate = lastHits.ToList();
+                toEliminate.Sort(delegate(Square s1, Square s2) { return (s1.Column + s1.Row).CompareTo(s2.Row + s2.Column); });
+                IEnumerable<Square> squares = eliminator.ToEliminate(toEliminate);
+                foreach (Square square in squares)
+                {
+                    square.SetSquareState(HitResult.Missed);
+                    
+                }
+                evidenceGrid.Eliminate(squares);
                 // mark all squares in LastHits as Sunken uz pomoc surroundingSquaresEliminator
-                foreach (Square square in lastHits)
-                    square.SetSquareState(HitResult.Sunken);
+                foreach (Square squareSunken in lastHits)
+                    squareSunken.SetSquareState(HitResult.Sunken);
             }
             ChangeTactics(result);
         }
@@ -77,7 +85,7 @@ namespace Vsite.Oom.Battleship.Model
             }
             else if(HitResult.Sunken == result && ShootingTactics == ShootingTactics.Linear)
             {
-                int sunkenShipLength = lastHits.Count;
+                int sunkenShipLength = lastHits.Count - 2;  // stavljen -2 jer se u lasthits 2 puta stave isti square-ovi tako da ih uvijek ima 2 viska (pretpostavljam zbog SurroundingShooting koji stavlja square-ove u lasthits i onda ih linear shooting opet dodaje)
                 shipsToShoot.Remove(sunkenShipLength);
                 lastHits.Clear();
                 targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);

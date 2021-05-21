@@ -249,7 +249,7 @@ namespace WindowsFormsApp1
             PlayerFleet = new Fleet();
             AiFleet = new Fleet();
 
-            Grid grid = new Grid(10, 10);
+            grid = new Grid(10, 10);
             
             
             SurroundingSquaresEliminator eliminator = new SurroundingSquaresEliminator(10, 10);
@@ -262,9 +262,7 @@ namespace WindowsFormsApp1
             DrawShip(2, grid, eliminator);
             DrawShip(2, grid, eliminator);
 
-            Grid EnemyGrid = new Grid(10, 10);
-            
-            
+            EnemyGrid = new Grid(10, 10);
 
             SurroundingSquaresEliminator EnemyEliminator = new SurroundingSquaresEliminator(10, 10);
 
@@ -275,6 +273,8 @@ namespace WindowsFormsApp1
             CreateEnemyFleet(3, EnemyGrid, EnemyEliminator);
             CreateEnemyFleet(2, EnemyGrid, EnemyEliminator);
             CreateEnemyFleet(2, EnemyGrid, EnemyEliminator);
+
+            gunnery = new Gunnery(10, 10, new List<int>() { 5, 5, 4, 3, 3, 2, 2 });
         }
 
         private void DrawShip(int shipLength, Grid grid, SurroundingSquaresEliminator eliminator)
@@ -344,19 +344,22 @@ namespace WindowsFormsApp1
             new List<Button> {},
         };
 
-        private Gunnery gunnery = new Gunnery(10, 10, new List<int>() {5, 5, 4, 3, 3, 2, 2} );
+        private Gunnery gunnery;
         private Fleet PlayerFleet;
         private Fleet AiFleet;
         private int Reset = 0;
+        private Grid grid;
+        private Grid EnemyGrid;
+
+
         private void ButtonClickedFunction(Button button)
         {
             if (Reset == 0)
                 return;
             string text = " ";
             
-            if (button.Text == text)
+            if (button.Text == text) // znaci da je pogodeno
             {
-                
                 string ime = button.Name;
                 int x = (int)Char.GetNumericValue(ime[8]);
                 int y = (int)Char.GetNumericValue(ime[10]);
@@ -388,24 +391,128 @@ namespace WindowsFormsApp1
                 button.BackColor = Color.Green;
                 button.Enabled = false;
             }
+            
 
+            
             Square Target = gunnery.NextTarget();
-            HitResult ShootingResult;
+            HitResult ShootingResult = HitResult.Missed;
+
+            if (Buttons[Target.Row][Target.Column].BackColor == Color.Blue)
+            {
+                foreach (Ship ship in PlayerFleet.Ships)
+                {
+                    ShootingResult = ship.Hit(Target);
+
+                    if (ShootingResult == HitResult.Missed)
+                    {
+                        Buttons[Target.Row][Target.Column].BackColor = Color.Purple;
+                    }
+                    if (ShootingResult == HitResult.Hit)
+                    {
+                        Buttons[Target.Row][Target.Column].BackColor = Color.Red;
+                        break;
+                    }
+                    else
+                    {
+                        foreach (Square Sunken in ship.Squares)
+                        {
+                            if (Sunken.SquareState == SquareState.Sunken)
+                            {
+                                Buttons[Sunken.Row][Sunken.Column].BackColor = Color.Black;
+                            }
+                        }
+                        break;
+                    }
+
+                }
+            }
+            else
+            {
+                Buttons[Target.Row][Target.Column].BackColor = Color.Green;
+            }
+
+
+
+            /* IMPLEMENTACIJA v1
             if (Buttons[Target.Row][Target.Column].BackColor == Color.Blue)
             {
                 Buttons[Target.Row][Target.Column].BackColor = Color.Red;
                 ShootingResult = HitResult.Hit;
+
+                
+
+                
+                int brojCrvenih = 0;
+                int brojPlavih = 0;
+                if (Target.Row - 1 >= 0)
+                {
+                    if (Buttons[Target.Row - 1][Target.Column].BackColor == Color.Blue)
+                        brojPlavih += 1;
+                }
+                else
+                    brojPlavih += 1;
+                if (Target.Row + 1 <= 9)
+                {
+                    if(Buttons[Target.Row + 1][Target.Column].BackColor == Color.Blue)
+                    brojPlavih += 1;
+                }
+                else
+                    brojPlavih += 1;
+                if (Target.Column - 1 >= 0)
+                {
+                    if (Buttons[Target.Row][Target.Column - 1].BackColor == Color.Blue)
+                        brojPlavih += 1;
+                }
+                else
+                    brojPlavih += 1;
+                if (Target.Column + 1 <= 9)
+                {
+                    if (Buttons[Target.Row][Target.Column + 1].BackColor == Color.Blue)
+                        brojPlavih += 1;
+                }
+                else
+                    brojPlavih += 1;
+                if (Target.Row - 1 >= 0 && Target.Row + 1 <= 9 && Target.Column - 1 >= 0 && Target.Column + 1 <= 9)
+                {
+                    if (Buttons[Target.Row - 1][Target.Column].BackColor == Color.Red || Buttons[Target.Row + 1][Target.Column].BackColor == Color.Red ||
+                    Buttons[Target.Row][Target.Column - 1].BackColor == Color.Red || Buttons[Target.Row][Target.Column + 1].BackColor == Color.Red)
+                        brojCrvenih += 1;
+                }
+                
+                if (brojCrvenih == 1 && brojPlavih == 0)
+                {
+                    ShootingResult = HitResult.Sunken;
+                    Buttons[Target.Row][Target.Column].BackColor = Color.Black;
+                    int row = Target.Row;
+                    int column = Target.Column;
+                    while (Buttons[row - 1][column].BackColor == Color.Red || Buttons[row + 1][column].BackColor == Color.Red ||
+                        Buttons[row][column - 1].BackColor == Color.Red || Buttons[row][column + 1].BackColor == Color.Red)
+                    {
+                        if (Buttons[row - 1][column].BackColor == Color.Red)
+                            row -= 1;
+                        if (Buttons[row + 1][column].BackColor == Color.Red)
+                            row += 1;
+                        if (Buttons[row][column - 1].BackColor == Color.Red)
+                            column -= 1;
+                        if (Buttons[row][column + 1].BackColor == Color.Red)
+                            column += 1;
+                    }
+                }
+                
+
             }
+
             else
             {
                 Buttons[Target.Row][Target.Column].BackColor = Color.Green;
                 ShootingResult = HitResult.Missed;
             }
-                
+               */
 
             gunnery.RecordShooting(ShootingResult);
-            
-            
+
+
+
         }
 
         private void AiButton0x0_Click(object sender, EventArgs e)

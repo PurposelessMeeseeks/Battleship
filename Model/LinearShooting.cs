@@ -64,15 +64,12 @@ namespace Vsite.Oom.Battleship.Model
             //
 
 
-            int randBroj = random.Next(0,1);
-            if (randBroj == 0)
-                return squares[0].First();
-            return squares[1].Last();
+            
         }
 
         Orientation GetHitSquaresOrientation()
         {
-            if (squaresHit[0].Row == squaresHit[1].Row)
+            if (squaresHit[0].Row == squaresHit[2].Row)
                 return Orientation.Horizontal;
             return Orientation.Vertical;
         }

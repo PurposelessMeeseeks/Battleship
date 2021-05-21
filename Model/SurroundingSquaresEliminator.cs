@@ -17,6 +17,7 @@ namespace Vsite.Oom.Battleship.Model
         {
             
             List<Square> shipSquaresList = shipSquares.ToList();
+            //shipSquaresList.Sort();
             int topLeftX = shipSquaresList[0].Row - 1;
             if (topLeftX < 0)
                 topLeftX = 0;

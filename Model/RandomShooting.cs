@@ -29,7 +29,7 @@ namespace Vsite.Oom.Battleship.Model
             //fetch keys from largestGroups
             var mostCommonSquares = largestGroups.Select(g => g.Key);
             if (mostCommonSquares.Count() == 1)
-                mostCommonSquares.First();
+                return mostCommonSquares.First();
             int index = random.Next(mostCommonSquares.Count());
             return mostCommonSquares.ElementAt(index);
 
