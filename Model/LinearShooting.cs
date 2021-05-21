@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
-    public class LinearShooting : ITargetSelect
-    {
         public enum Orientation
         {
             Horizontal,
             Vertical
         }
+    public class LinearShooting : ITargetSelect
+    {
         public LinearShooting(Grid grid, List<Square> squaresHit,int shipLenght)
         {
             this.grid = grid;
             this.squaresHit = squaresHit;
+            random = new Random();
             this.shipLenght = shipLenght;
         }
         public Square NextTarget()

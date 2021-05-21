@@ -13,20 +13,21 @@ namespace Vsite.Oom.Battleship.Model
             this.grid = grid;
             this.firstHit = firstHit;
             this.shipLength = shipLength;
+            random = new Random();
         }
         public Square NextTarget()
         {
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
-            var up = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Upwardes);
+            var up = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Upwards);
             if (up.Count() > 0)
                 squares.Add(up);
-            var right = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Rightwardes);
+            var right = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Rightwards);
             if(right.Count()>0)
                 squares.Add(right);
-            var down = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Downwareds);
+            var down = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Downwards);
             if (down.Count() > 0)
                 squares.Add(down);
-            var left = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwardes);
+            var left = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwards);
             if (left.Count() > 0)
                 squares.Add(left);
             //sort squares array by length
