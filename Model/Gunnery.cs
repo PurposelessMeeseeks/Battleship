@@ -63,7 +63,6 @@ namespace Vsite.Oom.Battleship.Model
             }
             else if (HitResult.Hit == result && ShootingTactics == ShootingTactics.Random)
             {
-                lastHits.Add(LastTarget);
                 targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
                 shootingTactics = ShootingTactics.Surrounding;
             }
@@ -74,9 +73,19 @@ namespace Vsite.Oom.Battleship.Model
             }
             else if(HitResult.Hit == result && ShootingTactics == ShootingTactics.Surrounding)
             {
-                lastHits.Add(LastTarget);
                 targetSelect = new LinearShooting(evidenceGrid, lastHits, shipsToShoot[0]);
                 shootingTactics = ShootingTactics.Linear;
+            }
+            else if(HitResult.Sunken == result && ShootingTactics == ShootingTactics.Surrounding)
+            {
+                int sunkenShipLength = lastHits.Count;
+                shipsToShoot.Remove(sunkenShipLength);
+                lastHits.Clear();
+                if (shipsToShoot.Count() != 0)
+                {
+                    targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
+                    shootingTactics = ShootingTactics.Random;
+                }
             }
             else if(HitResult.Missed == result && ShootingTactics == ShootingTactics.Linear)
             {
@@ -85,11 +94,14 @@ namespace Vsite.Oom.Battleship.Model
             }
             else if(HitResult.Sunken == result && ShootingTactics == ShootingTactics.Linear)
             {
-                int sunkenShipLength = lastHits.Count - 2;  // stavljen -2 jer se u lasthits 2 puta stave isti square-ovi tako da ih uvijek ima 2 viska (pretpostavljam zbog SurroundingShooting koji stavlja square-ove u lasthits i onda ih linear shooting opet dodaje)
+                int sunkenShipLength = lastHits.Count;
                 shipsToShoot.Remove(sunkenShipLength);
                 lastHits.Clear();
-                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
-                shootingTactics = ShootingTactics.Random;
+                if (shipsToShoot.Count() != 0)
+                {
+                    targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
+                    shootingTactics = ShootingTactics.Random;
+                }
             }
 
             // if result is missed stay in random shooting tactic

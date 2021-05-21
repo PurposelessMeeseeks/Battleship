@@ -24,6 +24,7 @@ namespace WindowsFormsApp1
         private void buttonReset_Click(object sender, EventArgs e)
         {
             Reset = 1;
+            LengthToShoot = 0;
 
             Buttons[0].Add(PlayerButton0x0);
             Buttons[0].Add(PlayerButton0x1);
@@ -274,6 +275,9 @@ namespace WindowsFormsApp1
             CreateEnemyFleet(2, EnemyGrid, EnemyEliminator);
             CreateEnemyFleet(2, EnemyGrid, EnemyEliminator);
 
+            LengthToShoot = 5 + 5 + 4 + 3 + 3 + 2 + 2;
+            LengthToShootByEnemy = 5 + 5 + 4 + 3 + 3 + 2 + 2;
+
             gunnery = new Gunnery(10, 10, new List<int>() { 5, 5, 4, 3, 3, 2, 2 });
         }
 
@@ -305,7 +309,7 @@ namespace WindowsFormsApp1
             AiFleet.CreateShip(Odabrani);
             foreach (Square square in Odabrani)
             {
-                EnemyButtons[square.Row][square.Column].BackColor = Color.Yellow;
+                //EnemyButtons[square.Row][square.Column].BackColor = Color.Yellow;     SLUZI SAMO ZA PROVJERU
                 EnemyButtons[square.Row][square.Column].Text = " ";
             }
             IEnumerable<Square> ToRemove = eliminator.ToEliminate(Odabrani);
@@ -350,6 +354,8 @@ namespace WindowsFormsApp1
         private int Reset = 0;
         private Grid grid;
         private Grid EnemyGrid;
+        private int LengthToShoot;
+        private int LengthToShootByEnemy;
 
 
         private void ButtonClickedFunction(Button button)
@@ -364,27 +370,46 @@ namespace WindowsFormsApp1
                 int x = (int)Char.GetNumericValue(ime[8]);
                 int y = (int)Char.GetNumericValue(ime[10]);
                 Square square = new Square(x, y);
-                foreach (Ship ships in AiFleet.Ships)
-                {
-                    HitResult result = ships.Hit(square);
-                    if (result == HitResult.Hit)
-                    {
-                        button.BackColor = Color.Red;
-                        button.Enabled = false;
-                    }
+                Ship shipThatWasShotByPlayer = null;
+                bool found = false;
 
-                    else
+                foreach (Ship ship in AiFleet.Ships)
+                {
+                    foreach (Square Candidate in ship.Squares)
                     {
-                        foreach(Square Sunken in ships.Squares)
+                        if (Candidate.Row == square.Row && Candidate.Column == square.Column)
                         {
-                            if (Sunken.SquareState == SquareState.Sunken)
-                            {
-                                EnemyButtons[Sunken.Row][Sunken.Column].BackColor = Color.Black;
-                                EnemyButtons[Sunken.Row][Sunken.Column].Enabled = false;
-                            }
+                            shipThatWasShotByPlayer = ship;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found)
+                        break;
+                }
+
+
+                HitResult result = shipThatWasShotByPlayer.Hit(square);
+                if (result == HitResult.Hit)
+                {
+                    button.BackColor = Color.Red;
+                    button.Enabled = false;
+                }
+
+                else
+                {
+                    
+                    foreach(Square Sunken in shipThatWasShotByPlayer.Squares)
+                    {
+                        if (Sunken.SquareState == SquareState.Sunken)
+                        {
+                            EnemyButtons[Sunken.Row][Sunken.Column].BackColor = Color.Black;
+                            EnemyButtons[Sunken.Row][Sunken.Column].Enabled = false;
+                            LengthToShoot -= 1;
                         }
                     }
                 }
+                
             }
             else
             {
@@ -396,7 +421,51 @@ namespace WindowsFormsApp1
             
             Square Target = gunnery.NextTarget();
             HitResult ShootingResult = HitResult.Missed;
+            bool Contains = false;
+            Ship shipThatWasShot = null;
 
+
+            foreach (Ship ship in PlayerFleet.Ships)
+            {
+                foreach(Square square in ship.Squares)
+                {
+                    if (Target.Row == square.Row && Target.Column == square.Column)
+                    {
+                        Contains = true;
+                        shipThatWasShot = ship;
+                        break;
+                    }
+                }
+                if (Contains)
+                    break;
+            }
+
+
+            if (Contains)
+            {
+                ShootingResult = shipThatWasShot.Hit(Target);
+                if (ShootingResult == HitResult.Hit)
+                {
+                    Buttons[Target.Row][Target.Column].BackColor = Color.Red;
+                }
+                else if(ShootingResult == HitResult.Sunken)
+                {
+                    foreach(Square square in shipThatWasShot.Squares)
+                    {
+                        Buttons[square.Row][square.Column].BackColor = Color.Black;
+                        LengthToShootByEnemy -= 1;
+                    }
+                }
+            }
+
+            else
+            {
+                Buttons[Target.Row][Target.Column].BackColor = Color.Green;
+                ShootingResult = HitResult.Missed;
+            }
+
+
+            /*
             if (Buttons[Target.Row][Target.Column].BackColor == Color.Blue)
             {
                 foreach (Ship ship in PlayerFleet.Ships)
@@ -430,7 +499,7 @@ namespace WindowsFormsApp1
             {
                 Buttons[Target.Row][Target.Column].BackColor = Color.Green;
             }
-
+            */
 
 
             /* IMPLEMENTACIJA v1
@@ -509,7 +578,29 @@ namespace WindowsFormsApp1
             }
                */
 
-            gunnery.RecordShooting(ShootingResult);
+            if (LengthToShoot == 0)
+            {
+                Console.WriteLine("You Win");
+                var oneDimension = EnemyButtons.SelectMany(s => s);
+                foreach (Button buttonToDisable in oneDimension)
+                {
+                    buttonToDisable.Enabled = false;
+                }
+                return;
+            }
+
+            if (LengthToShootByEnemy != 0)
+                gunnery.RecordShooting(ShootingResult);
+            else
+            {
+                Console.WriteLine("You Lose");
+                var oneDimension = EnemyButtons.SelectMany(s => s);
+                foreach(Button buttonToDisable in oneDimension)
+                {
+                    buttonToDisable.Enabled = false;
+                }
+                return;
+            }
 
 
 

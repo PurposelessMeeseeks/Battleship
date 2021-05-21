@@ -69,7 +69,7 @@ namespace Vsite.Oom.Battleship.Model
 
         Orientation GetHitSquaresOrientation()
         {
-            if (squaresHit[0].Row == squaresHit[2].Row)
+            if (squaresHit[0].Row == squaresHit[1].Row)
                 return Orientation.Horizontal;
             return Orientation.Vertical;
         }
