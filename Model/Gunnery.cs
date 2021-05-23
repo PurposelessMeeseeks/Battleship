@@ -47,19 +47,19 @@ namespace Vsite.Oom.Battleship.Model
 
         private void ChangeTactics(HitResult result)
         {
-            switch ( result)
+            switch (result)
             {
-                case HitResult.Hit:                  
+                case HitResult.Hit:
                     switch (shootingTactics)
                     {
                         case ShootingTactics.Random:
                             shootingTactics = ShootingTactics.Surrounding;
-                            targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0]);
                             Debug.Assert(lastHits.Count == 1);
+                            targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
                             return;
                         case ShootingTactics.Surrounding:
                             shootingTactics = ShootingTactics.Linear;
-                            targetSelect = new LinearShooting(evidenceGrid, lastHits);
+                            targetSelect = new LinearShooting(evidenceGrid, lastHits, shipsToShoot[0]);
                             return;
                         case ShootingTactics.Linear:
                             return;
@@ -73,15 +73,6 @@ namespace Vsite.Oom.Battleship.Model
                     targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
                     return;
             }
-            // if result is Missed dont change the tactics
-            // if result is Hit
-            //      - if current tactics is Random, change it to Surrounding and:
-            //      targetSelect = new SurroundingShooring(...);
-            //      - if current tactics is Surrounding, change it to Linear and:
-            //      targetSelect = new LinearShooring(...);
-            //      - if current tactics is Linear, don't change it 
-            // if result is Sunken, change current tactics to Random and:
-            //      target = new RandomShooting();
         }
         
 
