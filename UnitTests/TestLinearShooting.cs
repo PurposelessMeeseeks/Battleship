@@ -39,5 +39,13 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             var shooting = new LinearShooting(grid, squares, 3);
             Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 2)));
         }
+        [TestMethod]
+        public void NextTargetReturnSquareRightOfSquares3_0And3_1()
+        {
+            Grid grid = new Grid(10, 10);
+            List<Square> squares = new List<Square> { new Square(3, 0), new Square(3, 1) };
+            var shooting = new LinearShooting(grid, squares, 3);
+            Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 2)));
+        }
     }
 }
