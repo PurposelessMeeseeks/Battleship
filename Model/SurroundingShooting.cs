@@ -37,6 +37,7 @@ namespace Vsite.Oom.Battleship.Model
             //from remaining randomly select one
             //from selected list take first square
 
+
             throw new NotImplementedException();
         }
 

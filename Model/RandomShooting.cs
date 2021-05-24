@@ -15,10 +15,24 @@ namespace Vsite.Oom.Battleship.Model
         }
         public Square NextTarget()
         {
+            // get list of all possible placements for a ship of given length
             var sequences = grid.GetSequences(shipLength);
-            // linearize sequences into one sequence of arrays
-            // select one of squares randomly as a target
-            throw new NotImplementedException();
+            // create a simple array with all squares (some of them will appear multiple times)
+            var allCandiates = sequences.SelectMany(seq => seq);
+            // create groups with individual squares 
+            var groups = allCandiates.GroupBy(sq => sq);
+            // find the number of squares in the largest group
+            var maxCount = groups.Max(g => g.Count());
+            // filter out only groups which countain maxCount squares
+            var largestGroups = groups.Where(g => g.Count() == maxCount);
+            // fetch keys from each group (i.e. square that represents the group)
+            var mostOften = largestGroups.Select(g => g.Key);
+            if(mostOften.Count() == 1)
+            {
+                return mostOften.First();
+            }
+            int index = random.Next(mostOften.Count());
+            return mostOften.ElementAt(index);
         }
 
         private Grid grid;

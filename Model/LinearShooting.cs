@@ -34,6 +34,9 @@ namespace Vsite.Oom.Battleship.Model
                 case Orientation.Horizontal:
                     // get squares from left from the leftmost square in 'squaresHit'
                     // get squares from right from the rightmost square in 'squaresHit'
+                
+                    // result = grid.GetSequence();
+                  
                     break;
                 case Orientation.Vertical:
                     // get squares from up from the topmost square in 'squaresHit'

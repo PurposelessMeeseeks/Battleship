@@ -31,7 +31,9 @@ namespace Vsite.Oom.Battleship.Model
             //check if all squares are marked hit:
             //   if all squares are hit then mark all squares sunken and return sunken
             //  else return Hit
-            throw new NotImplementedException();
+
+
+                throw new NotImplementedException();
         }
 
         private Square[] squares = null;
