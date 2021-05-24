@@ -53,7 +53,7 @@
     <Compile Include="RandomShooting.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="Shipwright.cs" />
-    <Compile Include="SorroundShooting.cs" />
+    <Compile Include="SorroundingShooting.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="SurroundingSquaresEliminator.cs" />
   </ItemGroup>

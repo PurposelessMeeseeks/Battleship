@@ -18,7 +18,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void ShootingTacticsRemainsRandomForSquareMissed()
         {
             Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
-            g.RecordShootingResult(HitResult.Missed);
+            g.                                                        RecordShootingResult(HitResult.Missed);
             Assert.AreEqual(ShootingTactics.Random, g.ShootingTactics);
         }
 

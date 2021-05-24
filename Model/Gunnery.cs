@@ -1,65 +1,102 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
     public enum ShootingTactics
     {
-        Random,
-        Surrounding,
-        Linear
+        Random, Surrounding, Linear
     }
-
     public class Gunnery
+    {
+        public Gunnery(int rows, int columns, IEnumerable<int> shipLenghts)
         {
-            public Gunnery(int rows, int columns, IEnumerable<int> shipLengths)
-            {
-                evidenceGrid = new Grid(rows, columns);
-                var sorted = shipLengths.OrderByDescending(sl => sl);
-                shipsToShoot = sorted.ToList();
-                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
-            }
-
-            public Square NextTarget()
-            {
-
-                return targetSelect.NextTarget();
-            }
-
-            public void RecordShootingResult(HitResult result)
-            {
-                // evidenceGrid.RecordResult();
-
-                ChangeTactics(result);
-                throw new NotImplementedException();
-            }
-
-            private void ChangeTactics(HitResult result)
-            {
-                // if result is Missed, stay in Random tactics
-                // if result is Hit:
-                //      - if current tactics is Random, change it to Surrounding and:
-                //        targetSelect = new SurroundingShooting(Grid, firstHit);
-                //      - if current tactics is Surrounding, change it to Linear and:
-                //        targetSelect = new LinearShooting(Grid, firstHit);
-                //      - if current tactics is Linear, stay in Linear tactics
-                //if result is Sunken, change current tactics to Random and:
-                //  target = new RandomShooting();
-                throw new NotImplementedException();
-            }
-
-            public ShootingTactics ShootingTactics
-            {
-                get { return shootingTactics; }
-            }
-
-            private Grid evidenceGrid;
-            private List<int> shipsToShoot;
-            private ITargetSelect targetSelect;
-            private ShootingTactics shootingTactics = ShootingTactics.Random;
+            var Sorted = shipLenghts.OrderByDescending(sl => sl).ToArray();
+            EvidenceGrid = new Grid(rows, columns);
+            ShipsToShoot = Sorted.ToList();
+            TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot);
         }
-    }
 
+        public Square NextTarget()
+        {
+            var lastTarget = TargetSelect.NextTarget();
+            return lastTarget;
+        }
+
+        public void RecordShootingResult(HitResult result)
+        {
+            EvidenceGrid.RecordResult(lastTarget, result);
+
+            if (result == HitResult.Missed)
+            {
+                return;
+            }
+
+            lastHits.Add(lastTarget);
+
+            if (result == HitResult.Sunken)
+            {
+                // mark all squares around lastHits as missed
+                SurroundingSquaresEliminator eliminator = new SurroundingSquaresEliminator(10, 10);
+                eliminator.ToEliminate(lastHits);
+                // mark all squares in lastHits
+                foreach (Square square in lastHits)
+                {
+                    square.SetSquareState(HitResult.Sunken);
+                }
+            }
+
+            ChangeTactics(result);
+        }
+        private void ChangeTactics(HitResult result)
+        {
+            switch (result)
+            {
+                case HitResult.Missed:
+                    return;
+                case HitResult.Hit:
+                    switch (shootingTactics)
+                    {
+                        case ShootingTactics.Random:
+                            shootingTactics = ShootingTactics.Surrounding;
+                            Debug.Assert(lastHits.Count == 1);
+                            TargetSelect = new SurroundingShooting(EvidenceGrid, lastHits[0], ShipsToShoot[0]);
+                            return;
+
+                        case ShootingTactics.Surrounding:
+                            shootingTactics = ShootingTactics.Linear;
+                            TargetSelect = new LinearShooting(EvidenceGrid, lastHits, ShipsToShoot[0]);
+                            return;
+
+                        case ShootingTactics.Linear:
+                            TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot[0]);
+                            return;
+                        default:
+                            break;
+                    }
+                    break;
+
+                case HitResult.Sunken:
+                    shootingTactics = ShootingTactics.Random;
+                    int sunkenShipLength = lastHits.Count;
+                    ShipsToShoot.Remove(sunkenShipLength);
+                    lastHits.Clear();
+                    TargetSelect = new RandomShooting(EvidenceGrid, 4);
+                    return;
+
+                default:
+                    break;
+            }
+        }
+
+        public ShootingTactics ShootingTactics { get { return shootingTactics; } }
+
+        private readonly Grid EvidenceGrid;
+        private readonly List<int> ShipsToShoot;
+        private readonly List<Square> lastHits = new List<Square>();
+        private Square lastTarget;
+        private ITargetSelect TargetSelect;
+        private ShootingTactics shootingTactics = ShootingTactics.Random;
+    }
+}
