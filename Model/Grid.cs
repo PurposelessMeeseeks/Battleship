@@ -18,8 +18,8 @@ namespace Vsite.Oom.Battleship.Model
     {
         public Grid(int rows, int columns)
         {
-            this.rows = rows;
-            this.columns = columns;
+            this.Rows = rows;
+            this.Columns = columns;
 
             squares = new Square?[rows, columns];
             for (int r = 0; r < rows; ++r)
@@ -55,11 +55,11 @@ namespace Vsite.Oom.Battleship.Model
                     break;
                 case Direction.Rigthwards:
                     deltaColumn = +1;
-                    count = columns - from.Column;
+                    count = Columns - from.Column;
                     break;
                 case Direction.Downwards:
                     deltaRow = +1;
-                    count = rows - from.Row;
+                    count = Rows - from.Row;
                     break;
                 case Direction.Leftwards:
                     deltaColumn = -1;
@@ -83,16 +83,17 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordResult(Square square, HitResult result)
         {
-            squares[square.Row, square.Column].Value.SetSquareState(result);
+            square.SetSquareState(result);
+            squares[square.Row, square.Column] = square;
         }
 
         private List<List<Square>> GetHorizontalPlacements(int length)
         {
             var result = new List<List<Square>>();
-            for (int r = 0; r < rows; ++r)
+            for (int r = 0; r < Rows; ++r)
             {
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
-                for (int c = 0; c < columns; ++c)
+                for (int c = 0; c < Columns; ++c)
                 {
                     if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
                         gathered.Enqueue(squares[r, c].Value);
@@ -118,10 +119,10 @@ namespace Vsite.Oom.Battleship.Model
         private List<List<Square>> GetVerticalPlacements(int length)
         {
             var result = new List<List<Square>>();
-            for (int c = 0; c < columns; ++c)
+            for (int c = 0; c < Columns; ++c)
             {
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
-                for (int r = 0; r < rows; ++r)
+                for (int r = 0; r < Rows; ++r)
                 {
                     if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
                         gathered.Enqueue(squares[r, c].Value);
@@ -135,8 +136,8 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-        private int rows;
-        private int columns;
+        public readonly int Rows;
+        public readonly int Columns;
 
         private Square?[,] squares;
         private ISquareEliminator squareEliminator = new OnlyShipSquaresEliminator();

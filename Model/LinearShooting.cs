@@ -47,8 +47,16 @@ namespace Vsite.Oom.Battleship.Model
                     Debug.Assert(false);
                     break;
             }
-            // TODO: do it in a similar way as for surrounding shooting
-            throw new NotImplementedException();
+            // sort squares array by length
+            var sortedByLength = squares.OrderByDescending(seq => seq.Count());
+            int maxLength = sortedByLength.ElementAt(0).Count();
+            if (maxLength > shipLength - squaresHit.Count())
+                maxLength = shipLength - squaresHit.Count();
+            var longest = sortedByLength.Where(seq => seq.Count() >= maxLength);
+            if (longest.Count() == 1)
+                return longest.ElementAt(0).First();
+            int index = random.Next(longest.Count());
+            return longest.ElementAt(index).First();
         }
 
         Orientation GetHitSquaresOrientation()
