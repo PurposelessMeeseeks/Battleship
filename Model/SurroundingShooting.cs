@@ -32,10 +32,25 @@ namespace Vsite.Oom.Battleship.Model
             squares = grid.GetSequence(initiallyHit, Direction.Left);
             if (squares.Count() > 0)
                 result.Add(squares);
+            //if squares are only in one direction
+            if (result.Count() == 1)
+                return result[0].First();
 
+            // sort list from longest to shortest
+            var ordered = result.OrderByDescending(seq => seq.Count());
+            int maxLen = result.First().Count();
+            if (maxLen > shipLength - 1)
+                maxLen = shipLength - 1;
+            // filter out all arrays for which length is equal or larger then shiplength - 1 
+            var longestCandidates = ordered.Where(seq => seq.Count() >= maxLen);
+            int index = random.Next(longestCandidates.Count());
+            return longestCandidates.ElementAt(index).First();
             //from list 'squares' select only those which are longer than shipLength - 1 
             //from remaining randomly select one
             //from selected list take first square
+
+
+
 
 
             throw new NotImplementedException();
