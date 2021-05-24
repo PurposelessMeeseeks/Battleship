@@ -14,12 +14,7 @@ namespace Vsite.Oom.Battleship.Model
     }
     public class LinearShooting : ITargetSelect
     {
-        public LinearShooting(Grid grid, IEnumerable<Square> squareHit)
-        {
-            this.grid = grid;
-            this sqauresHit = squaresHit;
-            
-        }
+     
 
             public LinearShooting(Grid grid, List<Square> squaresHit, int shipLength)
             {
