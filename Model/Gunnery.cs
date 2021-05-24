@@ -35,12 +35,19 @@ namespace Vsite.Oom.Battleship.Model
             switch (result)
             {
                 case HitResult.Missed:
-                    // mark square missed in evidence grid
+                    evidenceGrid.MarkSquare(lastTarget, SquareState.Missed);
                     break;
                 case HitResult.Hit:
                     squaresHit.Add(lastTarget);
                     break;
                 case HitResult.Sunken:
+                    squaresHit.Add(lastTarget);
+                    var eliminator = new SurroundingSquareEliminator(evidenceGrid.Rows, evidenceGrid.Columns);
+                    var surroundingSquares = eliminator.ToEliminate(squaresHit);
+                    foreach (var square in surroundingSquares)
+                        evidenceGrid.MarkSquare(square, SquareState.Missed);
+                    foreach (var square in squaresHit)
+                        evidenceGrid.MarkSquare(square, SquareState.Sunken);
                     squaresHit.Clear();
                     break;
             }
