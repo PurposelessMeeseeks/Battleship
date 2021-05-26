@@ -11,9 +11,12 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void NextTargetReturnsOneOfSquaresAboveOrBelowSquares3_3And4_3()
         {
             Grid grid = new Grid(10, 10);
-            List<Square> squares = new List<Square> { new Square(3, 3), new Square(4, 3)};
+            List<Square> squares = new List<Square> { new Square(3, 3), new Square(4, 3) };
             var shooting = new LinearShooting(grid, squares, 3);
-            Assert.IsTrue(shooting.NextTarget().Equals (new Square(2, 3)) || shooting.NextTarget().Equals(new Square(5, 3)));
+            Assert.IsTrue(shooting.NextTarget().Equals(new Square(2, 3)) || shooting.NextTarget().Equals(new Square(5, 3)));
+            var nextTarget = shooting.NextTarget();
+            Assert.IsTrue(nextTarget.Equals(new Square(2, 3)) || nextTarget.Equals(new Square(5, 3)));
+
         }
         [TestMethod]
         public void NextTargetReturnsOneOfSquaresAboveOrRightSquares3_3And3_4()
@@ -22,6 +25,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             List<Square> squares = new List<Square> { new Square(3, 3), new Square(3, 4) };
             var shooting = new LinearShooting(grid, squares, 3);
             Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 2)) || shooting.NextTarget().Equals(new Square(3, 5)));
+            var nextTarget = shooting.NextTarget();
+            Assert.IsTrue(nextTarget.Equals(new Square(3, 2)) || nextTarget.Equals(new Square(3, 5)));
         }
         [TestMethod]
         public void NextTargetReturnsSquareLeftOfSquares3_8And3_9()
@@ -30,6 +35,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             List<Square> squares = new List<Square> { new Square(3, 8), new Square(3, 9) };
             var shooting = new LinearShooting(grid, squares, 3);
             Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 7)));
+            var nextTarget = shooting.NextTarget();
+            Assert.IsTrue(nextTarget.Equals(new Square(3, 7)));
         }
         [TestMethod]
         public void NextTargetReturnsSquareRightOfSquares3_0And3_1()
@@ -38,14 +45,9 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             List<Square> squares = new List<Square> { new Square(3, 0), new Square(3, 1) };
             var shooting = new LinearShooting(grid, squares, 3);
             Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 2)));
-        }
-        [TestMethod]
-        public void NextTargetReturnSquareRightOfSquares3_0And3_1()
-        {
-            Grid grid = new Grid(10, 10);
-            List<Square> squares = new List<Square> { new Square(3, 0), new Square(3, 1) };
-            var shooting = new LinearShooting(grid, squares, 3);
-            Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 2)));
+            var nextTarget = shooting.NextTarget();
+            Assert.IsTrue(nextTarget.Equals(new Square(3, 2)));
         }
     }
 }
+     

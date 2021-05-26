@@ -6,7 +6,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
     [TestClass]
     public class TestSurroundingShooting
     {
-        private Square square;
 
         [TestMethod]
         public void NextTargetSelectsOneOfSquaresSurroundingSquare3_3()
@@ -16,6 +15,10 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             var shooting = new SurroundingShooting(grid, square, 3);
             Assert.IsTrue(shooting.NextTarget().Equals(new Square(2, 3)) || shooting.NextTarget().Equals(new Square(3, 4)) || shooting.NextTarget().Equals(new Square(4, 3))
                 || shooting.NextTarget().Equals(new Square(3, 2)));
+            var nextTarget = shooting.NextTarget();
+            Assert.IsTrue(nextTarget.Equals(new Square(2, 3)) || nextTarget.Equals(new Square(3, 4)) || nextTarget.Equals(new Square(4, 3))
+                || nextTarget.Equals(new Square(3, 2)));
+
         }
     }
 }
