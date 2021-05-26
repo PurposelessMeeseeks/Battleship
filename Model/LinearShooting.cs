@@ -62,9 +62,8 @@ namespace Vsite.Oom.Battleship.Model
             }
 
         private Grid grid;
-        private List<Square> squareaHit;
+        private List<Square> squaresHit;
         private int shipLength;
         private Random random = new Random();
-        private object squaresHit;
     }
 }
