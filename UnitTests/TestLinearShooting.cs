@@ -1,11 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace Vsite.Oom.Battleship.Model.UnitTests {
     [TestClass]
     public class TestLinearShooting {
         [TestMethod]
-        public void NextTargetReturnOneOfSquaresAboveOrBelowSquares3_3And4_3() {
+        public void NextTargetReturnsOneOfSquaresAboveOrBelowSquares3_3And4_3() {
             Grid grid = new Grid(10, 10);
             List<Square> squares = new List<Square> { new Square(3, 3), new Square(4, 3) };
             var shooting = new LinearShooting(grid, squares, 3);
@@ -13,7 +14,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         }
 
         [TestMethod]
-        public void NextTargetReturnOneOfSquaresLeftOrRightSquares3_3And3_4() {
+        public void NextTargetReturnsOneOfSquaresLeftOrRightOfSquares3_3And4_3() {
             Grid grid = new Grid(10, 10);
             List<Square> squares = new List<Square> { new Square(3, 3), new Square(3, 4) };
             var shooting = new LinearShooting(grid, squares, 3);
@@ -21,7 +22,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         }
 
         [TestMethod]
-        public void NextTargetReturnOneOfSquaresLeftOfSquares3_8And3_9() {
+        public void NextTargetReturnsSquareLeftOfSquares3_8And3_9() {
             Grid grid = new Grid(10, 10);
             List<Square> squares = new List<Square> { new Square(3, 8), new Square(3, 9) };
             var shooting = new LinearShooting(grid, squares, 3);
@@ -29,7 +30,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         }
 
         [TestMethod]
-        public void NextTargetReturnOneOfSquareRightOfSquares3_0And3_1() {
+        public void NextTargetReturnsSquareRightOfSquares3_0And3_1() {
             Grid grid = new Grid(10, 10);
             List<Square> squares = new List<Square> { new Square(3, 0), new Square(3, 1) };
             var shooting = new LinearShooting(grid, squares, 3);

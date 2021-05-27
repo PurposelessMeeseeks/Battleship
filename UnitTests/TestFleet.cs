@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +15,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         [TestMethod]
         public void CreateShipAddsNewShipToFleet() {
             Fleet fleet = new Fleet();
-
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             fleet.CreateShip(squares);
             Assert.AreEqual(1, fleet.Ships.Count());
@@ -25,9 +25,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         }
 
         [TestMethod]
-        public void HitForFleetReturnsMissedIfSquareDoesnBelongToAnyShip() {
+        public void HitForFleetReturnsMissedIfSquareDoesntBelongToAnyShip() {
             Fleet fleet = new Fleet();
-
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             fleet.CreateShip(squares);
 
@@ -39,9 +38,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         }
 
         [TestMethod]
-        public void HitForFleetReturnsHitIfSquareBelongToAnyShip() {
+        public void HitForFleetReturnsHitIfSquareBelongsToAnyShip() {
             Fleet fleet = new Fleet();
-
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             fleet.CreateShip(squares);
 
@@ -55,7 +53,6 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         [TestMethod]
         public void HitForFleetReturnsSunkenIfAllSquareBelongingToAShipAreHit() {
             Fleet fleet = new Fleet();
-
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             fleet.CreateShip(squares);
 
@@ -63,24 +60,21 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
             fleet.Hit(new Square(1, 4));
             HitResult result = fleet.Hit(new Square(1, 3));
             Assert.AreEqual(HitResult.Sunken, result);
+
         }
 
         [TestMethod]
         public void HitForFleetReturnsSunkenIfAllSquaresBelongingToOneOfShipsAreHit() {
             Fleet fleet = new Fleet();
-
             List<Square> squares = new List<Square> { new Square(1, 2), new Square(1, 3), new Square(1, 4) };
             fleet.CreateShip(squares);
-
             squares = new List<Square> { new Square(5, 7), new Square(6, 7), new Square(7, 7) };
             fleet.CreateShip(squares);
-
             squares = new List<Square> { new Square(8, 1), new Square(9, 1) };
             fleet.CreateShip(squares);
 
             fleet.Hit(new Square(5, 7));
             fleet.Hit(new Square(6, 7));
-
             HitResult result = fleet.Hit(new Square(7, 7));
             Assert.AreEqual(HitResult.Sunken, result);
 

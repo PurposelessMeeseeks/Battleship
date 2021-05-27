@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model {
     public class SurroundingShooting : ITargetSelect {
+        private readonly Grid grid;
+        private readonly int shipLength;
+        private Square firstHit;
+        private readonly Random random = new Random();
         public SurroundingShooting(Grid grid, Square FirstHit, int shipLength) {
             this.grid = grid;
             this.firstHit = FirstHit;
             this.shipLength = shipLength;
         }
-
         public Square NextTarget() {
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
 
@@ -52,9 +57,7 @@ namespace Vsite.Oom.Battleship.Model {
             return longest.ElementAt(index).First();
         }
 
-        private readonly Grid grid;
-        private readonly int shipLength;
-        private Square firstHit;
-        private readonly Random random = new Random();
     }
+
+
 }

@@ -1,17 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Vsite.Oom.Battleship.Model.UnitTests {
     [TestClass]
     public class TestSquare {
         [TestMethod]
-        public void SquareConstructorCreateASquareAtGivenRowAndColumn() {
+        public void SquareConstructorCreatesASquareAtGivenRowAndColumn() {
             Square s = new Square(5, 4);
-            Assert.AreEqual(5, s.row);
-            Assert.AreEqual(4, s.column);
+            Assert.AreEqual(5, s.Row);
+            Assert.AreEqual(4, s.Column);
         }
 
         [TestMethod]
-        public void SquareSetSquareStateChangesSquareStateToMissedForHitResultMissed() {
+        public void SetSquareStateChangesSquareStateToMissedForHitResultMissed() {
             Square s = new Square(5, 4);
             Assert.AreEqual(SquareState.Default, s.SquareState);
             s.SetSquareState(HitResult.Missed);
@@ -19,7 +20,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         }
 
         [TestMethod]
-        public void SquareSetSquareStateChangesSquareStateToHitForHitResultHit() {
+        public void SetSquareStateChangesSquareStateToHitForHitResultHit() {
             Square s = new Square(5, 4);
             Assert.AreEqual(SquareState.Default, s.SquareState);
             s.SetSquareState(HitResult.Hit);
@@ -27,11 +28,12 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         }
 
         [TestMethod]
-        public void SquareSetSquareStateChangesSquareStateToSunkenForHitResultSunken() {
+        public void SetSquareStateChangesSquareStateToSunkenForHitResultSunken() {
             Square s = new Square(5, 4);
             Assert.AreEqual(SquareState.Default, s.SquareState);
             s.SetSquareState(HitResult.Sunken);
             Assert.AreEqual(SquareState.Sunken, s.SquareState);
         }
+
     }
 }

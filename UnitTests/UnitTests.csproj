@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{02B3DEFA-8D0B-43CE-A0C6-6C2B4AB18A44}</ProjectGuid>
+    <ProjectGuid>{DAF78287-D0CF-4ACB-93AF-08E1C5CF0C2C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Vsite.Oom.Battleship.Model.UnitTests</RootNamespace>
@@ -66,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
-      <Project>{84265126-cc92-4e07-bff4-105203d979d7}</Project>
+      <Project>{f270f21b-a49c-4d31-8157-ac76f2c21aaf}</Project>
       <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>

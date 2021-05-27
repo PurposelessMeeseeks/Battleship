@@ -6,9 +6,9 @@ namespace Vsite.Oom.Battleship.Model {
     public class RandomShooting : ITargetSelect {
         private readonly Grid Grid;
         private readonly int ShipLenght;
-        private readonly Grid evidenceGrid;
-        private readonly List<int> shipsToShoot;
-        private readonly Random random = new Random();
+        private Grid evidenceGrid;
+        private List<int> shipsToShoot;
+        private Random random = new Random();
 
         public RandomShooting(Grid grid, int shipLenght) {
             Grid = grid;
@@ -43,7 +43,6 @@ namespace Vsite.Oom.Battleship.Model {
             }
 
             int index = random.Next(mostCommunSquares.Count());
-
             return mostCommunSquares.ElementAt(index);
 
             throw new NotImplementedException();

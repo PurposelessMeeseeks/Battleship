@@ -17,19 +17,19 @@ namespace Vsite.Oom.Battleship.Model {
         }
 
         public Square NextTarget() {
-            var sorted = new List<Square>(squaresHit.OrderBy(s => s.row + s.column));
+            var sorted = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
 
             var orientation = GetHitSquaresOrientation();
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
             switch (orientation) {
                 case Orientation.Horizontal:
-                    var left = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Leftwords);
+                    var left = grid.GetAvailablePlacementsInDirection(sorted.First(), Grid.Direction.Leftwards);
 
                     if (left.Count() > 0) {
                         squares.Add(left);
                     }
 
-                    var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Rightwords);
+                    var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Grid.Direction.Rightwards);
 
                     if (right.Count() > 0) {
                         squares.Add(right);
@@ -37,13 +37,13 @@ namespace Vsite.Oom.Battleship.Model {
                     break;
 
                 case Orientation.Vertical:
-                    var up = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Upwords);
+                    var up = grid.GetAvailablePlacementsInDirection(sorted.First(), Grid.Direction.Upwards);
 
                     if (up.Count() > 0) {
                         squares.Add(up);
                     }
 
-                    var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Downwords);
+                    var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Grid.Direction.Downwards);
 
                     if (down.Count() > 0) {
                         squares.Add(down);
@@ -54,13 +54,6 @@ namespace Vsite.Oom.Battleship.Model {
                     Debug.Assert(false);
                     break;
             }
-
-            //if (squares.Count > 1)
-            //{
-            //    return squares[random.Next(0, 2)].First();
-            //}
-
-            //return squares[0].First();
 
             var sorted_2 = squares.OrderByDescending(seq => seq.Count());
 
@@ -82,7 +75,7 @@ namespace Vsite.Oom.Battleship.Model {
         }
 
         private Orientation GetHitSquaresOrientation() {
-            if (squaresHit[0].row == squaresHit[1].row) {
+            if (squaresHit[0].Row == squaresHit[1].Row) {
                 return Orientation.Horizontal;
             }
 

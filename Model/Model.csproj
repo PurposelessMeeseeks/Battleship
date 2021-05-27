@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{84265126-CC92-4E07-BFF4-105203D979D7}</ProjectGuid>
+    <ProjectGuid>{F270F21B-A49C-4D31-8157-AC76F2C21AAF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Vsite.Oom.Battleship.Model</RootNamespace>
