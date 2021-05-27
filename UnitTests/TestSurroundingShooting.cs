@@ -5,6 +5,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
     [TestClass]
     public class TestSurroundingShooting {
         [TestMethod]
+        //test ne prolazi svaki put
         public void NextTargetSelectsOneOfSquaresSurroundingSquare3_3() {
             Grid grid = new Grid(10, 10);
             Square square = new Square(3, 3);
