@@ -9,7 +9,6 @@ namespace Vsite.Oom.Battleship.Model
         Hit,
         Sunken
     }
-
     public struct Square : IEquatable<Square>
     {
         public Square(int row, int column)

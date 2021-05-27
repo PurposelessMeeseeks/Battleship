@@ -4,10 +4,8 @@ using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
 {
-
     public class SurroundingShooting : ITargetSelect
     {
-
         public SurroundingShooting(Grid grid, Square firstHit, int shipLength)
         {
             this.grid = grid;
@@ -18,26 +16,29 @@ namespace Vsite.Oom.Battleship.Model
         {
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
             
-            squares.Add(grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Upwards));
-            squares.Add(grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Rightwards));
-            squares.Add(grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Downwards));
-            squares.Add(grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Leftwards));
+            var up = grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Upwards);
+            if (up.Count() > 0)
+                squares.Add(up);
+            var right = grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Rightwards);
+            if (right.Count() > 0)
+                squares.Add(right);
+            var down = grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Downwards);
+            if (down.Count() > 0)
+                squares.Add(down);
+            var left = grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Leftwards);
+            if (left.Count() > 0)
+                squares.Add(left);
 
             // sort squares by length
             var sorted = squares.OrderByDescending(seq=>seq.Count());
             int maxLength = sorted.ElementAt(0).Count();
             if (maxLength > shipLength - 1)
                 maxLength = shipLength - 1;
-
             var longest = sorted.Where(seq => seq.Count() >= maxLength);
             if (longest.Count() == 1)
                 return longest.ElementAt(0).First();
             int index = random.Next(longest.Count());
             return longest.ElementAt(index).First();
-
-            // TODO: DZ select one of them as target
-            throw new NotImplementedException();
-
         }
 
         private Grid grid;

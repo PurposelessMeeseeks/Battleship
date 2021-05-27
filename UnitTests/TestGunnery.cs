@@ -55,7 +55,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             g.RecordShootingResult(HitResult.Hit);
             g.RecordShootingResult(HitResult.Hit);
             g.RecordShootingResult(HitResult.Missed);
-            Assert.AreEqual(ShootingTactics.Linear, g.ShootingTactics); // TODO: Linear
+            Assert.AreEqual(ShootingTactics.Linear, g.ShootingTactics);
         }
 
         [TestMethod]

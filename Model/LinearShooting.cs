@@ -26,20 +26,36 @@ namespace Vsite.Oom.Battleship.Model
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    squares.Add(grid.GetAvailablePlacementsInDirecion(squaresHit[0], Direction.Leftwards));
-                    squares.Add(grid.GetAvailablePlacementsInDirecion(squaresHit[1], Direction.Rightwards));
+                    var left = grid.GetAvailablePlacementsInDirecion(squaresHit[0], Direction.Leftwards);
+                    if (left.Count() > 0)
+                        squares.Add(left);
+                    var right = grid.GetAvailablePlacementsInDirecion(squaresHit[1], Direction.Rightwards);
+                    if (right.Count() > 0)
+                        squares.Add(right);
                     break;
                 case Orientation.Vertical:
-                    squares.Add(grid.GetAvailablePlacementsInDirecion(squaresHit[0], Direction.Upwards));
-                    squares.Add(grid.GetAvailablePlacementsInDirecion(squaresHit[1], Direction.Downwards));
+                    var up = grid.GetAvailablePlacementsInDirecion(squaresHit[0], Direction.Upwards);
+                    if (up.Count() > 0)
+                        squares.Add(up);
+                    var down = grid.GetAvailablePlacementsInDirecion(squaresHit[1], Direction.Downwards);
+                    if (down.Count() > 0)
+                        squares.Add(down);
                     break;
                 default:
                     Debug.Assert(false);
                     break;
             }
-            // TODO: DZ select one of them optionally using random number generator
-            // do it in similar way as for surrounding shooting
-            throw new NotImplementedException();
+
+            // sort squares array by length
+            var sortedByLength = squares.OrderByDescending(seq => seq.Count());
+            int maxLength = sortedByLength.ElementAt(0).Count();
+            if (maxLength > shipLength - squaresHit.Count())
+                maxLength = shipLength - squaresHit.Count();
+            var longest = sortedByLength.Where(seq => seq.Count() >= maxLength);
+            if (longest.Count() == 1)
+                return longest.ElementAt(0).First();
+            int index = random.Next(longest.Count());
+            return longest.ElementAt(index).First();
         }
 
         Orientation GetHitSquaresOrientation()
@@ -48,8 +64,9 @@ namespace Vsite.Oom.Battleship.Model
                 return Orientation.Horizontal;
             return Orientation.Vertical;
         }
-        Grid grid;
-        int shipLength;
-        List<Square> squaresHit;
+        private Grid grid;
+        private int shipLength;
+        private List<Square> squaresHit;
+        private Random random = new Random();
     }
 }

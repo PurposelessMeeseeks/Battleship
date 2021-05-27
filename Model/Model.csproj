@@ -43,12 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Battleship.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Battleship.Designer.cs">
-      <DependentUpon>Battleship.cs</DependentUpon>
-    </Compile>
     <Compile Include="Fleet.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Gunnery.cs" />
@@ -64,11 +58,6 @@
     <Compile Include="Square.cs" />
     <Compile Include="SurroundingShooting.cs" />
     <Compile Include="SurroundingSquareEliminator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Battleship.resx">
-      <DependentUpon>Battleship.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

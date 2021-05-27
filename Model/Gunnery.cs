@@ -36,8 +36,12 @@ namespace Vsite.Oom.Battleship.Model
             lastHits.Add(lastTarget);
             if (result == HitResult.Sunken)
             {
-                // mark all squares around lastHits as missed
-                // mark all squares in lastHits as sunken
+                var eliminator = new SurroundingSquareEliminator(evidenceGrid.Rows, evidenceGrid.Columns);
+                var toEliminate = eliminator.ToEliminate(lastHits);
+                foreach (var square in toEliminate)
+                    evidenceGrid.RecordResult(square, HitResult.Missed);
+                foreach (var square in lastHits)
+                    evidenceGrid.RecordResult(square, HitResult.Sunken);
             }
             ChangeTactics(result);
         }
@@ -46,16 +50,13 @@ namespace Vsite.Oom.Battleship.Model
         {
             switch (result)
             {
-                case HitResult.Missed:
-                    return;
                 case HitResult.Hit:
-                    lastHits.Add(lastTarget);
                     switch (shootingTactics)
                     {
                         case ShootingTactics.Random:
                             shootingTactics = ShootingTactics.Surrounding;
                             Debug.Assert(lastHits.Count == 1);
-                            targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0],shipsToShoot[0]);
+                            targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
                             return;
                         case ShootingTactics.Surrounding:
                             shootingTactics = ShootingTactics.Linear;
