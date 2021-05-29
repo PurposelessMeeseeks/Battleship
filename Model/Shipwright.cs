@@ -10,7 +10,7 @@ namespace Vsite.Oom.Battleship.Model
         {
             this.rows = rows;
             this.columns = columns;
-            this.shipLengths = shipLength.OrderByDescending(s => s);
+            shipLengths = shipLength.OrderByDescending(s => s);
         }
 
         public Fleet CreateFleet()
@@ -29,6 +29,9 @@ namespace Vsite.Oom.Battleship.Model
             Queue<int> lengths = new Queue<int>(shipLengths);
             Grid grid = new Grid(rows, columns);
             Fleet fleet = new Fleet();
+            SurroundingSquareEliminator eliminator = new SurroundingSquareEliminator(10, 10);
+            IEnumerable<Square> ToRemove; 
+
             while (lengths.Count > 0)
             {
                 int length = lengths.Dequeue();
@@ -38,7 +41,8 @@ namespace Vsite.Oom.Battleship.Model
                 int index = random.Next(placements.Count());
                 var selected = placements.ElementAt(index);
                 fleet.CreateShip(selected);
-                grid.Eliminate(selected);
+                ToRemove = eliminator.ToEliminate(selected);
+                grid.Eliminate(ToRemove);
             }
             return fleet;
         }

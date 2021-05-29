@@ -41,7 +41,7 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
-        public IEnumerable<Square> GetAvailablePlacementsInDirecion(Square from, Direction direction)
+        public IEnumerable<Square> GetAvailablePlacementsInDirection(Square from, Direction direction)
         {
             int deltaRow = 0;
             int deltaColumn = 0;
@@ -62,7 +62,7 @@ namespace Vsite.Oom.Battleship.Model
                     break;
                 case Direction.Leftwards:
                     deltaColumn = -1;
-                    count = from.Column +1;
+                    count = from.Column + 1;
                     break;
             }
             List<Square> result = new List<Square>();

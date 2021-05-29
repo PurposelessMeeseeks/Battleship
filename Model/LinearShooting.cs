@@ -26,18 +26,18 @@ namespace Vsite.Oom.Battleship.Model
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    var left = grid.GetAvailablePlacementsInDirecion(squaresHit[0], Direction.Leftwards);
+                    var left = grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Leftwards);
                     if (left.Count() > 0)
                         squares.Add(left);
-                    var right = grid.GetAvailablePlacementsInDirecion(squaresHit[1], Direction.Rightwards);
+                    var right = grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Rightwards);
                     if (right.Count() > 0)
                         squares.Add(right);
                     break;
                 case Orientation.Vertical:
-                    var up = grid.GetAvailablePlacementsInDirecion(squaresHit[0], Direction.Upwards);
+                    var up = grid.GetAvailablePlacementsInDirection(squaresHit[0], Direction.Upwards);
                     if (up.Count() > 0)
                         squares.Add(up);
-                    var down = grid.GetAvailablePlacementsInDirecion(squaresHit[1], Direction.Downwards);
+                    var down = grid.GetAvailablePlacementsInDirection(squaresHit[1], Direction.Downwards);
                     if (down.Count() > 0)
                         squares.Add(down);
                     break;

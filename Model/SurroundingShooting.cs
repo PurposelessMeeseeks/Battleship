@@ -16,16 +16,16 @@ namespace Vsite.Oom.Battleship.Model
         {
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
             
-            var up = grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Upwards);
+            var up = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Upwards);
             if (up.Count() > 0)
                 squares.Add(up);
-            var right = grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Rightwards);
+            var right = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Rightwards);
             if (right.Count() > 0)
                 squares.Add(right);
-            var down = grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Downwards);
+            var down = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Downwards);
             if (down.Count() > 0)
                 squares.Add(down);
-            var left = grid.GetAvailablePlacementsInDirecion(firstHit, Direction.Leftwards);
+            var left = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwards);
             if (left.Count() > 0)
                 squares.Add(left);
 
