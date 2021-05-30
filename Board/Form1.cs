@@ -45,6 +45,12 @@ namespace Board
             shipLengths = new List<int> { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 };
             shipwright = new Shipwright(10, 10, shipLengths);
             gunnery = new Gunnery(10, 10, shipLengths);
+
+            MyShipsAlive = shipLengths.Count;
+            AiShipsAlive = shipLengths.Count;
+
+            labelMyShipsAlive.Text = MyShipsAlive.ToString();
+            labelAiShipsAlive.Text = AiShipsAlive.ToString();
         }
 
         private void PlaceFleetButton_Click(object sender, EventArgs e)
@@ -337,6 +343,9 @@ namespace Board
         private Button[,] enemyButtons;
         private Button[,] myButtons;
 
+        private int MyShipsAlive;
+        private int AiShipsAlive;
+
         private void mySemaphore(Square sq, Button button)
         {
             foreach (Ship ship in aiFleet.Ships)
@@ -354,6 +363,9 @@ namespace Board
                     {
                         enemyButtons[square.Row, square.Column].BackColor = Color.Black;
                     }
+                    AiShipsAlive -= 1;
+                    labelAiShipsAlive.Text = AiShipsAlive.ToString();
+                    CheckResults();
                     break;
                 }
                 button.BackColor = Color.Green;
@@ -380,8 +392,11 @@ namespace Board
                 {
                     foreach (Square square in ship.Squares)
                     {
-                        myButtons[Target.Row, Target.Column].BackColor = Color.Black;
+                        myButtons[square.Row, square.Column].BackColor = Color.Black;
                     }
+                    MyShipsAlive -= 1;
+                    labelMyShipsAlive.Text = MyShipsAlive.ToString();
+                    CheckResults();
                     break;
                 }
             }
@@ -390,6 +405,16 @@ namespace Board
             gunnery.RecordShootingResult(result);
         }
 
+        private void CheckResults()
+        {
+            if (MyShipsAlive == 0)
+                if (MessageBox.Show("Ai Won!", "Looser", MessageBoxButtons.OK) == DialogResult.OK)
+                    Application.Exit();            
+            
+            if (AiShipsAlive == 0)
+                if (MessageBox.Show("You Won!", "Winner", MessageBoxButtons.OK) == DialogResult.OK)
+                    Application.Exit();
+        }
         private void button200_Click(object sender, EventArgs e)
         {
             mySemaphore(new Square(0, 0), button200);

@@ -272,6 +272,10 @@ namespace Board
             this.label40 = new System.Windows.Forms.Label();
             this.button200 = new System.Windows.Forms.Button();
             this.PlaceFleetButton = new System.Windows.Forms.Button();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.labelMyShipsAlive = new System.Windows.Forms.Label();
+            this.labelAiShipsAlive = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -3307,12 +3311,52 @@ namespace Board
             this.PlaceFleetButton.UseVisualStyleBackColor = true;
             this.PlaceFleetButton.Click += new System.EventHandler(this.PlaceFleetButton_Click);
             // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(73, 42);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(100, 17);
+            this.label41.TabIndex = 122;
+            this.label41.Text = "My ships alive:";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(623, 42);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(94, 17);
+            this.label42.TabIndex = 123;
+            this.label42.Text = "Ai ships alive:";
+            // 
+            // labelMyShipsAlive
+            // 
+            this.labelMyShipsAlive.AutoSize = true;
+            this.labelMyShipsAlive.Location = new System.Drawing.Point(179, 42);
+            this.labelMyShipsAlive.Name = "labelMyShipsAlive";
+            this.labelMyShipsAlive.Size = new System.Drawing.Size(16, 17);
+            this.labelMyShipsAlive.TabIndex = 124;
+            this.labelMyShipsAlive.Text = "0";
+            // 
+            // labelAiShipsAlive
+            // 
+            this.labelAiShipsAlive.AutoSize = true;
+            this.labelAiShipsAlive.Location = new System.Drawing.Point(729, 42);
+            this.labelAiShipsAlive.Name = "labelAiShipsAlive";
+            this.labelAiShipsAlive.Size = new System.Drawing.Size(16, 17);
+            this.labelAiShipsAlive.TabIndex = 125;
+            this.labelAiShipsAlive.Text = "0";
+            // 
             // Board
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1195, 701);
+            this.Controls.Add(this.labelAiShipsAlive);
+            this.Controls.Add(this.labelMyShipsAlive);
+            this.Controls.Add(this.label42);
+            this.Controls.Add(this.label41);
             this.Controls.Add(this.PlaceFleetButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -3324,6 +3368,7 @@ namespace Board
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -3572,6 +3617,10 @@ namespace Board
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Button button200;
         private System.Windows.Forms.Button PlaceFleetButton;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Label labelMyShipsAlive;
+        private System.Windows.Forms.Label labelAiShipsAlive;
     }
 }
 
