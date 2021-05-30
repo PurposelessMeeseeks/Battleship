@@ -44,13 +44,8 @@ namespace Board
             aiFleet = shipwright.CreateFleet();
 
             foreach (Ship s in myFleet.Ships)
-            {
                 foreach (Square sq in s.Squares)
-                {
-                    var button = GetButton(sq.Column, sq.Row);
-                    button.BackColor = Color.Blue;
-                }
-            }
+                    GetButton(sq.Column, sq.Row).BackColor = Color.Blue;
         }
 
         private void iPlay(Square sq, Button button)
@@ -58,7 +53,6 @@ namespace Board
             foreach (Ship ship in aiFleet.Ships)
             {
                 result = ship.Hit(sq);
-
                 if (result == HitResult.Hit)
                 {
                     button.BackColor = Color.Red;
@@ -67,9 +61,8 @@ namespace Board
                 if (result == HitResult.Sunken)
                 {
                     foreach (Square square in ship.Squares)
-                    {
                         GetEnemyButton(square.Column, square.Row).BackColor = Color.Black;
-                    }
+
                     AiShipsAlive -= 1;
                     labelAiShipsAlive.Text = AiShipsAlive.ToString();
                     CheckResults();
@@ -78,6 +71,7 @@ namespace Board
             }
             if (result == HitResult.Missed)
                 button.BackColor = Color.Green;
+
             button.Enabled = false;
             aiPlay();
         }
@@ -99,9 +93,8 @@ namespace Board
                 if (result == HitResult.Sunken)
                 {
                     foreach (Square square in ship.Squares)
-                    {
                         GetButton(square.Column, square.Row).BackColor = Color.Black;
-                    }
+
                     MyShipsAlive -= 1;
                     labelMyShipsAlive.Text = MyShipsAlive.ToString();
                     CheckResults();
