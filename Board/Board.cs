@@ -8,8 +8,8 @@ namespace Board
 {
     public partial class Board : Form
     {
-        private List<int> shipLengths;
-        private Shipwright shipwright;
+        private readonly List<int> shipLengths;
+        private readonly Shipwright shipwright;
         private Gunnery gunnery;
         private Fleet myFleet;
         private Fleet aiFleet;
