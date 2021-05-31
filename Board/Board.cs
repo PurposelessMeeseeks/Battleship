@@ -11,9 +11,9 @@ namespace Board
         private readonly List<int> shipLengths;
         private readonly Shipwright shipwright;
         private Gunnery gunnery;
+        private HitResult result;
         private Fleet myFleet;
         private Fleet aiFleet;
-        private HitResult result;
         private int MyShipsAlive;
         private int AiShipsAlive;
         public Board()
@@ -50,30 +50,37 @@ namespace Board
 
         private void iPlay(Square sq, Button button)
         {
-            foreach (Ship ship in aiFleet.Ships)
+            if (aiFleet == null)
             {
-                result = ship.Hit(sq);
-                if (result == HitResult.Hit)
-                {
-                    button.BackColor = Color.Red;
-                    break;
-                }
-                if (result == HitResult.Sunken)
-                {
-                    foreach (Square square in ship.Squares)
-                        GetEnemyButton(square.Column, square.Row).BackColor = Color.Black;
-
-                    AiShipsAlive -= 1;
-                    labelAiShipsAlive.Text = AiShipsAlive.ToString();
-                    CheckResults();
-                    break;
-                }
+                MessageBox.Show("Place fleet first!", "", MessageBoxButtons.OK);
+                return;
             }
-            if (result == HitResult.Missed)
-                button.BackColor = Color.Green;
 
-            button.Enabled = false;
-            aiPlay();
+            {
+                foreach (Ship ship in aiFleet.Ships)
+                {
+                    result = ship.Hit(sq);
+                    if (result == HitResult.Hit)
+                    {
+                        button.BackColor = Color.Red;
+                        break;
+                    }
+                    if (result == HitResult.Sunken)
+                    {
+                        foreach (Square square in ship.Squares)
+                            GetEnemyButton(square.Column, square.Row).BackColor = Color.Black;
+
+                        AiShipsAlive -= 1;
+                        labelAiShipsAlive.Text = AiShipsAlive.ToString();
+                        CheckResults();
+                        break;
+                    }
+                }
+                if (result == HitResult.Missed)
+                    button.BackColor = Color.Green;
+                button.Enabled = false;
+                aiPlay();
+            }
         }
 
         private void aiPlay()
