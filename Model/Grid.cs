@@ -14,10 +14,10 @@ namespace Vsite.Oom.Battleship.Model
 
     public class Grid
     {
-        private readonly int rows;
-        private readonly int colums;
+        public readonly int rows;
+        public readonly int colums;
 
-        private readonly Square?[,] squares;
+        private Square?[,] squares;
         private readonly ISquareEliminator squareEliminator = new OnlyShipSquaresEliminator();
 
         public Grid(int rows, int colums)
@@ -123,7 +123,7 @@ namespace Vsite.Oom.Battleship.Model
 
             foreach (Square square in ToEliminate)
             {
-                squares[square.row, square.column] = null; ;
+                squares[square.row, square.column] = null;
             }
         }
 

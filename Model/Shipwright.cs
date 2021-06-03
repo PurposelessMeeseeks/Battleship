@@ -6,13 +6,9 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class Shipwright
     {
-        private readonly Grid grid;
-        private readonly Fleet fleet;
-
         private readonly int rows;
         private readonly int columns;
         private readonly IEnumerable<int> shipLengths;
-
         private readonly Random random = new Random();
 
         public Shipwright(int rows, int columns, IEnumerable<int> shipLengths)
@@ -22,7 +18,7 @@ namespace Vsite.Oom.Battleship.Model
             this.shipLengths = shipLengths.OrderByDescending(s => s);
         }
 
-        public Fleet CreateFleet()
+        public Fleet CreateFleet(List<int> shipLengths)
         {
             for (int retries = 0; retries < 5; ++retries)
             {
@@ -39,7 +35,7 @@ namespace Vsite.Oom.Battleship.Model
         private Fleet PlaceShips()
         {
             Queue<int> lengths = new Queue<int>(shipLengths);
-            Grid grid = new Grid(rows, columns);
+            Grid grid = new Grid(rows, columns, new SurroundingSquaresEliminator(rows, columns));
             Fleet fleet = new Fleet();
 
             while (lengths.Count > 0)

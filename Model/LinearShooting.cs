@@ -65,13 +65,6 @@ namespace Vsite.Oom.Battleship.Model
                     break;
             }
 
-            //if (squares.Count > 1)
-            //{
-            //    return squares[random.Next(0, 2)].First();
-            //}
-
-            //return squares[0].First();
-
             var sorted_2 = squares.OrderByDescending(seq => seq.Count());
 
             int maxLength = sorted_2.ElementAt(0).Count();
