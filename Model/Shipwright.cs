@@ -28,6 +28,7 @@ namespace Vsite.Oom.Battleship.Model
 
             throw new ArgumentException();
         }
+
         private Fleet PlaceShips()
         {
             Queue<int> lengths = new Queue<int>(shipLengths);
@@ -56,7 +57,6 @@ namespace Vsite.Oom.Battleship.Model
         private int rows;
         private int columns;
         private IEnumerable<int> shipLengths;
-
         private Random random = new Random();
     }
 }
