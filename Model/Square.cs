@@ -12,17 +12,16 @@ namespace Vsite.Oom.Battleship.Model
 
     public struct Square : IEquatable<Square>
     {
+        public readonly int row;
+        public readonly int column;
+        private SquareState squareState;
+
         public Square(int Row, int Column)
         {
             row = Row;
             column = Column;
             squareState = SquareState.Default;
         }
-
-        public readonly int row;
-        public readonly int column;
-
-        private SquareState squareState;
 
         public void SetSquareState(HitResult hitResult)
         {

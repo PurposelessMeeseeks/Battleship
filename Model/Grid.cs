@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
 {
     public enum Direction
     {
-        Upwords,
-        Rightwords,
-        Downwords,
-        Leftwords
+        Upwards,
+        Rightwards,
+        Downwards,
+        Leftwards
     }
 
     public class Grid
@@ -17,7 +16,7 @@ namespace Vsite.Oom.Battleship.Model
         public readonly int rows;
         public readonly int colums;
 
-        private Square?[,] squares;
+        private readonly Square?[,] squares;
         private readonly ISquareEliminator squareEliminator = new OnlyShipSquaresEliminator();
 
         public Grid(int rows, int colums)
@@ -38,12 +37,8 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordResult(Square square, HitResult result)
         {
-            squares[square.row, square.column].Value.SetSquareState(result);
-        }
-
-        internal IEnumerable<Square> GetAvailablePlacementsInDirection(Square square)
-        {
-            throw new NotImplementedException();
+            square.SetSquareState(result);
+            squares[square.row, square.column] = square;
         }
 
         public Grid(int rows, int columns, ISquareEliminator squareEliminator) : this(rows, columns)
@@ -61,47 +56,41 @@ namespace Vsite.Oom.Battleship.Model
             }
 
             return result;
-
-            //List<List<Square>> result_2 = GetVerticalPlacements(length);
-
-            //{
-            //    result.Add(result_2[i]);
-            //}
         }
 
         public IEnumerable<Square> GetAvailablePlacementsInDirection(Square from, Direction direction)
         {
-            int deltaRow = 0;
-            int deltaColumn = 0;
+            int deltarow = 0;
+            int deltacolumn = 0;
             int count = 0;
 
             switch (direction)
             {
-                case Direction.Upwords:
-                    deltaRow = -1;
-                    count = from.row;
+                case Direction.Upwards:
+                    deltarow = -1;
+                    count = from.row + 1;
                     break;
 
-                case Direction.Rightwords:
-                    deltaColumn = +1;
+                case Direction.Rightwards:
+                    deltacolumn = 1;
                     count = colums - from.column;
                     break;
 
-                case Direction.Downwords:
-                    deltaRow = +1;
+                case Direction.Downwards:
+                    deltarow = 1;
                     count = rows - from.row;
                     break;
 
-                case Direction.Leftwords:
-                    deltaColumn = -1;
-                    count = from.column;
+                case Direction.Leftwards:
+                    deltacolumn = -1;
+                    count = from.column + 1;
                     break;
             }
 
             List<Square> result = new List<Square>();
 
-            int row = from.row + deltaRow;
-            int column = from.column + deltaColumn;
+            int row = from.row + deltarow;
+            int column = from.column + deltacolumn;
 
             for (int i = 1; i < count; ++i)
             {
@@ -111,8 +100,8 @@ namespace Vsite.Oom.Battleship.Model
                 }
 
                 result.Add(squares[row, column].Value);
-                row += deltaRow;
-                column += deltaColumn;
+                row += deltarow;
+                column += deltacolumn;
             }
             return result;
         }

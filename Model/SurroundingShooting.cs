@@ -17,10 +17,10 @@ namespace Vsite.Oom.Battleship.Model
         {
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
 
-            var up = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Upwords);
-            var right = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Rightwords);
-            var down = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Downwords);
-            var left = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwords);
+            var up = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Upwards);
+            var right = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Rightwards);
+            var down = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Downwards);
+            var left = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwards);
 
             if (up.Count() > 0)
             {

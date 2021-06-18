@@ -50,7 +50,6 @@ namespace Vsite.Oom.Battleship.Model
                     elim.Add(new Square(i, j));
                 }
             }
-
             return elim;
         }
     }

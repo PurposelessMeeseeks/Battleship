@@ -17,12 +17,12 @@ namespace Vsite.Oom.Battleship.Model
 
             EvidenceGrid = new Grid(rows, columns);
             ShipsToShoot = Sorted.ToList();
-            TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot);
+            TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot[0]);
         }
 
         public Square NextTarget()
         {
-            var lastTarget = TargetSelect.NextTarget();
+            lastTarget = TargetSelect.NextTarget();
             return lastTarget;
         }
 
@@ -40,15 +40,15 @@ namespace Vsite.Oom.Battleship.Model
             if (result == HitResult.Sunken)
             {
                 // mark all squares around lastHits as missed
-                SurroundingSquaresEliminator eliminator = new SurroundingSquaresEliminator(10, 10);
+                var eliminator = new SurroundingSquaresEliminator(EvidenceGrid.rows, EvidenceGrid.colums);
                 eliminator.ToEliminate(lastHits);
+
                 // mark all squares in lastHits
                 foreach (Square square in lastHits)
                 {
                     square.SetSquareState(HitResult.Sunken);
                 }
             }
-
             ChangeTactics(result);
         }
 
@@ -74,7 +74,6 @@ namespace Vsite.Oom.Battleship.Model
                             return;
 
                         case ShootingTactics.Linear:
-                            TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot[0]);
                             return;
 
                         default:
@@ -87,7 +86,7 @@ namespace Vsite.Oom.Battleship.Model
                     int sunkenShipLength = lastHits.Count;
                     ShipsToShoot.Remove(sunkenShipLength);
                     lastHits.Clear();
-                    TargetSelect = new RandomShooting(EvidenceGrid, 4);
+                    TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot[0]);
                     return;
 
                 default:
@@ -96,7 +95,6 @@ namespace Vsite.Oom.Battleship.Model
         }
 
         public ShootingTactics ShootingTactics { get { return shootingTactics; } }
-
         private readonly Grid EvidenceGrid;
         private readonly List<int> ShipsToShoot;
         private readonly List<Square> lastHits = new List<Square>();

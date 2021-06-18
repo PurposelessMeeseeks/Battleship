@@ -29,14 +29,15 @@ namespace Vsite.Oom.Battleship.Model
             switch (orientation)
             {
                 case Orientation.Horizontal:
-                    var left = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Leftwords);
+
+                    var left = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Leftwards);
 
                     if (left.Count() > 0)
                     {
                         squares.Add(left);
                     }
 
-                    var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Rightwords);
+                    var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Rightwards);
 
                     if (right.Count() > 0)
                     {
@@ -45,14 +46,15 @@ namespace Vsite.Oom.Battleship.Model
                     break;
 
                 case Orientation.Vertical:
-                    var up = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Upwords);
+
+                    var up = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Upwards);
 
                     if (up.Count() > 0)
                     {
                         squares.Add(up);
                     }
 
-                    var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Downwords);
+                    var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Downwards);
 
                     if (down.Count() > 0)
                     {

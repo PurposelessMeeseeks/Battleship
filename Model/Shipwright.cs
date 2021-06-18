@@ -54,7 +54,6 @@ namespace Vsite.Oom.Battleship.Model
                 fleet.CreateShip(selected);
                 grid.Eliminate(selected);
             }
-
             return fleet;
         }
     }
