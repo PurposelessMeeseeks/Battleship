@@ -8,18 +8,18 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class LimitedQueue<T> : Queue<T>
     {
-        public LimitedQueue(int length)
+        public LimitedQueue(int maxElements)
         {
-            this.length = length;
+            MaxElements = maxElements;
         }
 
         public new void Enqueue(T item)
         {
             base.Enqueue(item);
-            if (Count > length)
+            while (Count > MaxElements)
                 Dequeue();
         }
 
-        private int length;
+        public readonly int MaxElements;
     }
 }

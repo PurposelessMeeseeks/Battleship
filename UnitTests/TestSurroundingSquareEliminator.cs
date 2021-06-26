@@ -9,67 +9,88 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
     public class TestSurroundingSquareEliminator
     {
         [TestMethod]
-        public void ToEliminateReturns18SquaresForShip4_3To4_6()
+        public void ToEliminateReturns18SquaresForShipSquaresRow4Column3toRow4Column6OnGrid10x10()
         {
-            var squares = new List<Square> { new Square(4, 3), new Square(4, 4), new Square(4, 5), new Square(4, 6) };
-            SurroundingSquareEliminator eliminator = new SurroundingSquareEliminator(10, 10);
-            var result = eliminator.ToEliminate(squares);
-
-            squares.Add(new Square(3, 2));
-            squares.Add(new Square(5, 2));
-            squares.Add(new Square(3, 7));
-            squares.Add(new Square(5, 7));
-
-            squares.ForEach(s => Assert.IsTrue(result.Contains(s)));
-            Assert.AreEqual(18, result.Count());
+            SurroundingSquareEliminator sse = new SurroundingSquareEliminator(10, 10);
+            List<Square> shipSquares = new List<Square> { new Square(4, 3), new Square(4, 4), new Square(4, 5), new Square(4, 6) };
+            var toEliminate = sse.ToEliminate(shipSquares);
+            Assert.AreEqual(18, toEliminate.Count());
+            foreach (var square in shipSquares)
+            {
+                Assert.IsTrue(toEliminate.Contains(square));
+            }
+            Assert.IsTrue(toEliminate.Contains(new Square(3, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(5, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(3, 7)));
+            Assert.IsTrue(toEliminate.Contains(new Square(5, 7)));
         }
 
         [TestMethod]
-        public void ToEliminateReturns8SquaresForShip3_9To4_9()
+        public void ToEliminateReturns8SquaresForShipSquaresRow0Column3toRow0Column4OnGrid10x10()
         {
-            var squares = new List<Square> { new Square(3, 9), new Square(4, 9) };
-            SurroundingSquareEliminator eliminator = new SurroundingSquareEliminator(10, 10);
-            var result = eliminator.ToEliminate(squares);
-
-            squares.Add(new Square(2, 8));
-            squares.Add(new Square(2, 9));
-            squares.Add(new Square(5, 8));
-            squares.Add(new Square(5, 9));
-
-            squares.ForEach(s => Assert.IsTrue(result.Contains(s)));
-            Assert.AreEqual(8, result.Count());
-        }
-            
-        [TestMethod]
-        public void ToEliminateReturns12SquaresForShip7_5To9_5()
-        {
-            var squares = new List<Square> { new Square(7, 5), new Square(8, 5), new Square(9, 5) };
-            SurroundingSquareEliminator eliminator = new SurroundingSquareEliminator(10, 10);
-            var result = eliminator.ToEliminate(squares);
-
-            squares.Add(new Square(6, 4));
-            squares.Add(new Square(6, 6));
-            squares.Add(new Square(9, 4));
-            squares.Add(new Square(9, 6));
-
-            squares.ForEach(s => Assert.IsTrue(result.Contains(s)));
-            Assert.AreEqual(12, result.Count());
+            SurroundingSquareEliminator sse = new SurroundingSquareEliminator(10, 10);
+            List<Square> shipSquares = new List<Square> { new Square(0, 3), new Square(0, 4) };
+            var toEliminate = sse.ToEliminate(shipSquares);
+            Assert.AreEqual(8, toEliminate.Count());
+            foreach (var square in shipSquares)
+            {
+                Assert.IsTrue(toEliminate.Contains(square));
+            }
+            Assert.IsTrue(toEliminate.Contains(new Square(0, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(1, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(0, 5)));
+            Assert.IsTrue(toEliminate.Contains(new Square(1, 5)));
         }
 
         [TestMethod]
-        public void ToEliminateReturns9SquaresForShip0_5To1_5()
+        public void ToEliminateReturns8SquaresForShipSquaresRow3Column9toRow4Column9OnGrid10x10()
         {
-            var squares = new List<Square> { new Square(0, 5), new Square(1, 5) };
-            SurroundingSquareEliminator eliminator = new SurroundingSquareEliminator(10, 10);
-            var result = eliminator.ToEliminate(squares);
+            SurroundingSquareEliminator sse = new SurroundingSquareEliminator(10, 10);
+            List<Square> shipSquares = new List<Square> { new Square(3, 9), new Square(4, 9) };
+            var toEliminate = sse.ToEliminate(shipSquares);
+            Assert.AreEqual(8, toEliminate.Count());
+            foreach (var square in shipSquares)
+            {
+                Assert.IsTrue(toEliminate.Contains(square));
+            }
+            Assert.IsTrue(toEliminate.Contains(new Square(2, 8)));
+            Assert.IsTrue(toEliminate.Contains(new Square(2, 9)));
+            Assert.IsTrue(toEliminate.Contains(new Square(5, 8)));
+            Assert.IsTrue(toEliminate.Contains(new Square(5, 9)));
+        }
 
-            squares.Add(new Square(0, 4));
-            squares.Add(new Square(0, 6));
-            squares.Add(new Square(2, 4));
-            squares.Add(new Square(2, 6));
+        [TestMethod]
+        public void ToEliminateReturns12SquaresForShipSquaresRow7Column5toRow9Column5OnGrid10x10()
+        {
+            SurroundingSquareEliminator sse = new SurroundingSquareEliminator(10, 10);
+            List<Square> shipSquares = new List<Square> { new Square(7, 5), new Square(8, 5), new Square(9, 5) };
+            var toEliminate = sse.ToEliminate(shipSquares);
+            Assert.AreEqual(12, toEliminate.Count());
+            foreach (var square in shipSquares)
+            {
+                Assert.IsTrue(toEliminate.Contains(square));
+            }
+            Assert.IsTrue(toEliminate.Contains(new Square(6, 4)));
+            Assert.IsTrue(toEliminate.Contains(new Square(6, 6)));
+            Assert.IsTrue(toEliminate.Contains(new Square(9, 4)));
+            Assert.IsTrue(toEliminate.Contains(new Square(9, 6)));
+        }
 
-            squares.ForEach(s => Assert.IsTrue(result.Contains(s)));
-            Assert.AreEqual(9, result.Count());
+        [TestMethod]
+        public void ToEliminateReturns9SquaresForShipSquaresRow5Column0toRow5Column1OnGrid10x10()
+        {
+            SurroundingSquareEliminator sse = new SurroundingSquareEliminator(10, 10);
+            List<Square> shipSquares = new List<Square> { new Square(5, 0), new Square(5, 1) };
+            var toEliminate = sse.ToEliminate(shipSquares);
+            Assert.AreEqual(9, toEliminate.Count());
+            foreach (var square in shipSquares)
+            {
+                Assert.IsTrue(toEliminate.Contains(square));
+            }
+            Assert.IsTrue(toEliminate.Contains(new Square(4, 0)));
+            Assert.IsTrue(toEliminate.Contains(new Square(4, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(6, 0)));
+            Assert.IsTrue(toEliminate.Contains(new Square(6, 2)));
         }
     }
 }

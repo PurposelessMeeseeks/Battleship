@@ -8,64 +8,67 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
     public class TestGunnery
     {
         [TestMethod]
-        public void InitiallyShootingTacticsIsRandom()
+        public void InitialShootingTacticsIsRandom()
         {
-            Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
-            Assert.AreEqual(ShootingTactics.Random, g.CurrentShootingTactics);
+            var gunnery = new Gunnery(10, 10, new List<int> { 5, 4, 4 });
+            Assert.AreEqual(ShootingTactics.Random, gunnery.CurrentTactics);
+
+        }
+        [TestMethod]
+        public void GunneryDoesntChangeShootingTacticsWhenResultIsMissed()
+        {
+            var gunnery = new Gunnery(10, 10, new List<int>{ 5, 4, 4 });
+            Assert.AreEqual(ShootingTactics.Random, gunnery.CurrentTactics);
+            gunnery.ProcessShootingResult(HitResult.Missed);
+            Assert.AreEqual(ShootingTactics.Random, gunnery.CurrentTactics);
         }
 
         [TestMethod]
-        public void ShootingTacticsRemainsRandomForSquareMissed()
+        public void GunneryChangesShootingTacticsFromRandomToSurroundingWhenSqaureIsHit()
         {
-            Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
-            g.RecordShootingResult(HitResult.Missed);
-            Assert.AreEqual(ShootingTactics.Random, g.CurrentShootingTactics);
+            var gunnery = new Gunnery(10, 10, new List<int> { 5, 4, 4 });
+            Assert.AreEqual(ShootingTactics.Random, gunnery.CurrentTactics);
+            gunnery.ProcessShootingResult(HitResult.Hit);
+            Assert.AreEqual(ShootingTactics.Surrounding, gunnery.CurrentTactics);
         }
 
         [TestMethod]
-        public void ShootingTacticsChangesFromRandomToSurroundingWhenFirstSquareIsHit()
+        public void ShootingTacticsRemainsSurroundingIfSquareIsMissed()
         {
-            Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
-            g.RecordShootingResult(HitResult.Hit);
-            Assert.AreEqual(ShootingTactics.Surrounding, g.CurrentShootingTactics);
+            var gunnery = new Gunnery(10, 10, new List<int> { 5, 4, 4 });
+            Assert.AreEqual(ShootingTactics.Random, gunnery.CurrentTactics);
+            gunnery.ProcessShootingResult(HitResult.Hit);
+            Assert.AreEqual(ShootingTactics.Surrounding, gunnery.CurrentTactics);
+            gunnery.ProcessShootingResult(HitResult.Missed);
+            Assert.AreEqual(ShootingTactics.Surrounding, gunnery.CurrentTactics);
         }
 
         [TestMethod]
-        public void ShootingTacticsRemainsSurroundingAfterSquareIsMissed()
+        public void ShootingTacticsChangesFromSurroundingToLinearAfterSecondSquareIsHit()
         {
-            Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
-            g.RecordShootingResult(HitResult.Hit);
-            g.RecordShootingResult(HitResult.Missed);
-            Assert.AreEqual(ShootingTactics.Surrounding, g.CurrentShootingTactics);
+            var gunnery = new Gunnery(10, 10, new List<int> { 5, 4, 4 });
+            gunnery.ProcessShootingResult(HitResult.Hit);
+            gunnery.ProcessShootingResult(HitResult.Hit);
+            Assert.AreEqual(ShootingTactics.Linear, gunnery.CurrentTactics);
         }
 
         [TestMethod]
-        public void ShootingTacticsChangesFromSurroundingToLinearAfterSecondSquareHit()
+        public void ShootingTacticsChangesReamainsLinearIfSquareIsMissed()
         {
-            Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
-            g.RecordShootingResult(HitResult.Hit);
-            g.RecordShootingResult(HitResult.Hit);
-            Assert.AreEqual(ShootingTactics.Linear, g.CurrentShootingTactics);
-        }
-
-        [TestMethod]
-        public void ShootingTacticsRemainsLinearAfterSquareIsMissed()
-        {
-            Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
-            g.RecordShootingResult(HitResult.Hit);
-            g.RecordShootingResult(HitResult.Hit);
-            g.RecordShootingResult(HitResult.Missed);
-            Assert.AreEqual(ShootingTactics.Linear, g.CurrentShootingTactics);
+            var gunnery = new Gunnery(10, 10, new List<int> { 5, 4, 4 });
+            gunnery.ProcessShootingResult(HitResult.Hit);
+            gunnery.ProcessShootingResult(HitResult.Hit);
+            gunnery.ProcessShootingResult(HitResult.Missed);
+            Assert.AreEqual(ShootingTactics.Linear, gunnery.CurrentTactics);
         }
 
         [TestMethod]
         public void ShootingTacticsChangesToRandomAfterShipIsSunken()
         {
-            Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
-            g.RecordShootingResult(HitResult.Hit);
-            g.RecordShootingResult(HitResult.Hit);
-            g.RecordShootingResult(HitResult.Sunken);
-            Assert.AreEqual(ShootingTactics.Random, g.CurrentShootingTactics);
+            var gunnery = new Gunnery(10, 10, new List<int> { 5, 4, 4 });
+            gunnery.ProcessShootingResult(HitResult.Hit);
+            gunnery.ProcessShootingResult(HitResult.Sunken);
+            Assert.AreEqual(ShootingTactics.Random, gunnery.CurrentTactics);
         }
     }
 }

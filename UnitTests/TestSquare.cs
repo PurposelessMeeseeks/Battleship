@@ -7,38 +7,11 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
     public class TestSquare
     {
         [TestMethod]
-        public void SquareConstructorCreatesASquareAtGivenRowAndColumn()
+        public void SquareReturnsItsRowAndColumn()
         {
-            Square s = new Square(5, 4);
-            Assert.AreEqual(5, s.Row);
-            Assert.AreEqual(4, s.Column);
-        }
-
-        [TestMethod]
-        public void SetSquareStateChangesSquareStateToMissedForHitResultMissed()
-        {
-            Square s = new Square(5, 4);
-            Assert.AreEqual(SquareState.Default, s.SquareState);
-            s.SetSquareState(HitResult.Missed);
-            Assert.AreEqual(SquareState.Missed, s.SquareState);
-        }
-
-        [TestMethod]
-        public void SetSquareStateChangesSquareStateToHitForHitResultMissed()
-        {
-            Square s = new Square(5, 4);
-            Assert.AreEqual(SquareState.Default, s.SquareState);
-            s.SetSquareState(HitResult.Hit);
-            Assert.AreEqual(SquareState.Hit, s.SquareState);
-        }
-
-        [TestMethod]
-        public void SetSquareStateChangesSquareStateToSunkenForHitResultMissed()
-        {
-            Square s = new Square(5, 4);
-            Assert.AreEqual(SquareState.Default, s.SquareState);
-            s.SetSquareState(HitResult.Sunken);
-            Assert.AreEqual(SquareState.Sunken, s.SquareState);
+            Square sq = new Square(2, 3);
+            Assert.AreEqual(2, sq.Row);
+            Assert.AreEqual(3, sq.Column);
         }
     }
 }

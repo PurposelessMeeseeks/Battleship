@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
+    public enum Direction
+    {
+        Up,
+        Right,
+        Down,
+        Left
+    }
+
     public class Grid
     {
         public Grid(int rows, int columns)
         {
-            this.rows = rows;
-            this.columns = columns;
+            Rows = rows;
+            Columns = columns;
 
             squares = new Square?[rows, columns];
+
             for (int r = 0; r < rows; ++r)
             {
                 for (int c = 0; c < columns; ++c)
@@ -21,78 +30,119 @@ namespace Vsite.Oom.Battleship.Model
             }
         }
 
-        public Grid(int rows, int columns, ISquareEliminator squareEliminator) : this(rows, columns)
+        public IEnumerable<IEnumerable<Square>> GetSequences(int length)
         {
-            this.squareEliminator = squareEliminator;
-        }
-
-        public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)
-        {
-            List<List<Square>> result = GetHorizontalPlacements(length);
+            var result = GetHorizontalSequences(length);
             if (length > 1)
-                result.AddRange(GetVerticalPlacements(length));
+                result.AddRange(GetVerticalSequences(length));
             return result;
         }
 
-        private List<List<Square>> GetHorizontalPlacements(int length)
+        public void RemoveSquares(IEnumerable<Square> squaresToEliminate)
         {
-            var result = new List<List<Square>>();
-            for (int r = 0; r < rows; ++r)
-            {
-                LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
-                for (int c = 0; c < columns; ++c)
-                {
-                    if (squares[r, c] != null && squares[r,c].Value.SquareState == SquareState.Default)
-                        gathered.Enqueue(squares[r, c].Value);
-                    else
-                        gathered.Clear();
-
-                    if (gathered.Count == length)
-                        result.Add(new List<Square>(gathered.ToArray<Square>()));
-                }
-            }
-            return result;
-        }
-
-        public void Eliminate(IEnumerable<Square> selected)
-        {
-            var toEliminate = squareEliminator.ToEliminate(selected);
-            foreach (Square square in toEliminate)
+            foreach (Square square in squaresToEliminate)
             {
                 squares[square.Row, square.Column] = null;
             }
         }
 
-        private List<List<Square>> GetVerticalPlacements(int length)
+        public IEnumerable<Square> GetSequence(Square reference, Direction direction)
         {
-            var result = new List<List<Square>>();
-            for (int c = 0; c < columns; ++c)
+            int deltaRow = 0;
+            int deltaColumn = 0;
+            int count = 0;
+            switch (direction)
             {
-                LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
-                for (int r = 0; r < rows; ++r)
+                case Direction.Up:
+                    deltaRow = -1;
+                    count = reference.Row;
+                    break;
+                case Direction.Right:
+                    deltaColumn = +1;
+                    count = Columns - reference.Column - 1;
+                    break;
+                case Direction.Down:
+                    deltaRow = +1;
+                    count = Rows - reference.Row - 1;
+                    break;
+                case Direction.Left:
+                    deltaColumn = -1;
+                    count = reference.Column;
+                    break;
+            }
+            List<Square> result = new List<Square>();
+            int row = reference.Row + deltaRow;
+            int column = reference.Column + deltaColumn;
+            for (int i = 0; i < count; ++i)
+            {
+                if (!IsSquareAvailable(row, column))
+                    break;
+                else
                 {
-                    if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
-                        gathered.Enqueue(squares[r, c].Value);
-                    else
-                        gathered.Clear();
-
-                    if (gathered.Count == length)
-                        result.Add(new List<Square>(gathered.ToArray<Square>()));
+                    result.Add(squares[row, column].Value);
+                    row += deltaRow;
+                    column += deltaColumn;
                 }
             }
             return result;
         }
 
-        public void RecordResult(Square square, HitResult result)
+        public void MarkSquare(Square square, SquareState state)
         {
-            squares[square.Row, square.Column].Value.SetSquareState(result);
+            square.SetState(state);
+            squares[square.Row, square.Column] = square;
         }
 
+        private bool IsSquareAvailable(int row, int column)
+        {
+            return squares[row, column] != null && squares[row, column].Value.SquareState == SquareState.Default;
+        }
 
-        private int rows;
-        private int columns;
+        private List<IEnumerable<Square>> GetHorizontalSequences(int length)
+        {
+            List<IEnumerable<Square>> result = new List<IEnumerable<Square>>();
+            for (int r = 0; r < Rows; ++r)
+            {
+                var queue = new LimitedQueue<Square>(length);
+                for (int c = 0; c < Columns; ++c)
+                {
+                    if (IsSquareAvailable(r, c))
+                    {
+                        queue.Enqueue(squares[r, c].Value);
+                        if (queue.Count >= length)
+                            result.Add(queue.ToArray());
+                    }
+                    else
+                        queue.Clear();
+                }
+            }
+            return result;
+        }
 
-        private Square?[,] squares;
-        private ISquareEliminator squareEliminator = new OnlyShipSquaresEliminator();
+        private List<IEnumerable<Square>> GetVerticalSequences(int length)
+        {
+            List<IEnumerable<Square>> result = new List<IEnumerable<Square>>();
+            for (int c = 0; c < Columns; ++c)
+            {
+                var queue = new LimitedQueue<Square>(length);
+                for (int r = 0; r < Rows; ++r)
+                {
+                    if (IsSquareAvailable(r, c))
+                    {
+                        queue.Enqueue(squares[r, c].Value);
+                        if (queue.Count >= length)
+                            result.Add(queue.ToArray());
+                    }
+                    else
+                        queue.Clear();
+                }
+            }
+            return result;
+        }
+
+        private readonly Square?[,] squares;
+
+        public readonly int Rows;
+        public readonly int Columns;
     }
 }

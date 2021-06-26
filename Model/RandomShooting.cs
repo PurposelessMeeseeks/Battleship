@@ -6,24 +6,36 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
-    public class RandomShooting : ITargetSelect
+    public class RandomShooting : ISelectTarget
     {
-        private Grid Grid;
-        private int ShipLength;
-
-        public RandomShooting(Grid evidenceGrid, int shipLength)
+        public RandomShooting(Grid grid, int shipLength)
         {
-            Grid = evidenceGrid;
-            ShipLength = shipLength;
+            this.grid = grid;
+            this.shipLength = shipLength;
         }
 
         public Square NextTarget()
         {
-
-            var allPlacements = Grid.GetAvailablePlacements(ShipLength);
-
-
-            throw new NotImplementedException();
+            // get list of all possible placements for a ship of given length
+            var sequences = grid.GetSequences(shipLength);
+            // create a simple array with all squares (some of them will appear multiple times)
+            var allCandidates = sequences.SelectMany(seq => seq);
+            // create groups with individual squares
+            var groups = allCandidates.GroupBy(sq => sq);
+            // find the number of squares in the largests group
+            var maxCount = groups.Max(g => g.Count());
+            // filter out only groups which contain maxCount squares
+            var largestGroups = groups.Where(g => g.Count() == maxCount);
+            // fetch keys from each group (i.e. square that represents the group)
+            var mostOften = largestGroups.Select(g => g.Key);
+            if (mostOften.Count() == 1)
+                return mostOften.First();
+            int index = random.Next(mostOften.Count());
+            return mostOften.ElementAt(index);
         }
+
+        private Grid grid;
+        private int shipLength;
+        private Random random = new Random();
     }
 }

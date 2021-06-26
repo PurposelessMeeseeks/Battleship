@@ -16,7 +16,6 @@ namespace Vsite.Oom.Battleship.Model
 
     public struct Square : IEquatable<Square>
     {
-
         public Square(int row, int column)
         {
             Row = row;
@@ -24,30 +23,9 @@ namespace Vsite.Oom.Battleship.Model
             squareState = SquareState.Default;
         }
 
-        public readonly int Row;
-        public readonly int Column;
-
-        private SquareState squareState;
-
-        public SquareState SquareState
+        public void SetState(SquareState newState)
         {
-            get { return squareState; }
-        }
-
-        public void SetSquareState(HitResult hitResult)
-        {
-            switch (hitResult)
-            {
-                case HitResult.Missed:
-                    squareState = SquareState.Missed;
-                    break;
-                case HitResult.Hit:
-                    squareState = SquareState.Hit;
-                    break;
-                case HitResult.Sunken:
-                    squareState = SquareState.Sunken;
-                    break;
-            }
+            squareState = newState;
         }
 
         public bool Equals(Square other)
@@ -64,7 +42,27 @@ namespace Vsite.Oom.Battleship.Model
 
         public override int GetHashCode()
         {
-            return Row^Column;
+            return Row ^ Column;
         }
+
+        public static bool operator ==(Square sq1, Square sq2)
+        {
+            return sq1.Equals(sq2);
+        }
+
+        public static bool operator !=(Square sq1, Square sq2)
+        {
+            return !(sq1 ==sq2);
+        }
+
+        public SquareState SquareState
+        {
+            get { return squareState; }
+        }
+
+        public readonly int Row;
+        public readonly int Column;
+
+        private SquareState squareState;
     }
 }

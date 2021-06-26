@@ -10,8 +10,7 @@ namespace Vsite.Oom.Battleship.Model
     {
         public void CreateShip(IEnumerable<Square> squares)
         {
-            Ship ship = new Ship(squares);
-            ships.Add(ship);
+            ships.Add(new Ship(squares));
         }
 
         public IEnumerable<Ship> Ships
@@ -20,5 +19,21 @@ namespace Vsite.Oom.Battleship.Model
         }
 
         private List<Ship> ships = new List<Ship>();
+
+        public HitResult Hit(Square square)
+        {
+            foreach (Ship ship in ships)
+            {
+                var result = ship.Hit(square);
+                if (result != HitResult.Missed)
+                    return result;
+            }
+            return HitResult.Missed;
+        }
+
+        public Ship shipOnSquare(Square sq)
+        {
+            return ships.Find(s => s.Squares != null && s.Squares.Contains(sq));
+        }
     }
 }

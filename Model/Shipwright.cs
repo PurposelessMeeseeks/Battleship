@@ -12,42 +12,54 @@ namespace Vsite.Oom.Battleship.Model
         {
             this.rows = rows;
             this.columns = columns;
-            this.shipLengths = shipLengths.OrderByDescending(s => s);
+            this.shipLengths = shipLengths;
+        }
+
+        public Shipwright(int rows, int columns, IEnumerable<int> shipLengths, ISquareEliminate eliminate)
+        {
+            this.rows = rows;
+            this.columns = columns;
+            this.shipLengths = shipLengths;
+            eliminator = eliminate;
         }
 
         public Fleet CreateFleet()
         {
-            for (int retries = 0; retries < 5; ++retries)
+            int maxRetries = 5;
+            for (int i = 0; i < maxRetries; ++i)
             {
-                var fleet = PlaceShips();
+                Fleet fleet = PlaceShips();
                 if (fleet != null)
                     return fleet;
             }
-            throw new ArgumentException();
+            throw new ArgumentOutOfRangeException();
         }
 
         private Fleet PlaceShips()
         {
-            Queue<int> lengths = new Queue<int>(shipLengths);
             Grid grid = new Grid(rows, columns);
             Fleet fleet = new Fleet();
+            var sortedLengths = shipLengths.OrderByDescending(l => l);
+            Queue<int> lengths = new Queue<int>(sortedLengths);
             while (lengths.Count > 0)
             {
-                int length = lengths.Dequeue();
-                var placements = grid.GetAvailablePlacements(length);
+                int len = lengths.Dequeue();
+                var placements = grid.GetSequences(len);
                 if (placements.Count() == 0)
                     return null;
-                int index = random.Next(placements.Count());
+                var index = random.Next(placements.Count());
                 var selected = placements.ElementAt(index);
                 fleet.CreateShip(selected);
-                grid.Eliminate(selected);
+                var toEliminate = eliminator.ToEliminate(selected);
+                grid.RemoveSquares(toEliminate);
             }
             return fleet;
         }
 
-        private int rows;
-        private int columns;
-        private IEnumerable<int> shipLengths;
+        private readonly int rows;
+        private readonly int columns;
+        private readonly IEnumerable<int> shipLengths;
         private Random random = new Random();
+        private ISquareEliminate eliminator = new SimpleSquareEliminator();
     }
 }
