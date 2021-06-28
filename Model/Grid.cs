@@ -39,7 +39,8 @@ namespace Vsite.Oom.Battleship.Model
 
         public void RecordResult(Square square, HitResult result)
         {
-            squares[square.Row, square.Column].Value.SetSquareState(result);
+            square.SetSquareState(result);
+            squares[square.Row, square.Column] = square;
         }
 
         public IEnumerable<IEnumerable<Square>> GetAvailablePlacements(int length)

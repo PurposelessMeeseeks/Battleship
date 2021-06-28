@@ -42,8 +42,12 @@ namespace Vsite.Oom.Battleship.Model
 
             if (result == HitResult.Sunken)
             {
-                // mark all squares around lastHits as missed
-                // mark all squares in lastHits as sunken
+                SorroundingSquaresEliminator eliminator = new SorroundingSquaresEliminator(10, 10);
+                eliminator.ToEliminate(lastHits);
+                foreach (var item in lastHits)
+                {
+                    item.SetSquareState(HitResult.Sunken);
+                }
             }
 
             InvalidateTacticsState(result);
@@ -74,13 +78,17 @@ namespace Vsite.Oom.Battleship.Model
                 if (shootingTactis == ShootingTactis.Random)
                 {
                     // TODO: assert
-                    targetSelect = new SorroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
+                    targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
                     shootingTactis = ShootingTactis.Sorrounding;
                 }
                 else if (shootingTactis == ShootingTactis.Sorrounding)
                 {
                     targetSelect = new LinearShooting(evidenceGrid, lastHits, shipsToShoot[0]);
                     shootingTactis = ShootingTactis.Linear;
+                }
+                else if (shootingTactis == ShootingTactis.Linear)
+                {
+                    targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
                 }
             }
         }
