@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
-    public class SorroundingShooting : ITargetSelect
+    public class SurroundingShooting : ITargetSelect
     {
-        public SorroundingShooting(Grid grid, Square firstHit, int shipLength)
+        public SurroundingShooting(Grid grid, Square FirstHit, int shipLength)
         {
             this.grid = grid;
-            this.firstHit = firstHit;
+            this.firstHit = FirstHit;
             this.shipLength = shipLength;
-            random = new Random();
         }
 
         public Square NextTarget()
         {
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
 
+            var up = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Upwards);
             var right = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Rightwards);
-            var down  = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Downwards);
-            var left  = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwards);
-            var up    = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Upwards);
+            var down = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Downwards);
+            var left = grid.GetAvailablePlacementsInDirection(firstHit, Direction.Leftwards);
 
+            if (up.Count() > 0)
+            {
+                squares.Add(up);
+            }
 
             if (right.Count() > 0)
             {
@@ -41,17 +42,12 @@ namespace Vsite.Oom.Battleship.Model
                 squares.Add(left);
             }
 
-            if (up.Count() > 0)
-            {
-                squares.Add(up);
-            }
-
-            var sorted = squares.OrderBy(seq => seq.Count());
+            var sorted = squares.OrderByDescending(seq => seq.Count());
             int maxLength = sorted.ElementAt(0).Count();
 
             if (maxLength > shipLength - 1)
             {
-                maxLength = shipLength - 1; 
+                maxLength = shipLength - 1;
             }
 
             var longest = sorted.Where(seq => seq.Count() >= maxLength);
@@ -62,13 +58,13 @@ namespace Vsite.Oom.Battleship.Model
             }
 
             int index = random.Next(longest.Count());
+
             return longest.ElementAt(index).First();
         }
 
-        Grid grid;
-        Square firstHit;
-        Random random;
-
-        int shipLength;
+        private readonly Grid grid;
+        private readonly int shipLength;
+        private Square firstHit;
+        private readonly Random random = new Random();
     }
 }
