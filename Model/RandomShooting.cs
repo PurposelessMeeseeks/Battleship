@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
@@ -6,31 +7,26 @@ namespace Vsite.Oom.Battleship.Model
     public class RandomShooting : ITargetSelect
     {
         private readonly Grid Grid;
-        private readonly int ShipLenght;
-
-        //private readonly Grid evidenceGrid;
-        //private readonly List<int> shipsToShoot;
+        private readonly List<int> ShipsToShoot;
         private readonly Random random = new Random();
 
-        public RandomShooting(Grid grid, int shipLenght)
+        public RandomShooting(Grid grid, List<int> shipsToShoot)
         {
             Grid = grid;
-            ShipLenght = shipLenght;
+            ShipsToShoot = shipsToShoot;
         }
 
         public Square NextTarget()
         {
-            var allPlacements = Grid.GetAvailablePlacements(ShipLenght);
+            var allPlacements = Grid.GetAvailablePlacements(ShipsToShoot[0]);
 
             // create simple array of all squares
             var allCandidates = allPlacements.SelectMany(seq => seq);
-            //Debug.Assert(allPlacements.Count() != 0);
 
             // create groups with individual squares
             var groups = allCandidates.GroupBy(sq => sq);
 
             // find number of squares in the largest group
-            //var maxCount = groups.DefaultIfEmpty().Max(g => g.Count()iu
             var maxCount = groups.Max(g => g.Count());
 
             // filter groups with count == maxCount
@@ -44,7 +40,7 @@ namespace Vsite.Oom.Battleship.Model
                 mostCommunSquares.First();
             }
 
-            int index = random.Next(0, mostCommunSquares.Count());
+            int index = random.Next(mostCommunSquares.Count());
 
             return mostCommunSquares.ElementAt(index);
         }

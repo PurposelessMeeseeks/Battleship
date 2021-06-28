@@ -11,13 +11,21 @@ namespace Vsite.Oom.Battleship.Model
 
     public class Gunnery
     {
+        public ShootingTactics ShootingTactics { get { return shootingTactics; } }
+        private readonly Grid EvidenceGrid;
+        private readonly List<int> ShipsToShoot;
+        private readonly List<Square> lastHits = new List<Square>();
+        private Square lastTarget;
+        private ITargetSelect TargetSelect;
+        private ShootingTactics shootingTactics = ShootingTactics.Random;
+
         public Gunnery(int rows, int columns, IEnumerable<int> shipLenghts)
         {
             var Sorted = shipLenghts.OrderByDescending(sl => sl).ToArray();
 
             EvidenceGrid = new Grid(rows, columns);
             ShipsToShoot = Sorted.ToList();
-            TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot[0]);
+            TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot);
         }
 
         public Square NextTarget()
@@ -86,20 +94,12 @@ namespace Vsite.Oom.Battleship.Model
                     int sunkenShipLength = lastHits.Count;
                     ShipsToShoot.Remove(sunkenShipLength);
                     lastHits.Clear();
-                    TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot[0]);
+                    TargetSelect = new RandomShooting(EvidenceGrid, ShipsToShoot);
                     return;
 
                 default:
                     break;
             }
-        }
-
-        public ShootingTactics ShootingTactics { get { return shootingTactics; } }
-        private readonly Grid EvidenceGrid;
-        private readonly List<int> ShipsToShoot;
-        private readonly List<Square> lastHits = new List<Square>();
-        private Square lastTarget;
-        private ITargetSelect TargetSelect;
-        private ShootingTactics shootingTactics = ShootingTactics.Random;
+        }       
     }
 }

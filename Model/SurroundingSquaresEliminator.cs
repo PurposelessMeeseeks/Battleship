@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
@@ -15,37 +16,16 @@ namespace Vsite.Oom.Battleship.Model
 
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> shipSquares)
         {
-            int left = shipSquares.First().column;
-            int right = shipSquares.Last().column + 1;
-
-            int top = shipSquares.First().row;
-            int bottom = shipSquares.Last().row + 1;
-
-            if (left > 0)
-            {
-                --left;
-            }
-
-            if (right < columns)
-            {
-                ++right;
-            }
-
-            if (top > 0)
-            {
-                --top;
-            }
-
-            if (bottom < rows)
-            {
-                ++bottom;
-            }
+            int rowMin = Math.Max(shipSquares.Min(s => s.row) - 1, 0);
+            int columnMin = Math.Max(shipSquares.Min(s => s.column) - 1, 0);
+            int rowMax = Math.Min(shipSquares.Max(s => s.row) + 2, rows);
+            int columnMax = Math.Min(shipSquares.Max(s => s.column) + 2, columns);
 
             List<Square> elim = new List<Square>();
 
-            for (int i = top; i < bottom; i++)
+            for (int i = rowMin; i < rowMax; i++)
             {
-                for (int j = left; j < right; j++)
+                for (int j = columnMin; j < columnMax; j++)
                 {
                     elim.Add(new Square(i, j));
                 }

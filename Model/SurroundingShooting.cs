@@ -6,6 +6,11 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class SurroundingShooting : ITargetSelect
     {
+        private readonly Grid grid;
+        private readonly int shipLength;
+        private Square firstHit;
+        private readonly Random random = new Random();
+
         public SurroundingShooting(Grid grid, Square FirstHit, int shipLength)
         {
             this.grid = grid;
@@ -60,11 +65,6 @@ namespace Vsite.Oom.Battleship.Model
             int index = random.Next(longest.Count());
 
             return longest.ElementAt(index).First();
-        }
-
-        private readonly Grid grid;
-        private readonly int shipLength;
-        private Square firstHit;
-        private readonly Random random = new Random();
+        }        
     }
 }

@@ -15,7 +15,6 @@ namespace Vsite.Oom.Battleship.Model
     {
         public readonly int rows;
         public readonly int colums;
-
         private readonly Square?[,] squares;
         private readonly ISquareEliminator squareEliminator = new OnlyShipSquaresEliminator();
 

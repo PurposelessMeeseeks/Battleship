@@ -13,9 +13,14 @@ namespace Vsite.Oom.Battleship.Model
 
     public class LinearShooting : ITargetSelect
     {
+        private readonly Grid grid;
+        private readonly List<Square> squaresHit;
+        private readonly Random random = new Random();
+        private readonly int shipLength;
+
         public LinearShooting(Grid evidenceGrid, List<Square> squaresHit, int shipLength)
         {
-            this.grid = evidenceGrid;
+            grid = evidenceGrid;
             this.squaresHit = squaresHit;
             this.shipLength = shipLength;
         }
@@ -96,11 +101,6 @@ namespace Vsite.Oom.Battleship.Model
             }
 
             return Orientation.Vertical;
-        }
-
-        private readonly Grid grid;
-        private readonly List<Square> squaresHit;
-        private readonly Random random = new Random();
-        private readonly int shipLength;
+        }        
     }
 }

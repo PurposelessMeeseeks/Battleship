@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,22 +14,22 @@ namespace BattleshipGUI
         private const int nRows = 10;
         private const int nColumns = 10;
         private static int enemyShipsAlive = 10;
-
-        //private static int myShipsAlive = 10;
-        //private static int mySquaresAlive = 30;
-        private static int enemySquaresAlive = 30;
-
-        public List<int> shipLengths;
-        public Fleet myFleet, enemyFleet;
-        private readonly Gunnery gunner = new Gunnery(nRows, nColumns, new List<int> { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 });
+        private static int myShipsAlive = 10;
+        private static int mySquaresLeft = 30;
+        private static int enemySquaresLeft = 30;
+        private List<int> shipLengths;
+        private Fleet myFleet, enemyFleet;
+        private readonly Stopwatch stopWatch = new Stopwatch();
+        private readonly Gunnery gunner = new Gunnery(nRows, nColumns, new List<int> { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 });         
+        private readonly GridLabel[,] gridLabel = new GridLabel[nRows + 1, nColumns + 1];
         private readonly GridButton[,] myGridDraw = new GridButton[nRows, nColumns];
-        private readonly GridButton[,] enemyGridDraw = new GridButton[nRows, nColumns];
+        private readonly GridButton[,] enemyGridDraw = new GridButton[nRows, nColumns];        
 
         public MainForm()
         {
-            DrawPanel(myGridDraw, 50);
-            DrawPanel(enemyGridDraw, 700);
             InitializeComponent();
+            DrawPanel(myGridDraw, 50);
+            DrawPanel(enemyGridDraw, 700);           
         }
 
         // PLACE FLEET BUTTON
@@ -36,7 +37,9 @@ namespace BattleshipGUI
         {
             PlaceMyFleet();
             PlaceEnemyFleet();
+            EnableButtons(enemyGridDraw, true);            
             MessageBox.Show("You can start. Good Luck!", "Play", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            stopWatch.Start();
             PlaceFleetButton.Enabled = false;
         }
 
@@ -47,47 +50,137 @@ namespace BattleshipGUI
             {
                 for (int j = 0; j < nColumns; j++)
                 {
-                    gridDraw[i, j] = new GridButton(i, j)
+                    gridDraw[i, j] = new GridButton(nRows, nColumns)
                     {
                         Row = i,
                         Column = j,
                         BackColor = Color.GhostWhite,
                         Location = new Point(startLeft + i * 40, 60 + j * 40),
                         Size = new Size(40, 40),
+                        Enabled = false,
                         TabStop = false,
                         FlatStyle = FlatStyle.Flat
                     };
                     gridDraw[i, j].FlatAppearance.BorderSize = 1;
-                    gridDraw[i, j].FlatAppearance.BorderColor = Color.Black;
-                    gridDraw[i, j].Click += ButtonClick;
+                    gridDraw[i, j].FlatAppearance.BorderColor = Color.Black;                    
+                    gridDraw[i, j].Click += ButtonClick;                   
                     Controls.Add(gridDraw[i, j]);
+                }
+            }                  
+
+            // LABELS DRAW
+            char columnLetter = 'A';
+            for (int i = 0; i < nRows + 1; i++)
+            {
+                for (int j = 0; j < nColumns + 1; j++)
+                {
+                    gridLabel[i, j] = new GridLabel(nRows, nColumns);
+
+                    if (i != 0) // i >= 1
+                    {
+                        gridLabel[i, j].Text = columnLetter.ToString();                        
+                    }
+
+                    if (j != 0) // i >= 1
+                    {
+                        gridLabel[i, j].Text = j.ToString();                        
+                    }
+                    
+                    gridLabel[i, j].Location = new Point(startLeft + i * 40 - 25, 70 + j * 40 - 35);
+                    gridLabel[i, j].Size = new Size(20, 20);
+                    gridLabel[i, j].Font = new Font("Times New Roman", 8);
+                    Controls.Add(gridLabel[i, j]);
+                }
+
+                if (i != 0) // i >= 1
+                {
+                    columnLetter++;
+                }
+            }
+            myFleetGroupBox.SendToBack();
+            enemyFleetGroupBox.SendToBack();
+        }
+
+        // ENABLE BUTTONS
+        private void EnableButtons(GridButton[,] gridDraw, bool enable)
+        {
+            for (int i = 0; i < nRows; i++)
+            {
+                for (int j = 0; j < nColumns; j++)
+                {
+                    gridDraw[i, j].Enabled = enable;
                 }
             }
         }
 
-        // PAINTING SHIP SQUARE FOR MY FLEET
+        // PAINTING SHIP SQUARE (MY FLEET)
         private void FleetButtonFillColorForMyFleet(int nRows, int nColumn, Color c)
         {
-            myGridDraw[nRows, nColumn].BackColor = c;
+            myGridDraw[nRows, nColumn].BackColor = c;                 
         }
 
-        // PAINTING SHIP SQUARE FOR ENEMY FLEET
+        // PAINTING SHIP SQUARE (ENEMY FLEET)
         private void FleetButtonFillColorForEnemyFleet(int nRows, int nColumn, Color c)
         {
             enemyGridDraw[nRows, nColumn].BackColor = c;
         }
 
-        // ANIMATION FOR SINKEN SHIP (MY FLEET)
+        // ANIMATION SUNKEN SHIP (MY FLEET)
         private void AnimateColorForMyFleet(int nRows, int nColumn)
         {
             myGridDraw[nRows, nColumn].AnimateButtonColor(Color.DarkRed);
         }
 
-        // ANIMATION FOR SINKEN SHIP (ENEMY FLEET)
+        // ANIMATION SUNKEN SHIP (ENEMY FLEET)
         private void AnimateColorForEnemyFleet(int nRows, int nColumn)
         {
             enemyGridDraw[nRows, nColumn].AnimateButtonColor(Color.DarkRed);
         }
+
+        // STOPWATCH
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            stopWatchLabel.Text = stopWatch.Elapsed.ToString("mm\\:ss\\.ff");
+        }
+
+        // USER WON MESSAGE
+        private void IWonDisplay()
+        {
+            DialogResult msgBoxResult = MessageBox.Show("YOU WON!" + Environment.NewLine + Environment.NewLine 
+                + "Time: " + stopWatch.Elapsed.ToString("mm\\:ss\\.ff")
+                + Environment.NewLine + Environment.NewLine 
+                + "Press 'OK' if you want to play again or 'Cancel' to exit",
+                  "Winner!", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+            if (msgBoxResult == DialogResult.OK)
+            {
+                Application.Restart();
+            }
+            else if (msgBoxResult == DialogResult.Cancel)
+            {
+                Application.Exit();
+            }
+        }        
+
+        // ENEMY WON MESSAGE
+        private void EnemyWonDisplay()
+        {
+            DialogResult msgBoxResult = MessageBox.Show("ENEMY WON!" + Environment.NewLine + Environment.NewLine 
+                + "Time: " + stopWatch.Elapsed.ToString("mm\\:ss\\.ff")
+                + Environment.NewLine + Environment.NewLine 
+                + "Press 'OK' if you want to play again or 'Cancel' to exit",
+                  "Winner!", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+            if (msgBoxResult == DialogResult.OK)
+            {
+                Application.Restart();
+            }
+            else if (msgBoxResult == DialogResult.Cancel)
+            {
+                Application.Exit();
+            }
+        }
+
 
         // PLACE MY FLEET
         private void PlaceMyFleet()
@@ -102,8 +195,10 @@ namespace BattleshipGUI
                 if (myFleetColorDialog.ShowDialog() == DialogResult.OK)
                 {
                     myFleetColor = myFleetColorDialog.Color;
+                    myShipsAliveLabel.Text = myShipsAlive.ToString();
+                    mySquaresLeftLabel.Text = mySquaresLeft.ToString();
                     enemyShipsAliveLabel.Text = enemyShipsAlive.ToString();
-                    enemySquaresAliveLabel.Text = enemySquaresAlive.ToString();
+                    enemySquaresLeftLabel.Text = enemySquaresLeft.ToString();
                 }
                 else
                 {
@@ -112,8 +207,10 @@ namespace BattleshipGUI
                     if (myFleetColorDialog.ShowDialog() == DialogResult.OK)
                     {
                         myFleetColor = myFleetColorDialog.Color;
+                        myShipsAliveLabel.Text = myShipsAlive.ToString();
+                        mySquaresLeftLabel.Text = mySquaresLeft.ToString();
                         enemyShipsAliveLabel.Text = enemyShipsAlive.ToString();
-                        enemySquaresAliveLabel.Text = enemySquaresAlive.ToString();
+                        enemySquaresLeftLabel.Text = enemySquaresLeft.ToString();
                     }
                     else
                     {
@@ -125,7 +222,7 @@ namespace BattleshipGUI
             {
                 MessageBox.Show("You didn't choose the color, if you want to play start the appliacation again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 Application.Exit();
-            }
+            }            
 
             foreach (Ship ship in myFleet.Ships)
             {
@@ -157,23 +254,24 @@ namespace BattleshipGUI
         private void ButtonClick(object sender, EventArgs e)
         {
             GridButton btn = sender as GridButton;
-
             Square sqClicked = new Square(btn.Row, btn.Column);
-            HitResult result = enemyFleet.Hit(sqClicked);
+            HitResult result = enemyFleet.Hit(sqClicked);           
 
             switch (result)
             {
                 case HitResult.Missed:
                     btn.BackColor = Color.DarkGray;
+                    btn.Text = "X";                    
+                    btn.Font = new Font(Text, 20);
                     btn.Enabled = false;
                     EnemyTurn();
                     break;
 
                 case HitResult.Hit:
-                    btn.BackColor = Color.Red;
+                    btn.BackColor = Color.Red;                    
                     btn.Enabled = false;
-                    enemySquaresAlive--;
-                    enemySquaresAliveLabel.Text = enemySquaresAlive.ToString();
+                    enemySquaresLeft--;
+                    enemySquaresLeftLabel.Text = enemySquaresLeft.ToString();
                     EnemyTurn();
                     break;
 
@@ -185,31 +283,21 @@ namespace BattleshipGUI
                     }
 
                     enemyShipsAlive--;
-                    enemySquaresAlive--;
+                    enemySquaresLeft--;
                     enemyShipsAliveLabel.Text = enemyShipsAlive.ToString();
-                    enemySquaresAliveLabel.Text = enemySquaresAlive.ToString();
+                    enemySquaresLeftLabel.Text = enemySquaresLeft.ToString();
 
                     if (enemyShipsAlive == 0)
                     {
-                        DialogResult msgBoxResult = MessageBox.Show("YOU WON!" + Environment.NewLine + Environment.NewLine +
-                            "Press 'OK' if you want to play again or 'Cancel' to exit",
-                            "Winner!", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-
-                        if (msgBoxResult == DialogResult.OK)
-                        {
-                            Application.Restart();
-                        }
-                        else if (msgBoxResult == DialogResult.Cancel)
-                        {
-                            Application.Exit();
-                        }
+                        stopWatch.Stop();
+                        IWonDisplay();
                     }
                     EnemyTurn();
                     break;
 
                 default:
                     break;
-            }
+            }           
         }
 
         // GAME LOGIC (ENEMY TURN)
@@ -217,14 +305,19 @@ namespace BattleshipGUI
         {
             Square field = gunner.NextTarget();
             HitResult result = myFleet.Hit(field);
+            gunner.RecordShootingResult(result);            
 
             switch (result)
             {
                 case HitResult.Missed:
                     myGridDraw[field.row, field.column].BackColor = Color.DarkGray;
+                    myGridDraw[field.row, field.column].Text = "X";
+                    myGridDraw[field.row, field.column].Font = new Font(Text, 20);
                     break;
 
                 case HitResult.Hit:
+                    mySquaresLeft--;
+                    mySquaresLeftLabel.Text = mySquaresLeft.ToString();
                     myGridDraw[field.row, field.column].BackColor = Color.Red;
                     break;
 
@@ -233,12 +326,22 @@ namespace BattleshipGUI
                     {
                         AnimateColorForMyFleet(sunkenSquare.row, sunkenSquare.column);
                     }
+
+                    myShipsAlive--;
+                    mySquaresLeft--;
+                    myShipsAliveLabel.Text = myShipsAlive.ToString();
+                    mySquaresLeftLabel.Text = mySquaresLeft.ToString();
+
+                    if (myShipsAlive == 0)
+                    {
+                        stopWatch.Stop();
+                        EnemyWonDisplay();                        
+                    }
                     break;
 
                 default:
                     break;
-            }
-            gunner.RecordShootingResult(result);
+            }            
         }
     }
 }

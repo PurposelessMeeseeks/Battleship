@@ -12,6 +12,8 @@ namespace Vsite.Oom.Battleship.Model
 
     public class Ship
     {
+        private readonly Square[] squares;
+
         public Ship(IEnumerable<Square> squares)
         {
             this.squares = squares.ToArray();
@@ -46,8 +48,6 @@ namespace Vsite.Oom.Battleship.Model
                 return HitResult.Sunken;
             }
             return HitResult.Hit;
-        }
-
-        private readonly Square[] squares;
+        }        
     }
 }

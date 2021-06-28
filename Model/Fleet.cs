@@ -4,6 +4,8 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class Fleet
     {
+        private readonly List<Ship> ships = new List<Ship>();
+
         public void CreateShip(IEnumerable<Square> squares)
         {
             Ship ship = new Ship(squares);
@@ -27,8 +29,6 @@ namespace Vsite.Oom.Battleship.Model
                 }
             }
             return HitResult.Missed;
-        }
-
-        private readonly List<Ship> ships = new List<Ship>();
+        }       
     }
 }
