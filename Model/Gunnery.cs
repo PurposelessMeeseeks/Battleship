@@ -15,6 +15,11 @@ namespace Vsite.Oom.Battleship.Model
 
     public class Gunnery
     {
+        public Gunnery(int rows, int columns, IEnumerable<int> shipLengths) : this(rows,columns,shipLengths, new SurroundingSquareEliminator(rows, columns))
+        {
+
+        }
+
         public Gunnery(int rows, int columns, IEnumerable<int> shipLengths, ISquareEliminate eliminator )
         {
             var sorted = shipLengths.OrderByDescending(s => s);

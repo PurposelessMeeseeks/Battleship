@@ -21,6 +21,9 @@ namespace GUI
         private readonly Fleet protivnickaFlota;
         private readonly ISquareEliminate eliminator;
 
+        private readonly string mojaFlotaPrefix = "btnMojaFlota";
+        private readonly string protivnickaFlotaPrefix = "btnProtivnickaFlota";
+
         public Igra(int redci, int stupci, string postavljenjeFlote, List<int> listaBrodova)
         {
             InitializeComponent();
@@ -83,11 +86,11 @@ namespace GUI
                     if (protivnickaFlota)
                     {
                         newButton.Click += onClick;
-                        newButton.Name = "btnProtivnickaFlota" + j + i;
+                        newButton.Name = protivnickaFlotaPrefix + j + i;
                     }
                     else
                     {
-                        newButton.Name = "btnMojaFlota" + j + i;
+                        newButton.Name = mojaFlotaPrefix + j + i;
                     }
                     
                     this.Controls.Add(newButton);
@@ -111,14 +114,14 @@ namespace GUI
             Square mojaMeta = new Square(row,col);
             HitResult mojRezultat = protivnickaFlota.Hit(mojaMeta);
 
-            obradiGadjanjeLogic("btnProtivnickaFlota", protivnickaFlota, mojaMeta, button, mojRezultat);
+            obradiGadjanjeLogic(protivnickaFlotaPrefix, protivnickaFlota, mojaMeta, button, mojRezultat);
 
             Square sljedecaMeta = gunnery.NextTarget();
             HitResult protivnickiRezultat = mojaFlota.Hit(sljedecaMeta);
             gunnery.ProcessShootingResult(protivnickiRezultat);
 
-            Button btnMojaFlota = nadjiGumbZaPolje("btnMojaFlota", sljedecaMeta.Row, sljedecaMeta.Column);
-            obradiGadjanjeLogic("btnMojaFlota", mojaFlota ,sljedecaMeta, btnMojaFlota, protivnickiRezultat);
+            Button btnMojaFlota = nadjiGumbZaPolje(mojaFlotaPrefix, sljedecaMeta.Row, sljedecaMeta.Column);
+            obradiGadjanjeLogic(mojaFlotaPrefix, mojaFlota ,sljedecaMeta, btnMojaFlota, protivnickiRezultat);
         }
 
         private void obradiGadjanjeLogic(string buttonPrefix, Fleet f, Square sq, Button btn, HitResult hit)
@@ -147,7 +150,7 @@ namespace GUI
             f.RemainingShipNumber--;
             if(f.RemainingShipNumber == 0)
             {
-                bool poraz = buttonPrefix.Equals("btnMojaFlota");
+                bool poraz = buttonPrefix.Equals(mojaFlotaPrefix);
                 spremiRezultat(poraz);
 
                 string dialogText = poraz ? "Igra je završila, nažalost ste izgubili. Želte li igrati ponovno?" : "Čestitam, pobjedili ste suparničku flotu. Želte li igrati ponovno?";
@@ -198,7 +201,7 @@ namespace GUI
             {
                 ship.Squares.ToList().ForEach(square =>
                 {
-                    nadjiGumbZaPolje("btnMojaFlota", square.Row, square.Column).BackColor = Color.Blue;
+                    nadjiGumbZaPolje(mojaFlotaPrefix, square.Row, square.Column).BackColor = Color.Blue;
                 });
             });
         }
