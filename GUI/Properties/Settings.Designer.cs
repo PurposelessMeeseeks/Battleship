@@ -58,5 +58,53 @@ namespace GUI.Properties {
                 this["PostavljanjeFlote"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Odigrano {
+            get {
+                return ((int)(this["Odigrano"]));
+            }
+            set {
+                this["Odigrano"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Pobjede {
+            get {
+                return ((int)(this["Pobjede"]));
+            }
+            set {
+                this["Pobjede"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Porazi {
+            get {
+                return ((int)(this["Porazi"]));
+            }
+            set {
+                this["Porazi"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4,3,2")]
+        public string ListaBrodova {
+            get {
+                return ((string)(this["ListaBrodova"]));
+            }
+            set {
+                this["ListaBrodova"] = value;
+            }
+        }
     }
 }

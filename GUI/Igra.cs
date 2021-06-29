@@ -15,33 +15,31 @@ namespace GUI
     {
         private readonly int Redci;
         private readonly int Stupci;
-        private readonly string PostavljanjeFlote;
+        private readonly Eliminator PostavljanjeFlote;
         private readonly Gunnery gunnery;
         private readonly Fleet mojaFlota;
         private readonly Fleet protivnickaFlota;
+        private readonly ISquareEliminate eliminator;
 
-        public Igra(int redci, int stupci, string postavljenjeFlote)
+        public Igra(int redci, int stupci, string postavljenjeFlote, List<int> listaBrodova)
         {
             InitializeComponent();
+
+            Properties.Settings.Default.Odigrano += 1;
+            Properties.Settings.Default.Save();
+
             Redci = redci;
             Stupci = stupci;
-            PostavljanjeFlote = postavljenjeFlote;
+            PostavljanjeFlote = (Eliminator)Enum.Parse(typeof(Eliminator), postavljenjeFlote);
 
-            Size s = new Size(2 * Stupci * 40 + 100, Redci * 40 + 55);
+            Size s = new Size(2 * Stupci * 40 + 100, Redci * 40 + 100);
             this.Size = this.MaximumSize = this.MinimumSize = s;
 
             int nextGridPositionX = kreirajGumbeZaGridGadjanja(20,10);
 
             kreirajGumbeZaGridMojihBrodova(nextGridPositionX + 45, 10);
 
-            var listaBrodova = new List<int>()
-            {
-                5,
-                2,
-                3
-            };
-            ISquareEliminate eliminator;
-            if (PostavljanjeFlote.Equals("Brodovi se smiju dodirivati"))
+            if (PostavljanjeFlote == Eliminator.SimpleSquareEliminator)
                 eliminator = new SimpleSquareEliminator();
             else
                 eliminator = new SurroundingSquareEliminator(redci,stupci);
@@ -51,9 +49,8 @@ namespace GUI
             protivnickaFlota = shipwright.CreateFleet();
 
             oznaciMojuFlotu();
-            oznaciMojuFlotu2();
 
-            gunnery = new Gunnery(redci, stupci, listaBrodova);
+            gunnery = new Gunnery(redci, stupci, listaBrodova, eliminator);
         }
 
         private int kreirajGumbeZaGridGadjanja(int xPoc, int yPoc)
@@ -71,10 +68,10 @@ namespace GUI
         {
             Point nextButtonPosition = new Point(xPoc, yPoc);
             Button newButton;
-            for (int i=0; i<Stupci; i++)
+            for (int i=0; i< Redci; i++)
             {
                 nextButtonPosition.X = xPoc;
-                for (int j=0; j<Redci; j++)
+                for (int j=0; j<Stupci; j++)
                 {
                     newButton = new Button
                     {
@@ -108,8 +105,8 @@ namespace GUI
             button.Click -= onClick;
 
             var position = button.Text;
-            int row = position[0] - 65;
-            int col = position[1] - 49;
+            int col = position[0] - 65;
+            int row = position[1] - 49;
 
             Square mojaMeta = new Square(row,col);
             HitResult mojRezultat = protivnickaFlota.Hit(mojaMeta);
@@ -134,16 +131,51 @@ namespace GUI
 
         private Button nadjiGumbZaPolje(string buttonPrefix, int redak, int stupac) 
         {
-            return (Button)this.Controls.Find(buttonPrefix + redak + stupac, true).First();
+            return (Button)this.Controls.Find(buttonPrefix + stupac + redak, true).First();
         }
 
         private void obradiPotapanjeGUI(string buttonPrefix, Fleet f, Square sq)
         {
             Ship s = f.shipOnSquare(sq);
-            foreach(Square poljeBroda in s.Squares)
+            var squaresToEliminate = eliminator.ToEliminate(s.Squares);
+            foreach(Square poljeZaEliminiaciju in squaresToEliminate)
             {
-                nadjiGumbZaPolje(buttonPrefix, poljeBroda.Row, poljeBroda.Column).BackColor = Color.Red;
+                var button = nadjiGumbZaPolje(buttonPrefix, poljeZaEliminiaciju.Row, poljeZaEliminiaciju.Column);
+                button.BackColor = s.Squares.Contains(poljeZaEliminiaciju) ? Color.Red : Color.White;
+                button.Click -= onClick;
             }
+            f.RemainingShipNumber--;
+            if(f.RemainingShipNumber == 0)
+            {
+                bool poraz = buttonPrefix.Equals("btnMojaFlota");
+                spremiRezultat(poraz);
+
+                string dialogText = poraz ? "Igra je završila, nažalost ste izgubili. Želte li igrati ponovno?" : "Čestitam, pobjedili ste suparničku flotu. Želte li igrati ponovno?";
+                
+                DialogResult dialogResult = MessageBox.Show(dialogText, "Igra je završila.", MessageBoxButtons.YesNo);
+                
+                if (dialogResult == DialogResult.Yes)
+                {
+                    this.DialogResult = DialogResult.Yes;
+                    this.Close();
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    this.Close();
+                }
+            }
+        }
+
+        private void spremiRezultat(bool poraz)
+        {
+            
+            if (poraz)
+                Properties.Settings.Default.Porazi += 1;
+            else
+                Properties.Settings.Default.Pobjede += 1;
+
+            Properties.Settings.Default.Save();
+
         }
 
 
@@ -170,15 +202,14 @@ namespace GUI
                 });
             });
         }
-        private void oznaciMojuFlotu2()
+
+        private void btnExit_Click(object sender, EventArgs e)
         {
-            protivnickaFlota.Ships.ToList().ForEach(ship =>
+            DialogResult dialogResult = MessageBox.Show("Jeste li sigurni da želite napusitit igru?", "Izlaz", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                ship.Squares.ToList().ForEach(square =>
-                {
-                    nadjiGumbZaPolje("btnProtivnickaFlota", square.Row, square.Column).BackColor = Color.Blue;
-                });
-            });
+                this.Close();
+            }
         }
     }
 }

@@ -30,7 +30,10 @@ namespace Vsite.Oom.Battleship.Model
             {
                 Fleet fleet = PlaceShips();
                 if (fleet != null)
+                {
+                    fleet.RemainingShipNumber = fleet.Ships.Count();
                     return fleet;
+                }
             }
             throw new ArgumentOutOfRangeException();
         }

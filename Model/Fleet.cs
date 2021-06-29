@@ -8,6 +8,7 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class Fleet
     {
+        public int RemainingShipNumber;
         public void CreateShip(IEnumerable<Square> squares)
         {
             ships.Add(new Ship(squares));

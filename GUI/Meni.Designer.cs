@@ -32,6 +32,7 @@ namespace GUI
             this.btnStart = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.btnStats = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnStart
@@ -56,7 +57,9 @@ namespace GUI
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(12, 256);
+            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExit.Location = new System.Drawing.Point(12, 341);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(307, 85);
             this.btnExit.TabIndex = 2;
@@ -64,16 +67,27 @@ namespace GUI
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // btnStats
+            // 
+            this.btnStats.Location = new System.Drawing.Point(12, 195);
+            this.btnStats.Name = "btnStats";
+            this.btnStats.Size = new System.Drawing.Size(307, 85);
+            this.btnStats.TabIndex = 3;
+            this.btnStats.Text = "STATISTIKA";
+            this.btnStats.UseVisualStyleBackColor = true;
+            this.btnStats.Click += new System.EventHandler(this.btnStats_Click);
+            // 
             // Meni
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 353);
+            this.ClientSize = new System.Drawing.Size(332, 438);
+            this.Controls.Add(this.btnStats);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnStart);
-            this.MaximumSize = new System.Drawing.Size(350, 400);
-            this.MinimumSize = new System.Drawing.Size(350, 400);
+            this.MaximumSize = new System.Drawing.Size(350, 485);
+            this.MinimumSize = new System.Drawing.Size(350, 485);
             this.Name = "Meni";
             this.Text = "Main menu";
             this.ResumeLayout(false);
@@ -85,6 +99,7 @@ namespace GUI
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnStats;
     }
 }
 

@@ -36,7 +36,26 @@ namespace GUI
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            using (var form = new Igra(Properties.Settings.Default.BrojRedaka, Properties.Settings.Default.BrojStupaca, Properties.Settings.Default.PostavljanjeFlote))
+            startGame();            
+        }
+
+        private void startGame()
+        {
+            using (var form = new Igra(
+                Properties.Settings.Default.BrojRedaka, 
+                Properties.Settings.Default.BrojStupaca, 
+                Properties.Settings.Default.PostavljanjeFlote, 
+                Properties.Settings.Default.ListaBrodova.Split(',').Select(int.Parse).ToList()))
+            {
+                var result = form.ShowDialog();
+                if (result == DialogResult.Yes)
+                    startGame();
+            }
+        }
+
+        private void btnStats_Click(object sender, EventArgs e)
+        {
+            using (var form = new Statistika())
             {
                 var result = form.ShowDialog();
             }

@@ -38,6 +38,8 @@ namespace GUI
             this.cBoxStupac = new System.Windows.Forms.ComboBox();
             this.btnReturn = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.btnDodajBrod = new System.Windows.Forms.Button();
+            this.btnMakniBrod = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblGrid
@@ -63,9 +65,6 @@ namespace GUI
             // cBoxFlota
             // 
             this.cBoxFlota.FormattingEnabled = true;
-            this.cBoxFlota.Items.AddRange(new object[] {
-            "Nema dodira brodova",
-            "Brodovi se smiju dodirivati"});
             this.cBoxFlota.Location = new System.Drawing.Point(73, 177);
             this.cBoxFlota.Name = "cBoxFlota";
             this.cBoxFlota.Size = new System.Drawing.Size(246, 24);
@@ -125,7 +124,9 @@ namespace GUI
             // 
             // btnReturn
             // 
-            this.btnReturn.Location = new System.Drawing.Point(13, 287);
+            this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReturn.Location = new System.Drawing.Point(13, 387);
             this.btnReturn.Name = "btnReturn";
             this.btnReturn.Size = new System.Drawing.Size(307, 54);
             this.btnReturn.TabIndex = 8;
@@ -135,7 +136,9 @@ namespace GUI
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(12, 227);
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(12, 327);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(307, 54);
             this.btnSave.TabIndex = 9;
@@ -143,11 +146,35 @@ namespace GUI
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // btnDodajBrod
+            // 
+            this.btnDodajBrod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDodajBrod.Location = new System.Drawing.Point(197, 292);
+            this.btnDodajBrod.Name = "btnDodajBrod";
+            this.btnDodajBrod.Size = new System.Drawing.Size(121, 29);
+            this.btnDodajBrod.TabIndex = 10;
+            this.btnDodajBrod.Text = "DODAJ BROD";
+            this.btnDodajBrod.UseVisualStyleBackColor = true;
+            this.btnDodajBrod.Click += new System.EventHandler(this.btnDodajBrod_Click);
+            // 
+            // btnMakniBrod
+            // 
+            this.btnMakniBrod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnMakniBrod.Location = new System.Drawing.Point(13, 292);
+            this.btnMakniBrod.Name = "btnMakniBrod";
+            this.btnMakniBrod.Size = new System.Drawing.Size(121, 29);
+            this.btnMakniBrod.TabIndex = 11;
+            this.btnMakniBrod.Text = "MAKNI BROD";
+            this.btnMakniBrod.UseVisualStyleBackColor = true;
+            this.btnMakniBrod.Click += new System.EventHandler(this.btnMakniBrod_Click);
+            // 
             // Postavke
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 353);
+            this.ClientSize = new System.Drawing.Size(332, 453);
+            this.Controls.Add(this.btnMakniBrod);
+            this.Controls.Add(this.btnDodajBrod);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.cBoxStupac);
@@ -157,8 +184,8 @@ namespace GUI
             this.Controls.Add(this.cBoxFlota);
             this.Controls.Add(this.lblFlota);
             this.Controls.Add(this.lblGrid);
-            this.MaximumSize = new System.Drawing.Size(350, 400);
-            this.MinimumSize = new System.Drawing.Size(350, 400);
+            this.MaximumSize = new System.Drawing.Size(350, 500);
+            this.MinimumSize = new System.Drawing.Size(350, 500);
             this.Name = "Postavke";
             this.Text = "Postavke";
             this.ResumeLayout(false);
@@ -177,5 +204,7 @@ namespace GUI
         private System.Windows.Forms.ComboBox cBoxStupac;
         private System.Windows.Forms.Button btnReturn;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnDodajBrod;
+        private System.Windows.Forms.Button btnMakniBrod;
     }
 }
