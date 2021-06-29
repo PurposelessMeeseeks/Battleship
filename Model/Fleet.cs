@@ -29,6 +29,6 @@ namespace Vsite.Oom.Battleship.Model
                 }
             }
             return HitResult.Missed;
-        }       
+        }
     }
 }

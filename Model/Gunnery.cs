@@ -100,6 +100,6 @@ namespace Vsite.Oom.Battleship.Model
                 default:
                     break;
             }
-        }       
+        }
     }
 }

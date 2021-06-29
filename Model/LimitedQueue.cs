@@ -19,6 +19,6 @@ namespace Vsite.Oom.Battleship.Model
             {
                 Dequeue();
             }
-        }        
+        }
     }
 }

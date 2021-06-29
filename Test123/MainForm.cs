@@ -85,7 +85,7 @@ namespace BattleshipGUI
                     {
                         gridLabel[i, j].Text = j.ToString();                        
                     }
-                    
+
                     gridLabel[i, j].Location = new Point(startLeft + i * 40 - 25, 70 + j * 40 - 35);
                     gridLabel[i, j].Size = new Size(20, 20);
                     gridLabel[i, j].Font = new Font("Times New Roman", 8);
@@ -180,7 +180,6 @@ namespace BattleshipGUI
                 Application.Exit();
             }
         }
-
 
         // PLACE MY FLEET
         private void PlaceMyFleet()

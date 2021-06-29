@@ -30,6 +30,7 @@ namespace BattleshipGUI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.PlaceFleetButton = new System.Windows.Forms.Button();
             this.myFleetColorDialog = new System.Windows.Forms.ColorDialog();
             this.enemyShipsAliveLabel = new System.Windows.Forms.Label();
@@ -53,7 +54,7 @@ namespace BattleshipGUI
             this.PlaceFleetButton.Name = "PlaceFleetButton";
             this.PlaceFleetButton.Size = new System.Drawing.Size(69, 23);
             this.PlaceFleetButton.TabIndex = 0;
-            this.PlaceFleetButton.Text = "Place Fleet";
+            this.PlaceFleetButton.Text = "Place fleet";
             this.PlaceFleetButton.UseVisualStyleBackColor = true;
             this.PlaceFleetButton.Click += new System.EventHandler(this.PlaceFleetButton_Click);
             // 
@@ -197,6 +198,7 @@ namespace BattleshipGUI
             this.Controls.Add(this.enemyShipsAliveLabel);
             this.Controls.Add(this.PlaceFleetButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";

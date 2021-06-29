@@ -65,6 +65,6 @@ namespace Vsite.Oom.Battleship.Model
             int index = random.Next(longest.Count());
 
             return longest.ElementAt(index).First();
-        }        
+        }
     }
 }

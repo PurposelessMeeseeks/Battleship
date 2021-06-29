@@ -101,6 +101,6 @@ namespace Vsite.Oom.Battleship.Model
             }
 
             return Orientation.Vertical;
-        }        
+        }
     }
 }
