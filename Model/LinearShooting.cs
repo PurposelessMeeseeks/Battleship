@@ -33,27 +33,35 @@ namespace Vsite.Oom.Battleship.Model
             {
                 case Orientation.Horizontal:
                 {
-                    var left = grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Leftwards);
+                    var left = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Leftwards);
                     var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Rightwards);
 
                     if (left.Count() > 0)
+                    {
                         squares.Add(left);
+                    }
+
 
                     if (right.Count() > 0)
+                    {
                         squares.Add(right);
-
+                    }
                     break;
                 }
                 case Orientation.Vertical:
                 {
-                    var up = grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Upwards);
+                    var up = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Upwards);
                     var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Downwards);
 
                     if (up.Count() > 0)
+                    {
                         squares.Add(up);
+                    }
 
                     if (down.Count() > 0)
+                    {
                         squares.Add(down);
+                    }
                     break;
                 }
                 default:
