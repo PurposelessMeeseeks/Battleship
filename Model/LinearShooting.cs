@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Vsite.Oom.Battleship.Model
 {
-    public enum Orientiation
+    public enum Orientation
     {
         Horizontal,
         Vertical
@@ -31,7 +31,7 @@ namespace Vsite.Oom.Battleship.Model
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
             switch (orientation)
             {
-                case Orientiation.Horizontal:
+                case Orientation.Horizontal:
                 {
                     var left = grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Leftwards);
                     var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Rightwards);
@@ -44,7 +44,7 @@ namespace Vsite.Oom.Battleship.Model
 
                     break;
                 }
-                case Orientiation.Vertical:
+                case Orientation.Vertical:
                 {
                     var up = grid.GetAvailablePlacementsInDirection(sorted[0], Direction.Upwards);
                     var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Downwards);
@@ -69,11 +69,10 @@ namespace Vsite.Oom.Battleship.Model
             return squares[0].First();
         }
 
-        Orientiation GetHitSquaresOrientation()
+        private Orientation GetHitSquaresOrientation()
         {
-
-            return (squaresHit[0].Row == squaresHit[1].Row) ? Orientiation.Horizontal 
-                                                         : Orientiation.Vertical;
+            return (squaresHit[0].Row == squaresHit[1].Row) ? Orientation.Horizontal
+                                                            : Orientation.Vertical;
         }
 
         Grid grid;
