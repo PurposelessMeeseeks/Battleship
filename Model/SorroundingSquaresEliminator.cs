@@ -16,25 +16,18 @@ namespace Vsite.Oom.Battleship.Model
 
         public IEnumerable<Square> ToEliminate(IEnumerable<Square> squares)
         {
-            var mostLeftShip  = squares.First();
-            var mostRightShip = squares.Last();
+            int top = Math.Max(squares.Min(s => s.Row) - 1, 0);
+            int left = Math.Max(squares.Min(s => s.Column) - 1, 0);
+            int bottom = Math.Min(squares.Max(s => s.Row) + 2, rows);
+            int right = Math.Min(squares.Max(s => s.Column) + 2, columns);
 
-            // get the sorrounding squares dimension on the most left ship
-            int left = mostLeftShip.Column > 0 ? mostLeftShip.Column - 1 : mostLeftShip.Column;
-            int top = mostLeftShip.Row > 0 ? mostLeftShip.Row - 1 : mostLeftShip.Row;
-
-            // get the sorrounding squares dimension on the most right ship
-            int right = mostRightShip.Column + 1;
-            right = (right < columns) ? ++right : right;
-
-            int bottom = mostRightShip.Row + 1;
             bottom = (bottom < rows) ? ++bottom : bottom;
 
             var toEliminate = new List<Square>();
 
             for (int r = top; r < bottom; ++r)
             {
-                for (int c = left; c <right; ++c)
+                for (int c = left; c < right; ++c)
                 {
                     toEliminate.Add(new Square(r, c));
                 }
