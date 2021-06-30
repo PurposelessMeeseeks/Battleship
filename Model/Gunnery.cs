@@ -71,7 +71,7 @@ namespace Vsite.Oom.Battleship.Model
                 int sunkenShipLength = lastHits.Count;
                 lastHits.Clear();
                 shipsToShoot.Remove(sunkenShipLength);
-                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
+                targetSelect = new RandomShooting(evidenceGrid, shipsToShoot);
             }
 
             if (result == HitResult.Hit)
