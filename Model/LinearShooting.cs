@@ -69,12 +69,24 @@ namespace Vsite.Oom.Battleship.Model
                     break;
             }
 
-            if (squares.Count > 1)
+            var orderedByDescending = squares.OrderByDescending(seq => seq.Count());
+            int maxLength = orderedByDescending.ElementAt(0).Count();
+
+            if (maxLength > shipLength - squaresHit.Count())
             {
-                return squares[random.Next(0, 2)].First();
+                maxLength = shipLength - squaresHit.Count();
             }
 
-            return squares[0].First();
+            var longest = orderedByDescending.Where(seq => seq.Count() >= maxLength);
+
+            if (longest.Count() == 1)
+            {
+                return longest.ElementAt(0).First();
+            }
+
+            int index = random.Next(longest.Count());
+
+            return longest.ElementAt(index).First();
         }
 
         private Orientation GetHitSquaresOrientation()
