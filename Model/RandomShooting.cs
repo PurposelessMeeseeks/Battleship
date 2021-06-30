@@ -9,16 +9,16 @@ namespace Vsite.Oom.Battleship.Model
 {
     public class RandomShooting : ITargetSelect
     {
-        public RandomShooting(Grid grid, int shipLength)
+        public RandomShooting(Grid grid, List<int> shipsToShoot)
         {
             this.grid = grid;
-            this.shipLength = shipLength;
+            this.shipsToShoot = shipsToShoot;
             random = new Random();
         }
 
         public Square NextTarget()
         {
-            var allPlacements = grid.GetAvailablePlacements(shipLength);
+            var allPlacements = grid.GetAvailablePlacements(shipsToShoot[0]);
             Debug.Assert(allPlacements.Count() != 0);
             // create simple array of all squares
             var allCandidates = allPlacements.SelectMany(seq => seq);
@@ -46,7 +46,7 @@ namespace Vsite.Oom.Battleship.Model
         }
 
         private Grid grid;
-        private int shipLength;
+        private List<int> shipsToShoot;
 
         Random random;
     }

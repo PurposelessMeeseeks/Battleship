@@ -20,7 +20,7 @@ namespace Vsite.Oom.Battleship.Model
             var sorted = shipLengths.OrderByDescending(s => s);
             shipsToShoot = shipLengths.ToList();
 
-            targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
+            targetSelect = new RandomShooting(evidenceGrid, shipsToShoot);
         }
 
         public Square NextTarget()
