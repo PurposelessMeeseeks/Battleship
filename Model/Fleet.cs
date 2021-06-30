@@ -12,6 +12,10 @@ namespace Vsite.Oom.Battleship.Model
         {
             ships.Add(new Ship(squares));
         }
+        public bool AreAllSunken()
+        {
+            return ships.All( s => s.Squares.All( sq => sq.SquareState == SquareState.Sunken));
+        }
 
         public IEnumerable<Ship> Ships { get { return ships; } }
 
