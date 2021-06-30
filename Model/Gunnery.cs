@@ -25,7 +25,8 @@ namespace Vsite.Oom.Battleship.Model
 
         public Square NextTarget()
         {
-            return targetSelect.NextTarget();
+            lastTarget = targetSelect.NextTarget();
+            return lastTarget;
         }
 
         public ShootingTactics CurrentShootingTactis { get { return shootingTactis; } }
