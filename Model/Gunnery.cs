@@ -39,12 +39,14 @@ namespace Vsite.Oom.Battleship.Model
             {
                 return;
             }
+
             lastHits.Add(lastTarget);
 
             if (result == HitResult.Sunken)
             {
-                SorroundingSquaresEliminator eliminator = new SorroundingSquaresEliminator(10, 10);
+                var eliminator = new SurroundingSquareEliminator(evidenceGrid.rows, evidenceGrid.columns);
                 eliminator.ToEliminate(lastHits);
+
                 foreach (var item in lastHits)
                 {
                     item.SetSquareState(HitResult.Sunken);
