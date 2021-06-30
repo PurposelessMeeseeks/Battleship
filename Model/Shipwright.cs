@@ -33,7 +33,7 @@ namespace Vsite.Oom.Battleship.Model
         private Fleet PlaceShips()
         {
             Queue<int> lengths = new Queue<int>(shipLengths);
-            Grid grid = new Grid(rows, columns, new SorroundingSquaresEliminator(rows, columns));
+            Grid grid = new Grid(rows, columns, new SurroundingSquareEliminator(rows, columns));
             Fleet fleet = new Fleet();
 
             while (lengths.Count > 0)

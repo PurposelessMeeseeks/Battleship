@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model
 {
-    public class SorroundingSquaresEliminator : ISquareEliminator
+    public class SurroundingSquareEliminator : ISquareEliminator
     {
-        public SorroundingSquaresEliminator(int rows, int columns)
+        public SurroundingSquareEliminator(int rows, int columns)
         {
             this.rows    = rows;
             this.columns = columns;
