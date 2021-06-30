@@ -13,7 +13,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void ToEliminateReturnsEighteenSquaresToEliminateForShipWithDimensionFourByThree()
         {
             var ship = new List<Square> { new Square(7, 3), new Square(7, 4), new Square(7, 5), new Square(7, 6) };
-            var eliminator = new SorroundingSquaresEliminator(10, 10);
+            var eliminator = new SurroundingSquareEliminator(10, 10);
             var toEliminate = eliminator.ToEliminate(ship);
 
             Assert.AreEqual(18, toEliminate.Count());
@@ -29,7 +29,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void ToEliminateReturnsEightSquaresWhenShipIsPlacedOnTheFirstColumnVertically()
         {
             var ship = new List<Square> { new Square(0, 5), new Square(0, 6)};
-            var eliminator = new SorroundingSquaresEliminator(10, 10);
+            var eliminator = new SurroundingSquareEliminator(10, 10);
             var toEliminate = eliminator.ToEliminate(ship);
 
             Assert.AreEqual(8, toEliminate.Count());
@@ -45,7 +45,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void ToEliminateReturnsEightSquaresWhenShipIsPlacedOnTheFirsRowHorisontally()
         {
             var ship = new List<Square> { new Square(0, 0), new Square(0, 1) };
-            var eliminator = new SorroundingSquaresEliminator(10, 10);
+            var eliminator = new SurroundingSquareEliminator(10, 10);
             var toEliminate = eliminator.ToEliminate(ship);
 
             Assert.AreEqual(6, toEliminate.Count());
@@ -62,7 +62,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void ToEliminateReturnsSixSquaresWhenShipIsPlacedInTheCorner()
         {
             var ship = new List<Square>{ new Square(8, 9), new Square(9, 9)};
-            var eliminator = new SorroundingSquaresEliminator(10, 10);
+            var eliminator = new SurroundingSquareEliminator(10, 10);
             var toEliminate = eliminator.ToEliminate(ship);
 
             Assert.AreEqual(6, toEliminate.Count());
