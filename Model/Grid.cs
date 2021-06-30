@@ -104,16 +104,18 @@ namespace Vsite.Oom.Battleship.Model
 
                 for (int c = 0; c < columns; ++c)
                 {
-                    if (squares[r,c] == null)
+                    if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
+                    {
+                        gathered.Enqueue(squares[r, c].Value);
+                    }
+                    else
                     {
                         gathered.Clear();
-                        continue;
                     }
 
-                    gathered.Enqueue(squares[r, c].Value);
                     if (gathered.Count == length)
                     {
-                        result.Add(new List<Square>(gathered.ToArray()));
+                        result.Add(new List<Square>(gathered.ToArray<Square>()));
                     }
                 }
             }
@@ -135,18 +137,21 @@ namespace Vsite.Oom.Battleship.Model
         {
             var result = new List<List<Square>>();
 
-            for (int c = 0; c < columns; ++c) // Vertical traverse, c - r
+            for (int c = 0; c < columns; ++c)  // Vertical traverse, r - c
             {
                 LimitedQueue<Square> gathered = new LimitedQueue<Square>(length);
+
                 for (int r = 0; r < rows; ++r)
                 {
-                    if (squares[r,c] == null)
+                    if (squares[r, c] != null && squares[r, c].Value.SquareState == SquareState.Default)
+                    {
+                        gathered.Enqueue(squares[r, c].Value);
+                    }
+                    else
                     {
                         gathered.Clear();
-                        continue;
                     }
 
-                    gathered.Enqueue(squares[r, c].Value);
                     if (gathered.Count == length)
                     {
                         result.Add(new List<Square>(gathered.ToArray<Square>()));
