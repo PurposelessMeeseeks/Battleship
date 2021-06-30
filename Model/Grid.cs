@@ -158,8 +158,8 @@ namespace Vsite.Oom.Battleship.Model
         }
 
 
-        private int rows;
-        private int columns;
+        public readonly int rows;
+        public readonly int columns;
 
         private Square?[,] squares;
         private ISquareEliminator squareEliminator = new OnlyShipSquaresEliminator();
