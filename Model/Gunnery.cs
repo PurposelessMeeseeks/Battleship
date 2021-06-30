@@ -28,7 +28,7 @@ namespace Vsite.Oom.Battleship.Model
             return targetSelect.NextTarget();
         }
 
-        public ShootingTactis CurrentShootingTactis { get { return shootingTactis; } }
+        public ShootingTactics CurrentShootingTactis { get { return shootingTactis; } }
 
         public void RecordShootingResult(HitResult result)
         {
@@ -66,7 +66,7 @@ namespace Vsite.Oom.Battleship.Model
 
             if (result == HitResult.Sunken)
             {
-                shootingTactis = ShootingTactis.Random;
+                shootingTactis = ShootingTactics.Random;
                 int sunkenShipLength = lastHits.Count;
                 lastHits.Clear();
                 shipsToShoot.Remove(sunkenShipLength);
@@ -75,20 +75,20 @@ namespace Vsite.Oom.Battleship.Model
 
             if (result == HitResult.Hit)
             {
-                if (shootingTactis == ShootingTactis.Random)
+                if (shootingTactis == ShootingTactics.Random)
                 {
                     // TODO: assert
                     targetSelect = new SurroundingShooting(evidenceGrid, lastHits[0], shipsToShoot[0]);
-                    shootingTactis = ShootingTactis.Sorrounding;
+                    shootingTactis = ShootingTactics.Sorrounding;
                 }
-                else if (shootingTactis == ShootingTactis.Sorrounding)
+                else if (shootingTactis == ShootingTactics.Sorrounding)
                 {
                     targetSelect = new LinearShooting(evidenceGrid, lastHits, shipsToShoot[0]);
-                    shootingTactis = ShootingTactis.Linear;
+                    shootingTactis = ShootingTactics.Linear;
                 }
-                else if (shootingTactis == ShootingTactis.Linear)
+                else if (shootingTactis == ShootingTactics.Linear)
                 {
-                    targetSelect = new RandomShooting(evidenceGrid, shipsToShoot[0]);
+                    return;
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace Vsite.Oom.Battleship.Model
         private List<int> shipsToShoot;
         private Square lastTarget;
         private List<Square> lastHits;
-        private ShootingTactis shootingTactis = ShootingTactis.Random;
+        private ShootingTactics shootingTactis = ShootingTactics.Random;
         private ITargetSelect targetSelect;
     }
 }
