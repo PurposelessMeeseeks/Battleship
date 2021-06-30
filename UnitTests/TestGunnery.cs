@@ -12,7 +12,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         {
             Gunnery gunnery = new Gunnery(10, 10, new List<int> { 5, 3 });
             
-            Assert.AreEqual(ShootingTactis.Random, gunnery.CurrentShootingTactis);
+            Assert.AreEqual(ShootingTactics.Random, gunnery.CurrentShootingTactis);
         }
 
         [TestMethod]
@@ -21,7 +21,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Gunnery gunnery = new Gunnery(10, 10, new List<int> { 5, 3 });
             gunnery.RecordShootingResult(HitResult.Missed);
             
-            Assert.AreEqual(ShootingTactis.Random, gunnery.CurrentShootingTactis);
+            Assert.AreEqual(ShootingTactics.Random, gunnery.CurrentShootingTactis);
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Gunnery gunnery = new Gunnery(10, 10, new List<int> { 5, 3 });
             gunnery.RecordShootingResult(HitResult.Hit);
 
-            Assert.AreEqual(ShootingTactis.Sorrounding, gunnery.CurrentShootingTactis);
+            Assert.AreEqual(ShootingTactics.Sorrounding, gunnery.CurrentShootingTactis);
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             gunnery.RecordShootingResult(HitResult.Hit);
             gunnery.RecordShootingResult(HitResult.Missed);
 
-            Assert.AreEqual(ShootingTactis.Sorrounding, gunnery.CurrentShootingTactis);
+            Assert.AreEqual(ShootingTactics.Sorrounding, gunnery.CurrentShootingTactis);
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             gunnery.RecordShootingResult(HitResult.Missed);
             gunnery.RecordShootingResult(HitResult.Hit);
 
-            Assert.AreEqual(ShootingTactis.Linear, gunnery.CurrentShootingTactis);
+            Assert.AreEqual(ShootingTactics.Linear, gunnery.CurrentShootingTactis);
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             gunnery.RecordShootingResult(HitResult.Hit);
             gunnery.RecordShootingResult(HitResult.Hit);
 
-            Assert.AreEqual(ShootingTactis.Linear, gunnery.CurrentShootingTactis);
+            Assert.AreEqual(ShootingTactics.Linear, gunnery.CurrentShootingTactis);
         }
 
         [TestMethod]
@@ -78,9 +78,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             gunnery.RecordShootingResult(HitResult.Hit);
             gunnery.RecordShootingResult(HitResult.Sunken);
 
-            Assert.AreEqual(ShootingTactis.Random, gunnery.CurrentShootingTactis);
+            Assert.AreEqual(ShootingTactics.Random, gunnery.CurrentShootingTactis);
         }
-
-
     }
 }

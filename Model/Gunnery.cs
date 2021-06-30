@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Vsite.Oom.Battleship.Model
 {
-    public enum ShootingTactis
+    public enum ShootingTactics
     {
         Linear,
         Random,
