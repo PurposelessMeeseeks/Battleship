@@ -60,19 +60,22 @@ namespace Vsite.Oom.Battleship.Model
             {
                 case Direction.Upwards:
                     deltaRow = -1;
-                    count = from.Row;
+                    count = from.Row + 1;
                     break;
+
                 case Direction.Rightwards:
-                    deltaColumn = +1;
+                    deltaColumn = 1;
                     count = columns - from.Column;
                     break;
+
                 case Direction.Downwards:
-                    deltaRow = +1;
+                    deltaRow = 1;
                     count = rows - from.Row;
                     break;
+
                 case Direction.Leftwards:
                     deltaColumn = -1;
-                    count = from.Column;
+                    count = from.Column + 1;
                     break;
             }
 
