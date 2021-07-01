@@ -22,7 +22,8 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             Grid grid = new Grid(10, 10);
             List<Square> squares = new List<Square> { new Square(3, 3), new Square(3, 4) };
             var shooting = new LinearShooting(grid, squares, 3);
-            Assert.IsTrue(shooting.NextTarget().Equals(new Square(3, 2)) || shooting.NextTarget().Equals(new Square(3, 5)));
+            var nextTarget = shooting.NextTarget();
+            Assert.IsTrue(nextTarget.Equals(new Square(3, 2)) || nextTarget.Equals(new Square(3, 5)));
         }
 
         [TestMethod]

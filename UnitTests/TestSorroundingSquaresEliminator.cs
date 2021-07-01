@@ -12,17 +12,16 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         [TestMethod]
         public void ToEliminateReturnsEighteenSquaresToEliminateForShipWithDimensionFourByThree()
         {
-            var ship = new List<Square> { new Square(7, 3), new Square(7, 4), new Square(7, 5), new Square(7, 6) };
+            var ship = new List<Square> { new Square(4, 3), new Square(4, 4), new Square(4, 5), new Square(4, 6) };
             var eliminator = new SurroundingSquareEliminator(10, 10);
             var toEliminate = eliminator.ToEliminate(ship);
 
             Assert.AreEqual(18, toEliminate.Count());
 
-            // all sorrounding squares
-            Assert.IsTrue(toEliminate.Contains(new Square(6, 2)));
-            Assert.IsTrue(toEliminate.Contains(new Square(8, 2)));
-            Assert.IsTrue(toEliminate.Contains(new Square(8, 7)));
-            Assert.IsTrue(toEliminate.Contains(new Square(6, 7)));
+            Assert.IsTrue(toEliminate.Contains(new Square(3, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(5, 2)));
+            Assert.IsTrue(toEliminate.Contains(new Square(3, 7)));
+            Assert.IsTrue(toEliminate.Contains(new Square(5, 7)));
         }
 
         [TestMethod]
