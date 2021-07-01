@@ -19,8 +19,6 @@ namespace Vsite.Oom.Battleship.Model
             int bottom = Math.Min(squares.Max(s => s.Row) + 2, rows);
             int right = Math.Min(squares.Max(s => s.Column) + 2, columns);
 
-            bottom = (bottom < rows) ? ++bottom : bottom;
-
             var toEliminate = new List<Square>();
 
             for (int r = top; r < bottom; ++r)
