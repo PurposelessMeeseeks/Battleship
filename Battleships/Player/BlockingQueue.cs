@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Battleships
+{
+    public class BlockingQueue<T>
+    {
+        private readonly Queue<T> queue = new Queue<T>();
+        private readonly int maxSize;
+        public BlockingQueue(int maxSize) { this.maxSize = maxSize; }
+
+        public void Enqueue(T item)
+        {
+            lock (queue)
+            {
+                while (queue.Count >= maxSize)
+                {
+                    Monitor.Wait(queue);
+                }
+                queue.Enqueue(item);
+                
+                // wake up any blocked dequeue
+                Monitor.PulseAll(queue);
+            }
+        }
+        public T Dequeue()
+        {
+            lock (queue)
+            {
+                while (queue.Count == 0)
+                {
+                    Monitor.Wait(queue);
+                }
+                
+                return queue.Dequeue();
+            }
+        }
+    }
+}

@@ -58,6 +58,13 @@
     <Compile Include="FleetControl.Designer.cs">
       <DependentUpon>FleetControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Player\HumanPlayer.cs" />
+    <Compile Include="Player\PCPlayer.cs" />
+    <Compile Include="Player\Player.cs" />
+    <Compile Include="Player\IPlayer.cs" />
+    <Compile Include="Player\IRunnable.cs" />
+    <Compile Include="Player\BlockingQueue.cs" />
+    <Compile Include="Player\PlayerManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShipButton.cs">

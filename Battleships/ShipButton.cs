@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace Battleships
 {
-    class ShipButton : Button
+    public class ShipButton : Button
     {
         public ShipButton(int row, int column) : base()
         {

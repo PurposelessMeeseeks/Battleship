@@ -23,6 +23,11 @@ namespace Battleships
             GuiInitialization(10, 10);
         }
 
+        public void Miss(Square square)
+        {
+            ships[square.Row, square.Column].SetColor(Color.Black, Color.Black);
+        }
+
         public void Hit(Square square)
         {
             ships[square.Row, square.Column].SetColor(Color.Red, Color.Red);
