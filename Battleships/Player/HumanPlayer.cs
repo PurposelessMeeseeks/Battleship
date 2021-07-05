@@ -1,52 +1,47 @@
 ﻿using System;
 using Vsite.Oom.Battleship.Model;
+using System.Linq;
 
 namespace Battleships
 {
-    public class HumanPlayerImpl : Player
+    public class HumanPlayer : Player
     {
         public event EventHandler InvokePCPlayerTurn;
+        public event EventHandler EndGameEvent;
 
-        public HumanPlayerImpl(FleetControl guiFleet, Fleet fleet, BlockingQueue<ShipButton> queue)
+        public HumanPlayer(FleetControl guiFleet, Fleet fleet, BlockingQueue<ShipButton> queue)
+            : base(guiFleet, fleet)
         {
             GuiFleet = guiFleet;
             Fleet = fleet;
             NotificationQueue = queue;
         }
 
-        protected override bool TurnLogic()
+        protected override void TurnLogic()
         {
             ShipButton button = NotificationQueue.Dequeue();
 
             var row = button.Row;
             var col = button.Column;
+            var target = new Square(row, col);
+            var hitResult = Fleet.Hit(target);
 
-            bool isHitted = false;
-            foreach (var ships in Fleet.Ships)
+            InvalidateHit(GuiFleet, Fleet, hitResult, target);
+
+            if (Fleet.AreAllSunken())
             {
-                var hitResult = ships.Hit(new Square(row, col));
-                if (hitResult == HitResult.Hit)
-                {
-                    GuiFleet.Hit(new Square(row, col));
-                    isHitted = true;
-                    break;
-                }
-
-                if (hitResult == HitResult.Sunken)
-                {
-                    GuiFleet.Hit(new Square(row, col));
-                    GuiFleet.SunkShip(ships.Squares);
-                    isHitted = true;
-                }
+                EndGameEvent(this, EventArgs.Empty);
+                return;
             }
 
             InvokePCPlayerTurn(this, EventArgs.Empty);
-
-            return isHitted;
         }
 
-        private FleetControl GuiFleet;
-        private Fleet Fleet;
+        protected override void DecreaseShipCount()
+        {
+            GuiFleet.InvalidateShipCount();
+        }
+
         private BlockingQueue<ShipButton> NotificationQueue;
     }
 }

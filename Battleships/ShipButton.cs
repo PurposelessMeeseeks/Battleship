@@ -19,29 +19,47 @@ namespace Battleships
             int width = 35;
             int height = 35;
             int offsetX = 30;
-            int offsetY = 40;
+            int offsetY = 50;
+            Size = new Size(width, height);
+            Location = new Point((width * Row) + offsetX, (height * Column) + offsetY);
 
-            Size = new System.Drawing.Size(width, height);
-            Location = new System.Drawing.Point((width * Row) + offsetX, (height * Column) + offsetY);
             isSunken = false;
+
+            BackColor = Color.Gray;
+            ForeColor = Color.Gray;
+
+            // Border
+
+            FlatStyle = FlatStyle.Flat;
+            FlatAppearance.BorderColor = Color.Black;
+            FlatAppearance.BorderSize = 1;
+
+            // Focus border ehnancement is not needed
+            TabStop = false;
+            NotifyDefault(false);
 
             Show();
         }
 
         public bool IsSunken{get {return isSunken;} }
 
-        public void Sunk()
+        public Task Sunk()
         {
-            var currentColor = BackColor;
-            Task.Run(() => SunkAnimation(Color.DarkRed, currentColor));
+            var currentColor = Color.Red;
+            return Task.Run(() => SunkAnimation(Color.Purple, currentColor));
         }
 
-        public void SetColor(System.Drawing.Color foreColor, System.Drawing.Color backColor)
+        public void SetColor(Color foreColor, Color backColor)
         {
             ForeColor = foreColor;
             BackColor = backColor;
         }
         
+        public void Disable()
+        {
+            Enabled = false;
+        }
+
         private void SunkAnimation(Color cOne, Color cTwo)
         {
             for (int i = 0; i < 3; ++i)
@@ -55,6 +73,7 @@ namespace Battleships
             BackColor = cOne;
             isSunken = true;
         }
+
 
         public readonly int Row;
         public readonly int Column;

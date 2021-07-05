@@ -18,8 +18,8 @@ namespace Battleships
             PlayerFleetControl = HumanFleetControl;
             this.PCFleetControl = PCFleetControl;
 
-            HumanPlayerNotificationQueue = new BlockingQueue<ShipButton>(10);
-            HumanPlayer = new HumanPlayerImpl(PCFleetControl, PCFleet, HumanPlayerNotificationQueue);
+            HumanPlayerNotificationQueue = new BlockingQueue<ShipButton>();
+            HumanPlayer = new HumanPlayer(PCFleetControl, PCFleet, HumanPlayerNotificationQueue);
             PCPlayer = new PCPlayer(PlayerFleetControl, PlayerFleet);
 
             HumanPlayer.InvokePCPlayerTurn += 
@@ -34,10 +34,32 @@ namespace Battleships
                     HumanPlayer.Play();
                 });
 
-            PCFleetControl.PlaceShips(PCFleet);
             PlayerFleetControl.PlaceShips(PlayerFleet);
-
+            PCFleetControl.PlaceShips(PCFleet);
             HumanPlayer.Play();
+        }
+
+        public event EventHandler EndGameEvent
+        {
+            add
+            {
+                PCPlayer.EndGameEvent += value;
+                HumanPlayer.EndGameEvent += value;
+            }
+
+            remove
+            {
+                PCPlayer.EndGameEvent -= value;
+                HumanPlayer.EndGameEvent -= value;
+
+            }
+        }
+
+        public void Cleanup()
+        {
+            HumanPlayerNotificationQueue.Close();
+            PCPlayer.Stop();
+            HumanPlayer.Stop();
         }
 
         public void EnqueuePlayerNotification(ShipButton shipButton)
@@ -47,11 +69,12 @@ namespace Battleships
 
         private BlockingQueue<ShipButton> HumanPlayerNotificationQueue;
 
-        private HumanPlayerImpl HumanPlayer;
+        private HumanPlayer HumanPlayer;
         private PCPlayer PCPlayer;
 
         private Fleet PCFleet;
         private Fleet PlayerFleet;
+
         private FleetControl PCFleetControl;
         private FleetControl PlayerFleetControl;
     }

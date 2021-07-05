@@ -23,9 +23,19 @@ namespace Battleships
             GuiInitialization(10, 10);
         }
 
+        public void Initialize()
+        {
+            ClearColor();
+            SetRemainingShipsNumber();
+        }
+
         public void Miss(Square square)
         {
-            ships[square.Row, square.Column].SetColor(Color.Black, Color.Black);
+            ships[square.Row, square.Column].Invoke((MethodInvoker)delegate ()
+            {
+                ships[square.Row, square.Column].SetColor(Color.Black, Color.Black);
+                ships[square.Row, square.Column].Disable();
+            });
         }
 
         public void Hit(Square square)
@@ -35,12 +45,23 @@ namespace Battleships
 
         public void SunkShip(IEnumerable<Square> ship)
         {
+            Task t = null;
             foreach (var square in ship)
             {
-                ships[square.Row, square.Column].Sunk();
+                t = ships[square.Row, square.Column].Sunk(); // get only the last one and block until he is done
             }
+
+            t.Wait();
         }
 
+        public void ClearColor()
+        {
+            foreach (var button in ships)
+            {
+                button.BackColor = Color.WhiteSmoke;
+                button.ForeColor = Color.WhiteSmoke;
+            }
+        }
 
         public void PlaceShips(Fleet fleet)
         {
@@ -52,6 +73,27 @@ namespace Battleships
                 }
             }
         }
+        
+        public void InvalidateShipCount()
+        {
+            var number = int.Parse(RemainingShipsNumber.Text);
+            --number;
+
+            DecreaseShipCount(number.ToString());
+        }
+
+        protected void DecreaseShipCount(string text)
+        {
+            Invoke((MethodInvoker)delegate ()
+            {
+                RemainingShipsNumber.Text = text;
+            });
+        }
+
+        private void SetRemainingShipsNumber()
+        {
+            RemainingShipsNumber.Text = "10";
+        }
 
         private void Button_click(object sender, EventArgs e)
         {
@@ -60,6 +102,24 @@ namespace Battleships
 
         private void GuiInitialization(int row, int column)
         {
+
+            RemainingShips = new Label {
+                Text = "Remaining ships: ",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Size = new Size(100, 30),
+                Location = new Point(40, 2)
+            };
+
+            RemainingShipsNumber = new Label
+            {
+                Text = "10",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Size = new Size(30, 30),
+                Location = new Point(140, 2)
+            };
+
+            Controls.Add(RemainingShips);
+            Controls.Add(RemainingShipsNumber);
             InitializeButtons(row, column);
             InitializeText(row, column);
         }
@@ -79,8 +139,9 @@ namespace Battleships
                 {
                     var button = new ShipButton(r, c);
                     button.Click += Button_click;
+
                     ships[r, c] = button;
-                    this.Controls.Add(button);
+                    Controls.Add(button);
                 }
             }
         }
@@ -104,9 +165,8 @@ namespace Battleships
                     Text = ((char)(c + 'A')).ToString(),
                     TextAlign = ContentAlignment.MiddleCenter,
                     Size = new Size(width, height),
-                    Location = new Point(((width * c) + offsetX), (height + yPos) - width)
+                    Location = new Point(((width * c) + offsetX), (height + (yPos * 2)) - width)
                 };
-
                 horisontalLabels[c] = l;
 
                 Controls.Add(l);
@@ -118,7 +178,7 @@ namespace Battleships
             int width = 35;
             int height = 35;
             int xPos = -10;
-            int offsetY = 10;
+            int offsetY = 30;
 
             for (int r = 0; r < rows; ++r)
             {
@@ -136,6 +196,9 @@ namespace Battleships
 
         Label[] verticalLabels;
         Label[] horisontalLabels;
-        ShipButton[,] ships;
+
+        Label RemainingShips;
+        Label RemainingShipsNumber;
+        private ShipButton[,] ships;
     }
 }
