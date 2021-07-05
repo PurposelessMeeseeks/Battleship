@@ -67,7 +67,7 @@ namespace Battleships
             this.Controls.Add(this.PCFleetControl);
             this.Controls.Add(this.PlayerFleetControl);
             this.Name = "Battleship";
-            this.Text = "Form1";
+            this.Text = "Battleship";
             this.ResumeLayout(false);
 
         }
