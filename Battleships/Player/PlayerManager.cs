@@ -35,7 +35,6 @@ namespace Battleships
                 });
 
             PlayerFleetControl.PlaceShips(PlayerFleet);
-            PCFleetControl.PlaceShips(PCFleet);
             HumanPlayer.Play();
         }
 
