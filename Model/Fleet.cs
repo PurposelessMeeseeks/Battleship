@@ -20,6 +20,11 @@ namespace Vsite.Oom.Battleship.Model
 
         private List<Ship> ships = new List<Ship>();
 
+        public bool isSunken()
+        {
+            return ships.All(s => s.isSunken() );
+        }
+
         public HitResult Hit (Square square)
         {
             foreach (Ship ship in ships)

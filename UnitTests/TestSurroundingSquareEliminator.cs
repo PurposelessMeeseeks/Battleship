@@ -29,7 +29,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
         public void ToEliminateReturns8SquaresShipSquaresRow0Column3toRow0Column4OnGrid10x10()
         {
             SurroundingSquareEliminator sse = new SurroundingSquareEliminator(10, 10);
-            List<Square> shipSquares = new List<Square> { new Square(3, 0), new Square(0, 4)};
+            List<Square> shipSquares = new List<Square> { new Square(0, 3), new Square(0, 4)};
             var toEliminate = sse.ToEliminate(shipSquares);
             Assert.AreEqual(8, toEliminate.Count());
             foreach (var square in shipSquares)

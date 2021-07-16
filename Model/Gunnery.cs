@@ -30,16 +30,22 @@ namespace Vsite.Oom.Battleship.Model
 
         public void ProcessShootingResult(HitResult result)
         {
-            //Mark the result in evidence grid 
+       
             switch (result)
             {
                 case HitResult.Missed:
-                    //mark square missed in evidence grid
+                    evidanceGrid.MarkSquare(lastTarget, SquareState.Missed);
                     break;
                 case HitResult.Hit:
                     squaresHit.Add(lastTarget);
                     break;
                 case HitResult.Sunken:
+                    var elimintor = new SurroundingSquareEliminator(evidanceGrid.Rows, evidanceGrid.Columns);
+                    var surroundingSquares = elimintor.ToEliminate(squaresHit);
+                    foreach (var square in surroundingSquares)
+                        evidanceGrid.MarkSquare(square, SquareState.Missed);
+                    foreach (var square in squaresHit)
+                        evidanceGrid.MarkSquare(square, SquareState.Missed);
                     squaresHit.Clear();
                     break;
             }

@@ -14,7 +14,7 @@ namespace Vsite.Oom.Battleship.Model
         Sunken
     }
 
-    public struct Square
+    public struct Square : IEquatable<Square>
     {
         public Square(int row, int column) 
         {
@@ -27,6 +27,21 @@ namespace Vsite.Oom.Battleship.Model
         public void SetState(SquareState newState)
         {
             squareState = newState;
+        }
+
+        public bool Equals(Square other)
+        {
+            return Row == other.Row && Column == other.Column; 
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return Equals((Square)obj); 
         }
 
         public SquareState SquareState

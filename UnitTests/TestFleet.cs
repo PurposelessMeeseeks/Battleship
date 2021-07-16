@@ -48,7 +48,7 @@ namespace Vsite.Oom.Battleship.Model.UnitTests
             squares = new List<Square> { new Square(3, 8), new Square(4, 8)};
             fleet.CreateShip(squares);
 
-            Assert.AreEqual(HitResult.Hit, fleet.Hit(new Square(4,8)));
+            Assert.AreEqual(HitResult.Hit, fleet.Hit(new Square(4,3)));
             Assert.AreEqual(HitResult.Hit, fleet.Hit(new Square(4,4)));
             Assert.AreEqual(HitResult.Hit, fleet.Hit(new Square(4,5)));
 

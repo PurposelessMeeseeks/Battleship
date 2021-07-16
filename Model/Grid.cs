@@ -98,6 +98,12 @@ namespace Vsite.Oom.Battleship.Model
             return result;
         }
 
+        public void MarkSquare(Square square,SquareState state)
+        {
+            square.SetState(state);
+            squares[square.Row, square.Column] = square;
+        }
+
         private bool IsSquareAvailable(int row,int column)
         {
             return squares[row, column] != null && squares[row, column].Value.SquareState == SquareState.Default;
