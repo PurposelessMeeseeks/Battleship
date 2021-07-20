@@ -164,7 +164,7 @@ namespace BattleshipGUI {
                 case HitResult.Missed:
                     btn.BackColor = Color.DarkGray;
                     btn.Enabled = false;
-                    EnemyTurn();
+                    enemy_turn();
                     break;
 
                 case HitResult.Hit:
@@ -172,7 +172,7 @@ namespace BattleshipGUI {
                     btn.Text = "X";
                     btn.Font = new Font(Text, 20);
                     btn.Enabled = false;
-                    EnemyTurn();
+                    enemy_turn();
                     break;
 
                 case HitResult.Sunken:
@@ -187,7 +187,7 @@ namespace BattleshipGUI {
                         stop_watch.Stop();
                         YouWonDisplay();
                     }
-                    EnemyTurn();
+                    enemy_turn();
                     break;
 
                 default:
@@ -206,7 +206,7 @@ namespace BattleshipGUI {
 
         }
 
-        private void EnemyTurn() {
+        private void enemy_turn() {
             Square field = gunner.NextTarget();
             HitResult result = my_ships.Hit(field);
             gunner.RecordShootingResult(result);
@@ -214,7 +214,6 @@ namespace BattleshipGUI {
             switch (result) {
                 case HitResult.Missed:
                     my_grid_draw[field.row, field.column].BackColor = Color.Gray;
-                  
                     break;
 
                 case HitResult.Hit:
