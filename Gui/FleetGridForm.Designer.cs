@@ -40,10 +40,11 @@ namespace BattleshipGUI
             // 
             // Start_Button
             // 
+            this.Start_Button.Font = new System.Drawing.Font("Georgia", 7.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.Start_Button.Location = new System.Drawing.Point(648, 278);
-            this.Start_Button.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Start_Button.Margin = new System.Windows.Forms.Padding(4);
             this.Start_Button.Name = "Start_Button";
-            this.Start_Button.Size = new System.Drawing.Size(200, 133);
+            this.Start_Button.Size = new System.Drawing.Size(200, 137);
             this.Start_Button.TabIndex = 0;
             this.Start_Button.Text = "Start the game";
             this.Start_Button.UseVisualStyleBackColor = true;
@@ -53,7 +54,7 @@ namespace BattleshipGUI
             // 
             this.stop_watch_Label.AutoSize = true;
             this.stop_watch_Label.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stop_watch_Label.Location = new System.Drawing.Point(697, 21);
+            this.stop_watch_Label.Location = new System.Drawing.Point(701, 26);
             this.stop_watch_Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.stop_watch_Label.Name = "stop_watch_Label";
             this.stop_watch_Label.Size = new System.Drawing.Size(79, 20);
@@ -68,21 +69,22 @@ namespace BattleshipGUI
             // time_TextLabel
             // 
             this.time_TextLabel.AutoSize = true;
-            this.time_TextLabel.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.time_TextLabel.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.time_TextLabel.Location = new System.Drawing.Point(712, 1);
             this.time_TextLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.time_TextLabel.Name = "time_TextLabel";
-            this.time_TextLabel.Size = new System.Drawing.Size(48, 20);
+            this.time_TextLabel.Size = new System.Drawing.Size(68, 25);
             this.time_TextLabel.TabIndex = 10;
             this.time_TextLabel.Text = "Time";
+            this.time_TextLabel.Click += new System.EventHandler(this.time_TextLabel_Click);
             // 
             // my_fleet_GroupBox
             // 
-            this.my_fleet_GroupBox.Font = new System.Drawing.Font("Georgia", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.my_fleet_GroupBox.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.my_fleet_GroupBox.Location = new System.Drawing.Point(16, 21);
-            this.my_fleet_GroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.my_fleet_GroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.my_fleet_GroupBox.Name = "my_fleet_GroupBox";
-            this.my_fleet_GroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.my_fleet_GroupBox.Padding = new System.Windows.Forms.Padding(4);
             this.my_fleet_GroupBox.Size = new System.Drawing.Size(624, 562);
             this.my_fleet_GroupBox.TabIndex = 11;
             this.my_fleet_GroupBox.TabStop = false;
@@ -91,11 +93,11 @@ namespace BattleshipGUI
             // 
             // enemy_fleet_GroupBox
             // 
-            this.enemy_fleet_GroupBox.Font = new System.Drawing.Font("Georgia", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.enemy_fleet_GroupBox.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enemy_fleet_GroupBox.Location = new System.Drawing.Point(856, 21);
-            this.enemy_fleet_GroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.enemy_fleet_GroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.enemy_fleet_GroupBox.Name = "enemy_fleet_GroupBox";
-            this.enemy_fleet_GroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.enemy_fleet_GroupBox.Padding = new System.Windows.Forms.Padding(4);
             this.enemy_fleet_GroupBox.Size = new System.Drawing.Size(635, 562);
             this.enemy_fleet_GroupBox.TabIndex = 12;
             this.enemy_fleet_GroupBox.TabStop = false;
@@ -114,7 +116,7 @@ namespace BattleshipGUI
             this.Controls.Add(this.Start_Button);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FleetGridForm";

@@ -33,7 +33,7 @@ namespace BattleshipGUI {
         }
   
         private void PlaceFleetButton_Click(object sender, EventArgs e) {
-            Place_my_ships();
+            place_my_ships();
             place_enemy_ships();
 
             enable_buttons(enemy_grid_draw, true);
@@ -50,11 +50,15 @@ namespace BattleshipGUI {
                     draw_grid[i, j] = new Grid_Buttons(rows, columns) {
                         grid_button_row = i,
                         grid_button_column = j,
+                        
                         BackColor = Color.White,
+                        
                         Location = new Point(startLeft + i * 40, 60 + j * 40),
                         Size = new Size(40, 40),
+                        
                         Enabled = false,
                         TabStop = false,
+
                         FlatStyle = FlatStyle.Flat
                     };
                     draw_grid[i, j].FlatAppearance.BorderSize = 1;
@@ -126,13 +130,13 @@ namespace BattleshipGUI {
             }
         }
 
-        private void Place_my_ships() {
+        private void place_my_ships() {
             Color my_ships_color = Color.White;
             shipLengths = new List<int> { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 };
             Shipwright sw = new Shipwright(10, 10, shipLengths);
             my_ships = sw.CreateShips(new List<int> { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2 });
 
-            my_ships_color = Color.Black;
+            my_ships_color = Color.DeepSkyBlue;
 
 
             foreach (Ship ship in my_ships.Ships) {
@@ -203,6 +207,10 @@ namespace BattleshipGUI {
         }
 
         private void my_fleet_GroupBox_Enter(object sender, EventArgs e) {
+
+        }
+
+        private void time_TextLabel_Click(object sender, EventArgs e) {
 
         }
 
