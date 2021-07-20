@@ -102,26 +102,23 @@ namespace BattleshipGUI {
             stop_watch_Label.Text = stop_watch.Elapsed.ToString("mm\\:ss\\.ff");
         }
 
-        private void YouWonDisplay() {
-            DialogResult msgBoxResult = MessageBox.Show("You won!" + Environment.NewLine + Environment.NewLine
-                + "Time in game: " + stop_watch.Elapsed.ToString("mm\\:ss\\.ff")
-                + Environment.NewLine + Environment.NewLine
-                + "Press 'OK' to play again",
-                  "Game over", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+      
 
-            if (msgBoxResult == DialogResult.OK) {
-                Application.Restart();
-            } else if (msgBoxResult == DialogResult.Cancel) {
-                Application.Exit();
+        private void I_WonOrLostDisplay(bool iWon) {
+            DialogResult msgBoxResult = new DialogResult();
+            if (iWon) {
+                msgBoxResult = MessageBox.Show("You won!" + Environment.NewLine + Environment.NewLine
+               + "Time in game: " + stop_watch.Elapsed.ToString("mm\\:ss\\.ff")
+               + Environment.NewLine + Environment.NewLine + "Press OK to play again",
+                 "Game over", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            } else {
+                msgBoxResult = MessageBox.Show("You lost!" + Environment.NewLine + Environment.NewLine
+               + "Time in game: " + stop_watch.Elapsed.ToString("mm\\:ss\\.ff")
+               + Environment.NewLine + Environment.NewLine + "Press OK to play again",
+                 "Game over", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
             }
-        }
 
-        private void YouLostDisplay() {
-            DialogResult msgBoxResult = MessageBox.Show("You lost!" + Environment.NewLine + Environment.NewLine
-                + "Time in game: " + stop_watch.Elapsed.ToString("mm\\:ss\\.ff")
-                + Environment.NewLine + Environment.NewLine
-                + "Press 'OK' to play again",
-                  "Game over", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
             if (msgBoxResult == DialogResult.OK) {
                 Application.Restart();
@@ -189,7 +186,7 @@ namespace BattleshipGUI {
 
                     if (numbe_of_enemy_ships_alive == 0) {
                         stop_watch.Stop();
-                        YouWonDisplay();
+                        I_WonOrLostDisplay(true);
                     }
                     enemy_turn();
                     break;
@@ -242,7 +239,7 @@ namespace BattleshipGUI {
 
                     if (number_of_my_ships_alive == 0) {
                         stop_watch.Stop();
-                        YouLostDisplay();
+                        I_WonOrLostDisplay(false);
                     }
                     break;
 
