@@ -10,26 +10,32 @@ namespace Vsite.Oom.Battleship.Model {
     }
 
     public class LinearShooting : ITargetSelect {
+        private readonly Grid grid;
+        private readonly List<Square> squaresHit;
+        private readonly Random random = new Random();
+        private readonly int shipLength;
+
         public LinearShooting(Grid evidenceGrid, List<Square> squaresHit, int shipLength) {
-            this.grid = evidenceGrid;
+            grid = evidenceGrid;
             this.squaresHit = squaresHit;
             this.shipLength = shipLength;
         }
 
         public Square NextTarget() {
-            var sorted = new List<Square>(squaresHit.OrderBy(s => s.Row + s.Column));
+            var sorted = new List<Square>(squaresHit.OrderBy(s => s.row + s.column));
 
             var orientation = GetHitSquaresOrientation();
             List<IEnumerable<Square>> squares = new List<IEnumerable<Square>>();
             switch (orientation) {
                 case Orientation.Horizontal:
-                    var left = grid.GetAvailablePlacementsInDirection(sorted.First(), Grid.Direction.Leftwards);
+
+                    var left = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Leftwards);
 
                     if (left.Count() > 0) {
                         squares.Add(left);
                     }
 
-                    var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Grid.Direction.Rightwards);
+                    var right = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Rightwards);
 
                     if (right.Count() > 0) {
                         squares.Add(right);
@@ -37,13 +43,14 @@ namespace Vsite.Oom.Battleship.Model {
                     break;
 
                 case Orientation.Vertical:
-                    var up = grid.GetAvailablePlacementsInDirection(sorted.First(), Grid.Direction.Upwards);
+
+                    var up = grid.GetAvailablePlacementsInDirection(sorted.First(), Direction.Upwards);
 
                     if (up.Count() > 0) {
                         squares.Add(up);
                     }
 
-                    var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Grid.Direction.Downwards);
+                    var down = grid.GetAvailablePlacementsInDirection(sorted.Last(), Direction.Downwards);
 
                     if (down.Count() > 0) {
                         squares.Add(down);
@@ -75,16 +82,11 @@ namespace Vsite.Oom.Battleship.Model {
         }
 
         private Orientation GetHitSquaresOrientation() {
-            if (squaresHit[0].Row == squaresHit[1].Row) {
+            if (squaresHit[0].row == squaresHit[1].row) {
                 return Orientation.Horizontal;
             }
 
             return Orientation.Vertical;
         }
-
-        private readonly Grid grid;
-        private readonly List<Square> squaresHit;
-        private readonly Random random = new Random();
-        private readonly int shipLength;
     }
 }

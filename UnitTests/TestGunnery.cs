@@ -1,11 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 
 namespace Vsite.Oom.Battleship.Model.UnitTests {
     [TestClass]
     public class TestGunnery {
-
         [TestMethod]
         public void InitiallyShootingTacticsIsRandom() {
             Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
@@ -20,22 +18,23 @@ namespace Vsite.Oom.Battleship.Model.UnitTests {
         }
 
         [TestMethod]
-        public void ShootingTacticsChangesFromRandomToSurroundingWhenFirstSquareIsHit() {
+        public void ShootingTacticsChangesFromRandomToSurroundingWhenFirstSquaresIsHit() {
             Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
             g.RecordShootingResult(HitResult.Hit);
             Assert.AreEqual(ShootingTactics.Surrounding, g.ShootingTactics);
         }
 
         [TestMethod]
-        public void ShootingTacticsRemainsSurroundingAfterSquareIsMissed() {
+        public void ShootingTacticsRemainSurroindingAfterSquareIsMissed() {
             Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
             g.RecordShootingResult(HitResult.Hit);
+            Assert.AreEqual(ShootingTactics.Surrounding, g.ShootingTactics);
             g.RecordShootingResult(HitResult.Missed);
             Assert.AreEqual(ShootingTactics.Surrounding, g.ShootingTactics);
         }
 
         [TestMethod]
-        public void ShootingTacticsChangesFromSurroundingToLinearAfterSecondSquareHit() {
+        public void ShootingTacticsChangesFromRSurrundingToLinearAfterSecondSquareIsHit() {
             Gunnery g = new Gunnery(10, 10, new List<int> { 5, 3 });
             g.RecordShootingResult(HitResult.Hit);
             g.RecordShootingResult(HitResult.Hit);

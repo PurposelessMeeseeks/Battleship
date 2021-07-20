@@ -5,23 +5,16 @@ using System.Linq;
 namespace Vsite.Oom.Battleship.Model {
     public class RandomShooting : ITargetSelect {
         private readonly Grid Grid;
-        private readonly int ShipLenght;
-        private Grid evidenceGrid;
-        private List<int> shipsToShoot;
-        private Random random = new Random();
+        private readonly List<int> ShipsToShoot;
+        private readonly Random random = new Random();
 
-        public RandomShooting(Grid grid, int shipLenght) {
+        public RandomShooting(Grid grid, List<int> shipsToShoot) {
             Grid = grid;
-            ShipLenght = shipLenght;
-        }
-
-        public RandomShooting(Grid evidenceGrid, List<int> shipsToShoot) {
-            this.evidenceGrid = evidenceGrid;
-            this.shipsToShoot = shipsToShoot;
+            ShipsToShoot = shipsToShoot;
         }
 
         public Square NextTarget() {
-            var allPlacements = Grid.GetAvailablePlacements(ShipLenght);
+            var allPlacements = Grid.GetAvailablePlacements(ShipsToShoot[0]);
 
             // create simple array of all squares
             var allCandidates = allPlacements.SelectMany(seq => seq);
@@ -43,9 +36,8 @@ namespace Vsite.Oom.Battleship.Model {
             }
 
             int index = random.Next(mostCommunSquares.Count());
-            return mostCommunSquares.ElementAt(index);
 
-            throw new NotImplementedException();
+            return mostCommunSquares.ElementAt(index);
         }
     }
 }

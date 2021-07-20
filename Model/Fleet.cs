@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Vsite.Oom.Battleship.Model {
     public class Fleet {
+        private readonly List<Ship> ships = new List<Ship>();
+
         public void CreateShip(IEnumerable<Square> squares) {
             Ship ship = new Ship(squares);
             ships.Add(ship);
@@ -18,12 +16,12 @@ namespace Vsite.Oom.Battleship.Model {
         public HitResult Hit(Square square) {
             foreach (Ship ship in ships) {
                 var hit = ship.Hit(square);
-                if (hit != HitResult.Missed)
+
+                if (hit != HitResult.Missed) {
                     return hit;
+                }
             }
             return HitResult.Missed;
         }
-
-        private List<Ship> ships = new List<Ship>();
     }
 }

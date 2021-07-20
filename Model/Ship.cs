@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Vsite.Oom.Battleship.Model {
     public enum HitResult {
@@ -12,6 +9,8 @@ namespace Vsite.Oom.Battleship.Model {
     }
 
     public class Ship {
+        private readonly Square[] squares;
+
         public Ship(IEnumerable<Square> squares) {
             this.squares = squares.ToArray();
         }
@@ -21,12 +20,14 @@ namespace Vsite.Oom.Battleship.Model {
         }
 
         public HitResult Hit(Square square) {
-            if (!squares.Contains(square))
+            if (!squares.Contains(square)) {
                 return HitResult.Missed;
+            }
 
             for (int i = 0; i < squares.Length; ++i) {
-                if (squares[i].Equals(square))
+                if (squares[i].Equals(square)) {
                     squares[i].SetSquareState(HitResult.Hit);
+                }
             }
 
             if (squares.All(sq => sq.SquareState == SquareState.Hit)) {
@@ -35,10 +36,7 @@ namespace Vsite.Oom.Battleship.Model {
                 }
                 return HitResult.Sunken;
             }
-
             return HitResult.Hit;
         }
-
-        private Square[] squares;
     }
 }
