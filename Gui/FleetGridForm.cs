@@ -9,7 +9,7 @@ using Vsite.Oom.Battleship.Model;
 
 namespace BattleshipGUI {
     public partial class FleetGridForm : Form {
-   
+
         private List<int> shipLengths;
         private readonly Stopwatch stop_watch = new Stopwatch();
         private Fleet my_ships, enemy_ships;
@@ -31,7 +31,7 @@ namespace BattleshipGUI {
             panel_draw(my_grid_draw, 50);
             panel_draw(enemy_grid_draw, 700);
         }
-  
+
         private void PlaceFleetButton_Click(object sender, EventArgs e) {
             place_my_ships();
             place_enemy_ships();
@@ -39,23 +39,23 @@ namespace BattleshipGUI {
             enable_buttons(enemy_grid_draw, true);
 
             stop_watch.Start();
-            
+
             Start_Button.Enabled = false;
         }
 
-      
+
         private void panel_draw(Grid_Buttons[,] draw_grid, int startLeft) {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
                     draw_grid[i, j] = new Grid_Buttons(rows, columns) {
                         grid_button_row = i,
                         grid_button_column = j,
-                        
+
                         BackColor = Color.White,
-                        
+
                         Location = new Point(startLeft + i * 40, 60 + j * 40),
                         Size = new Size(40, 40),
-                        
+
                         Enabled = false,
                         TabStop = false,
 
@@ -89,7 +89,7 @@ namespace BattleshipGUI {
         private void animate_my_ships(int nRows, int nColumn) {
             my_grid_draw[nRows, nColumn].animate_button(Color.DarkRed);
             my_grid_draw[nRows, nColumn].Text = "X";
-            my_grid_draw[nRows, nColumn].Font = new Font(Text,20);
+            my_grid_draw[nRows, nColumn].Font = new Font(Text, 20);
         }
 
         private void animate_enemy_ships(int nRows, int nColumn) {
@@ -102,23 +102,17 @@ namespace BattleshipGUI {
             stop_watch_Label.Text = stop_watch.Elapsed.ToString("mm\\:ss\\.ff");
         }
 
-      
+
 
         private void I_WonOrLostDisplay(bool iWon) {
-            DialogResult msgBoxResult = new DialogResult();
-            if (iWon) {
-                msgBoxResult = MessageBox.Show("You won!" + Environment.NewLine + Environment.NewLine
-               + "Time in game: " + stop_watch.Elapsed.ToString("mm\\:ss\\.ff")
-               + Environment.NewLine + Environment.NewLine + "Press OK to play again",
-                 "Game over", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-            } else {
-                msgBoxResult = MessageBox.Show("You lost!" + Environment.NewLine + Environment.NewLine
-               + "Time in game: " + stop_watch.Elapsed.ToString("mm\\:ss\\.ff")
-               + Environment.NewLine + Environment.NewLine + "Press OK to play again",
-                 "Game over", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            string lostOrWon = "You lost!";
+            if (iWon)
+                lostOrWon = "You won!";
 
-            }
-
+            DialogResult msgBoxResult = msgBoxResult = MessageBox.Show(lostOrWon + Environment.NewLine + Environment.NewLine
+             + "Time in game: " + stop_watch.Elapsed.ToString("mm\\:ss\\.ff")
+             + Environment.NewLine + Environment.NewLine + "Press OK to play again",
+               "Game over", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
             if (msgBoxResult == DialogResult.OK) {
                 Application.Restart();
@@ -231,7 +225,7 @@ namespace BattleshipGUI {
                 case HitResult.Sunken:
                     foreach (var sunkenSquare in my_ships.Ships.Where(s => s.Squares.Contains(field)).SelectMany(s => s.Squares)) {
                         animate_my_ships(sunkenSquare.row, sunkenSquare.column);
-                      
+
                     }
 
                     number_of_my_ships_alive--;
