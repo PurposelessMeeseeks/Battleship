@@ -11,7 +11,7 @@ namespace BattleshipGUI {
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FleetGridForm());
+            Application.Run(new ShipsGridForm());
 
         }
     }

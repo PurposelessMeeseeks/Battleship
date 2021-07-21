@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Vsite.Oom.Battleship.Model;
 
 namespace BattleshipGUI {
-    public partial class FleetGridForm : Form {
+    public partial class ShipsGridForm : Form {
 
         private List<int> shipLengths;
         private readonly Stopwatch stop_watch = new Stopwatch();
@@ -26,7 +26,7 @@ namespace BattleshipGUI {
         private static int number_of_my_squares_left = 30;
         private static int number_of_enemy_squares_left = 30;
 
-        public FleetGridForm() {
+        public ShipsGridForm() {
             InitializeComponent();
             panel_draw(my_grid_draw, 50);
             panel_draw(enemy_grid_draw, 700);
@@ -67,8 +67,8 @@ namespace BattleshipGUI {
                     Controls.Add(draw_grid[i, j]);
                 }
             }
-            my_fleet_GroupBox.SendToBack();
-            enemy_fleet_GroupBox.SendToBack();
+            my_ships_GroupBox.SendToBack();
+            enemy_ships_GroupBox.SendToBack();
         }
 
         private void enable_buttons(Grid_Buttons[,] gridDraw, bool enable) {
